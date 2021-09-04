@@ -1,5 +1,8 @@
 # api cinema
-Link server [https://server-api-cinema.herokuapp.com/](https://server-api-cinema.herokuapp.com/)
+Link server [https://server-api-cinema.herokuapp.com/](https://server-api-cinema.herokuapp.com/)\
+API location https://thongtindoanhnghiep.co/rest-api
+
+
 
 
 ## `Auth`
