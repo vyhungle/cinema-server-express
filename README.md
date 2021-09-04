@@ -2,8 +2,8 @@
 Link server [https://server-api-cinema.herokuapp.com/](https://server-api-cinema.herokuapp.com/)
 
 
-### `Auth`
-## Đăng ký Post Method (trả về token hoặc Obj errors)
+## `Auth`
+### Đăng ký Post Method (trả về token hoặc Obj errors)
 
 -https://server-api-cinema.herokuapp.com/api/auth/register \
 -Content-Type: application/json\
@@ -23,7 +23,7 @@ Link server [https://server-api-cinema.herokuapp.com/](https://server-api-cinema
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dateOfBirth": string\
 }
 
-## Đăng nhập Post Method (trả về token hoặc Obj errors)
+### Đăng nhập Post Method (trả về token hoặc Obj errors)
 
 -https://server-api-cinema.herokuapp.com/api/auth/login \
 -Content-Type: application/json\
