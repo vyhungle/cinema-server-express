@@ -4,10 +4,17 @@ Content-Type: application/json
 
 {
     "email":"vyhungle@gmail.com",
+    "phoneNumber":"0983782942",
     "password":"vykt2000",
     "confirmPassword":"vykt2000",
-    "lastName":"Hùng",
-    "firstName":"Nguyễn Văn"
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "address":{
+        "city":"TP.HCM",
+        "district":"Tân phú",
+        "ward":"Tây thạnh",
+        "street":"37, T4A"
+    },
+    "dateOfBirth":"11/26/2000"
 }
 
 #### Đăng nhập
@@ -15,6 +22,6 @@ POST http://localhost:4000/api/auth/login
 Content-Type: application/json
 
 {
-    "email":"vyhungle@gmail.com",
+    "username":"0983782942",
     "password":"vykt2000"
 }

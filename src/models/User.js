@@ -6,18 +6,23 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  phoneNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   password: {
     type: String,
     required: true,
   },
   profile: {
-    firstName: String,
-    lastName: String,
+    fullName: String,
     avatar: String,
     dateOfBirth: String,
     hobby: String,
     male: Boolean,
     imageCover: String,
+    address: String,
   },
   createdAt: {
     type: String,

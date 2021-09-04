@@ -22,17 +22,30 @@ function generateToken(user) {
 // @desc Register user
 // @access Public
 router.post("/register", async (req, res) => {
-  const { password, confirmPassword, email, lastName, firstName } = req.body;
-  const user = await User.findOne({ email: email });
+  const {
+    password,
+    confirmPassword,
+    email,
+    fullName,
+    phoneNumber,
+    dateOfBirth,
+    address,
+  } = req.body;
+  const checkEmail = await User.findOne({ email: email });
+  const checkPhone = await User.findOne({ phoneNumber: phoneNumber });
 
-  const isEmail = user ? true : false;
+  const isEmail = checkEmail ? true : false;
+  const isPhone = checkPhone ? true : false;
   const { valid, errors } = ValidateRegisterInput(
     isEmail,
+    isPhone,
+    phoneNumber,
     email,
     password,
     confirmPassword,
-    firstName,
-    lastName
+    fullName,
+    address,
+    dateOfBirth
   );
   if (!valid) {
     res.json({
@@ -45,9 +58,11 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       email,
       password: hashedPassword,
+      phoneNumber,
       profile: {
-        firstName,
-        lastName,
+        fullName,
+        dateOfBirth,
+        address: `${address.street}, ${address.ward}, ${address.district}, ${address.city}.`,
       },
       createdAt: new Date().toISOString(),
     });
@@ -65,12 +80,13 @@ router.post("/register", async (req, res) => {
 // @desc Login user
 // @access Public
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email: email });
-  const { valid, errors } = ValidateLoginInput(email, password);
-  if (!user) {
-    if (email !== "") {
-      errors.email = "Thông tin tài khoản không tồn tại";
+  const { username, password } = req.body;
+  const checkEmail = await User.findOne({ email: username });
+  const checkPhone = await User.findOne({ phoneNumber: username });
+  const { valid, errors } = ValidateLoginInput(username, password);
+  if (!checkEmail && !checkPhone) {
+    if (username !== "") {
+      errors.username = "Thông tin tài khoản không tồn tại";
     }
     res.json({
       success: false,
@@ -78,6 +94,7 @@ router.post("/login", async (req, res) => {
       errors: errors,
     });
   } else {
+    const user = checkEmail ? checkEmail : checkPhone;
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       if (password !== "") {
