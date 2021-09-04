@@ -1,0 +1,20 @@
+### Đăng ký
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+    "email":"vyhungle@gmail.com",
+    "password":"vykt2000",
+    "confirmPassword":"vykt2000",
+    "lastName":"Hùng",
+    "firstName":"Nguyễn Văn"
+}
+
+#### Đăng nhập
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"vyhungle@gmail.com",
+    "password":"vykt2000"
+}
