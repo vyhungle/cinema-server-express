@@ -37,3 +37,11 @@ API location https://thongtindoanhnghiep.co/rest-api
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": string(email hoặc phoneNumber),\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"password" : string,\
 }
+
+
+### Lấy thông tin của user đăng nhập
+-Method get \
+-https://server-api-cinema.herokuapp.com/api/auth/me \
+-Content-Type: application/json\
+-Authorization: Bearer <Token khi login hoặc register>\
+-res => obj user
