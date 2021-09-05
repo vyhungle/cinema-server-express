@@ -50,7 +50,7 @@ API location https://thongtindoanhnghiep.co/rest-api
 }\
 -res (nếu đăng nhập thành công trả về values, ngược lại trả về errors)\
 { \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolean,\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,
  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"values": {\
@@ -68,7 +68,7 @@ API location https://thongtindoanhnghiep.co/rest-api
 -Authorization: Bearer <Token khi login hoặc register>\
 -res \
 { \
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolean,\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user": obj User\
 }
