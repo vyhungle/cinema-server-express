@@ -35,5 +35,5 @@ API location https://thongtindoanhnghiep.co/rest-api
 -body\
 {\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": string(email hoặc phoneNumber),\
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"phoneNumber" : string,\
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"password" : string,\
 }
