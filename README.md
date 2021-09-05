@@ -6,7 +6,7 @@ API location https://thongtindoanhnghiep.co/rest-api
 
 
 ## `Auth`
-### Đăng ký (trả về token hoặc Obj errors)
+### Đăng ký
 
 -Method post \
 -https://server-api-cinema.herokuapp.com/api/auth/register \
@@ -38,7 +38,7 @@ API location https://thongtindoanhnghiep.co/rest-api
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"errors": {tên field: string...}\
 }
 
-### Đăng nhập (trả về token hoặc Obj errors)
+### Đăng nhập
 
 -Method post \
 -https://server-api-cinema.herokuapp.com/api/auth/login \
