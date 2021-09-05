@@ -66,4 +66,9 @@ API location https://thongtindoanhnghiep.co/rest-api
 -https://server-api-cinema.herokuapp.com/api/auth/me \
 -Content-Type: application/json\
 -Authorization: Bearer <Token khi login hoặc register>\
--res => obj user
+-res \
+{ \
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user": obj User\
+}
