@@ -25,6 +25,17 @@ API location https://thongtindoanhnghiep.co/rest-api
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"street": string\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dateOfBirth": string (mm/dd/yyy)\
+}\
+-res (nếu đăng ký thành công trả về values, ngược lại trả về errors)\
+{ \
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,\
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"values": {\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"token": string,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user": obj User\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"errors": {tên field: string...}\
 }
 
 ### Đăng nhập (trả về token hoặc Obj errors)
@@ -36,6 +47,17 @@ API location https://thongtindoanhnghiep.co/rest-api
 {\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"username": string(email hoặc phoneNumber),\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"password" : string,\
+}\
+-res (nếu đăng nhập thành công trả về values, ngược lại trả về errors)\
+{ \
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,\
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"values": {\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"token": string,\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user": obj User\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}\
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"errors": {tên field: string...}\
 }
 
 
