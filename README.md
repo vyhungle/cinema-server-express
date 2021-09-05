@@ -6,8 +6,9 @@ API location https://thongtindoanhnghiep.co/rest-api
 
 
 ## `Auth`
-### Đăng ký Post Method (trả về token hoặc Obj errors)
+### Đăng ký (trả về token hoặc Obj errors)
 
+-Method post \
 -https://server-api-cinema.herokuapp.com/api/auth/register \
 -Content-Type: application/json\
 -body\
@@ -23,11 +24,12 @@ API location https://thongtindoanhnghiep.co/rest-api
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ward": string,\
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"street": string\
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},\
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dateOfBirth": string\
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dateOfBirth": string (mm/dd/yyy)\
 }
 
-### Đăng nhập Post Method (trả về token hoặc Obj errors)
+### Đăng nhập (trả về token hoặc Obj errors)
 
+-Method post \
 -https://server-api-cinema.herokuapp.com/api/auth/login \
 -Content-Type: application/json\
 -body\
