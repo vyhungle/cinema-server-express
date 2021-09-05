@@ -3,8 +3,8 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-    "email":"vyhungle@gmail.com",
-    "phoneNumber":"0983782940",
+    "email":"vyhungles@gmail.com",
+    "phoneNumber":"0983781940",
     "password":"vykt2000",
     "confirmPassword":"vykt2000",
     "fullName":"Lê Nguyễn Hùng Vỹ",

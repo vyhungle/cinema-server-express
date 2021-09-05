@@ -25,7 +25,7 @@ function generateToken(user) {
 
 router.get("/me", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.userId).select("-password");
     return res.json({
       success: true,
       message: "Lấy dữ liệu thành công",
@@ -95,7 +95,10 @@ router.post("/register", async (req, res) => {
       message: "Đăng ký tài khoản",
       values: {
         token: token,
-        user: newUser,
+        user: {
+          ...newUser._doc,
+          password: undefined,
+        },
       },
     });
   }
@@ -120,6 +123,7 @@ router.post("/login", async (req, res) => {
     });
   } else {
     const user = checkEmail ? checkEmail : checkPhone;
+    delete user.password;
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       if (password !== "") {
@@ -137,7 +141,10 @@ router.post("/login", async (req, res) => {
         message: "Đăng nhập",
         values: {
           token: token,
-          user: user,
+          user: {
+            ...user._doc,
+            password: undefined,
+          },
         },
       });
     }
