@@ -69,6 +69,6 @@ API location https://thongtindoanhnghiep.co/rest-api
 -res \
 { \
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": boolen,\
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": string,\
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user": obj User\
 }
