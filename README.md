@@ -1,6 +1,7 @@
 # Api Ciname
 Api server https://server-api-cinema.herokuapp.com/ \
-Api location https://thongtindoanhnghiep.co/rest-api 
+Api location https://thongtindoanhnghiep.co/rest-api \
+API geolocation https://opencagedata.com/api
 ## `Index`
 - [Auth](#auth)
 ## `Auth`
