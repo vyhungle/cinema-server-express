@@ -56,7 +56,7 @@ router.post("/register", async (req, res) => {
   } = req.body;
 
   const geo = await getGeoLocation(
-    `${address.street}, ${address.ward}, ${address.district}, ${address.city}.`
+    `${address.street}, ${address.ward}, ${address.district}, ${address.city}`
   );
   const { lat, lng } = geo.data.results[0].geometry;
 
@@ -157,8 +157,11 @@ router.post("/login", async (req, res) => {
             password: undefined,
             profile: {
               ...user._doc.profile,
-              lat: undefined,
-              lng: undefined,
+              address: {
+                ...user._doc.profile.address,
+                lat: undefined,
+                lng: undefined,
+              },
             },
           },
         },
