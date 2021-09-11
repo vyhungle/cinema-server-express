@@ -1,10 +1,10 @@
 # Api Ciname
 Api server https://server-api-cinema.herokuapp.com/ \
 API geolocation https://opencagedata.com/api \
-Api location: \
+Api location:
 - get city https://provinces.open-api.vn/api/p
-- get districts https://provinces.open-api.vn/api/p/{city code}?depth=2
-- get wards https://provinces.open-api.vn/api/d/{district code}?depth=2
+- get districts https://provinces.open-api.vn/api/p/{ city code }?depth=2
+- get wards https://provinces.open-api.vn/api/d/{ district code }?depth=2
 ## `Index`
 - [Auth](#auth)
 ## `Auth`
