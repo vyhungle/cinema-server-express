@@ -20,7 +20,12 @@ Api location:
               "dateOfBirth": string,
               "hobby": string,
               "male": boolean,
-              "address": string
+              "address": {
+                   "city": string,
+                  "district": string,
+                  "ward": string,
+                  "street": string
+              }
         }
         "createdAt": string
       }
