@@ -3,8 +3,8 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-    "email":"vyhungles@gmail.com",
-    "phoneNumber":"0983781940",
+    "email":"vyhungless@gmail.com",
+    "phoneNumber":"0983781952",
     "password":"vykt2000",
     "confirmPassword":"vykt2000",
     "fullName":"Lê Nguyễn Hùng Vỹ",
@@ -30,3 +30,12 @@ Content-Type: application/json
 GET http://localhost:4000/api/auth/me
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzM2NGUxNTkwYWI1NDQ0MGUxMzQ1NCIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzA4MjIyMDUsImV4cCI6MTYzMjAzMTgwNX0.lQBc9CfSMvLSiuvmaDhqSoBpoIdGmdScm51H-FcDJWk
+
+
+### send otp
+POST http://localhost:4000/api/otp/send
+Content-Type: application/json
+
+{
+    "phoneNumber":"0993783942"
+}

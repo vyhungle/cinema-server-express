@@ -3,7 +3,8 @@ import cors from "cors";
 import http from "http";
 
 import { ConnectionMongoDB } from "./config/mongodb";
-import authRouter from './routers/auth'
+import authRouter from "./routers/auth";
+import otpRouter from "./routers/otp";
 
 require("dotenv").config();
 const app = express();
@@ -15,6 +16,7 @@ app.set("json spaces", 2);
 
 //Router
 app.use("/api/auth", authRouter);
+app.use("/api/otp", otpRouter);
 
 //Connect db
 ConnectionMongoDB();

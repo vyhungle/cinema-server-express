@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { ValidateLoginInput, ValidateRegisterInput } from "../utils/validators";
 import User from "../models/User";
 import verifyToken from "../middleware/auth";
+import { getGeoLocation } from "../api/geolocation";
 
 function generateToken(user) {
   return jwt.sign(
@@ -53,6 +54,12 @@ router.post("/register", async (req, res) => {
     dateOfBirth,
     address,
   } = req.body;
+
+  const geo = await getGeoLocation(
+    `${address.street}, ${address.ward}, ${address.district}, ${address.city}.`
+  );
+  const { lat, lng } = geo.data.results[0].geometry;
+
   const checkEmail = await User.findOne({ email: email });
   const checkPhone = await User.findOne({ phoneNumber: phoneNumber });
 
@@ -84,7 +91,7 @@ router.post("/register", async (req, res) => {
       profile: {
         fullName,
         dateOfBirth,
-        address: `${address.street}, ${address.ward}, ${address.district}, ${address.city}.`,
+        address: { ...address, lat, lng },
       },
       createdAt: new Date().toISOString(),
     });
@@ -98,6 +105,10 @@ router.post("/register", async (req, res) => {
         user: {
           ...newUser._doc,
           password: undefined,
+          profile: {
+            ...newUser._doc.profile,
+            address,
+          },
         },
       },
     });
@@ -144,6 +155,11 @@ router.post("/login", async (req, res) => {
           user: {
             ...user._doc,
             password: undefined,
+            profile: {
+              ...user._doc.profile,
+              lat: undefined,
+              lng: undefined,
+            },
           },
         },
       });

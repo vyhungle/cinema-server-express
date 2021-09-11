@@ -21,8 +21,14 @@ const userSchema = new Schema({
     dateOfBirth: String,
     hobby: String,
     male: Boolean,
-    imageCover: String,
-    address: String,
+    address: {
+      city: String,
+      district: String,
+      ward: String,
+      street: String,
+      lat: String,
+      lng: String,
+    },
   },
   createdAt: {
     type: String,
