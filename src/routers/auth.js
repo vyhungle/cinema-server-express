@@ -55,11 +55,6 @@ router.post("/register", async (req, res) => {
     address,
   } = req.body;
 
-  const geo = await getGeoLocation(
-    `${address.street}, ${address.ward}, ${address.district}, ${address.city}`
-  );
-  const { lat, lng } = geo.data.results[0].geometry;
-
   const checkEmail = await User.findOne({ email: email });
   const checkPhone = await User.findOne({ phoneNumber: phoneNumber });
 
@@ -83,6 +78,10 @@ router.post("/register", async (req, res) => {
       errors: errors,
     });
   } else {
+    const geo = await getGeoLocation(
+      `${address.street}, ${address.ward}, ${address.district}, ${address.city}`
+    );
+    const { lat, lng } = geo.data.results[0].geometry;
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       email,
