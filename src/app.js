@@ -11,12 +11,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.set("json spaces", 2);
 
 //Router
