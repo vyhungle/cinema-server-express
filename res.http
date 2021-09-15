@@ -22,14 +22,14 @@ POST http://localhost:4000/api/auth/login
 Content-Type: application/json
 
 {
-    "username":"0983781952",    
+    "username":"0983782942",    
     "password":"vykt2000"
 }
 
 ### get my user
 GET http://localhost:4000/api/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzM2NGUxNTkwYWI1NDQ0MGUxMzQ1NCIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzA4MjIyMDUsImV4cCI6MTYzMjAzMTgwNX0.lQBc9CfSMvLSiuvmaDhqSoBpoIdGmdScm51H-FcDJWk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4NzM2YWE4MjY4NDE0ODFiMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzE3MDk3NTYsImV4cCI6MTYzMjkxOTM1Nn0.r_ypgz-r67R6Vxq7-UrE7nYWuZNZ4DOZYYF7wlC5nvE
 
 
 ### send otp
