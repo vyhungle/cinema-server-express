@@ -11,6 +11,11 @@ Api location:
 ## `Index`
 
 - [Auth](#auth)
+- [Cast](#cast)
+- [Director](#director)
+- [Producer](#producer)
+- [Language](#language)
+- [Movie](#movie)
 
 ## `Auth`
 
@@ -109,6 +114,76 @@ Api location:
         "message": string,
         "user": obj User
       }
+      
+ ## `Cast`
+
+### Modal
+
+     {
+        "_id": string,
+        "name": string,
+        "dateOfBirth": string,
+        "image": string,
+        "joinDate": string,
+        "address": string,
+        "email": string,
+        "phoneNumber": string,
+        "introduce": string,
+        "male": booleanm
+        "createdAt": string
+      }
+      
+ ### Tạo đạo diễn mới
+- Method post
+- https://server-api-cinema.herokuapp.com/api/cast/add
+- body
+           
+          "name":"Craig Gillespie",
+          "dateOfBirth":"9/1/1967",
+          "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+          "joinDate":"10/10/2015",
+          "address":"Sydney, New South Wales, Australia",
+          "phoneNumber":"0986521456",
+          "email":"craig@gmail.com",
+          "introduce":"",
+          "male":true
+     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "cast": obj cast
+          }
+          
+  ### Lấy tất cả đạo diển
+- Method post
+- https://server-api-cinema.herokuapp.com/api/cast/all     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "casts": [obj cast]
+          }
+          
+  ### Lấy đạo diển theo id
+- Method post
+- https://server-api-cinema.herokuapp.com/api/cast/:id     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "casts": [obj cast]
+          }
+          
+## `Director`
+## `Producer`
+## `Language`
+## `Movie`
+        
+        
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
