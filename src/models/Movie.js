@@ -3,6 +3,16 @@ import { Schema, model } from "mongoose";
 const movieSchema = new Schema({
   name: String,
   moveDuration: String,
-  date: {},
+  image: String,
+  trailer: String,
+  description: String,
+  language: {
+    type: Schema.Types.ObjectId,
+    ref: "languages",
+  },
+  cast:{
+    type: Schema.Types.ObjectId,
+    ref: "casts",
+  }
 });
 module.exports = model("movies", movieSchema);
