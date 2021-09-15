@@ -83,7 +83,7 @@ router.post("/register", async (req, res) => {
       dateOfBirth
     );
     if (!valid) {
-      res.status(400).json({
+      res.json({
         success: false,
         message: "Đăng ký tài khoản",
         errors: errors,
@@ -145,7 +145,7 @@ router.post("/login", async (req, res) => {
       if (username !== "") {
         errors.username = "Thông tin tài khoản không tồn tại";
       }
-      res.status(400).json({
+      res.json({
         success: false,
         message: "Đăng nhập",
         errors: errors,
@@ -158,7 +158,7 @@ router.post("/login", async (req, res) => {
         if (password !== "") {
           errors.password = "Thông tin mật khẩu chưa chính xác";
         }
-        res.status(400).json({
+        res.json({
           success: false,
           message: "Đăng nhập",
           errors: errors,

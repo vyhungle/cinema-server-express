@@ -33,13 +33,13 @@ router.get("/all", async (req, res) => {
     if (categories) {
       return res.json({
         success: true,
-        message: "Lấy danh thể loại phim thành công",
+        message: "Lấy danh sách thể loại phim thành công",
         values: { categories },
       });
     }
     return res.status(400).json({
       success: false,
-      message: "Lấy danh thể loại phim thất bại",
+      message: "Lấy danh sách thể loại phim thất bại",
       values: { categories: [] },
     });
   } catch (error) {
