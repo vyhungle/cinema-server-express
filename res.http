@@ -39,3 +39,28 @@ Content-Type: application/json
 {
     "phoneNumber":"0993783942"
 }
+
+
+###
+POST http://localhost:4000/api/cast/add
+Content-Type: application/json
+
+{
+     "name":"Craig Gillespie",
+      "dateOfBirth":"9/1/1967",
+      "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+      "joinDate":"10/10/2015",
+      "address":"Sydney, New South Wales, Australia",
+      "phoneNumber":"0986521456",
+      "email":"craig@gmail.com",
+      "introduce":"",
+      "male":true
+}
+
+###
+GET http://localhost:4000/api/cast/all
+
+
+###
+GET http://localhost:4000/api/cast/614203ba5428a850a873bad2
+

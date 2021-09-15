@@ -1,6 +1,11 @@
-import { CloudinaryConfig } from "../config/cloudinary";
+import cloudinary from "cloudinary";
+require("dotenv").config();
 
-CloudinaryConfig();
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const addImage = async (folder, image) => {
   const result = await cloudinary.v2.uploader.upload(image, {
@@ -8,5 +13,6 @@ export const addImage = async (folder, image) => {
     public_id: "",
     folder,
   });
+  console.log(result)
   return result.url;
 };
