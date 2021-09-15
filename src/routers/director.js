@@ -1,9 +1,7 @@
 import express from "express";
 const router = express.Router();
+import Director from "../models/Director";
 
-import Cast from "../models/Cast";
-
-// Create cast
 router.post("/add", async (req, res) => {
   const {
     name,
@@ -18,7 +16,7 @@ router.post("/add", async (req, res) => {
   } = req.body;
 
   try {
-    const cast = new Cast({
+    const director = new Director({
       name,
       dateOfBirth,
       image,
@@ -29,12 +27,12 @@ router.post("/add", async (req, res) => {
       introduce,
       male,
     });
-    await cast.save();
+    await director.save();
     return res.json({
       success: true,
-      message: "Thêm đạo diển thành công",
+      message: "Thêm diễn viên thành công",
       values: {
-        cast,
+        director,
       },
     });
   } catch (error) {
@@ -48,18 +46,18 @@ router.post("/add", async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const casts = await Cast.find();
-    if (casts) {
+    const directors = await Director.find();
+    if (directors) {
       return res.json({
         success: true,
-        message: "Lấy danh sách đạo diễn thành công",
-        values: { casts },
+        message: "Lấy danh sách diễn viên thành công",
+        values: { directors },
       });
     }
     return res.status(400).json({
       success: false,
-      message: "Lấy danh sách đạo diễn thất bại",
-      values: { casts: [] },
+      message: "Lấy danh sách diễn viên thất bại",
+      values: { directors: [] },
     });
   } catch (error) {
     return res.status(500).json({
@@ -72,18 +70,18 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const cast = await Cast.findById(req.params.id);
-    if (cast) {
+    const director = await Director.findById(req.params.id);
+    if (director) {
       return res.json({
         success: true,
-        message: "Lấy đạo diễn thành công",
-        values: { cast },
+        message: "Lấy diễn viên thành công",
+        values: { director },
       });
     }
     return res.status(400).json({
       success: false,
-      message: "Lấy đạo diển thất bại",
-      values: { cast: {} },
+      message: "Lấy diễn viên thất bại",
+      values: { director: {} },
     });
   } catch (error) {
     return res.status(500).json({
@@ -92,6 +90,6 @@ router.get("/:id", async (req, res) => {
       error: error.message,
     });
   }
-}); 
+});
 
 module.exports = router;
