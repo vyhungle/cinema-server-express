@@ -7,6 +7,7 @@ import authRouter from "./routers/auth";
 import otpRouter from "./routers/otp";
 import castRouter from "./routers/cast";
 import directorRouter from "./routers/director";
+import categoryRouter from "./routers/category";
 
 require("dotenv").config();
 const app = express();
@@ -21,6 +22,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/otp", otpRouter);
 app.use("/api/cast", castRouter);
 app.use("/api/director", directorRouter);
+app.use("/api/category", categoryRouter);
 
 //Connect db
 ConnectionMongoDB();

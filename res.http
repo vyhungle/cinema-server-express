@@ -90,3 +90,21 @@ GET http://localhost:4000/api/director/all
 GET http://localhost:4000/api/director/614207275f7f1a20b40891fe
 
 
+###
+POST http://localhost:4000/api/category/add
+Content-Type: application/json
+
+{
+     "name":"Craig Gillespie",   
+    "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png"
+     
+}
+
+###
+GET http://localhost:4000/api/category/all
+
+
+###
+GET http://localhost:4000/api/category/6142088c6cb13f1f44d46cb9
+
+
