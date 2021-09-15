@@ -8,6 +8,8 @@ import otpRouter from "./routers/otp";
 import castRouter from "./routers/cast";
 import directorRouter from "./routers/director";
 import categoryRouter from "./routers/category";
+import movieRouter from "./routers/movie";
+import languageRouter from "./routers/language";
 
 require("dotenv").config();
 const app = express();
@@ -23,6 +25,8 @@ app.use("/api/otp", otpRouter);
 app.use("/api/cast", castRouter);
 app.use("/api/director", directorRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/movie", movieRouter);
+app.use("/api/language", languageRouter);
 
 //Connect db
 ConnectionMongoDB();

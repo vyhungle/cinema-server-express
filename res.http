@@ -108,3 +108,20 @@ GET http://localhost:4000/api/category/all
 GET http://localhost:4000/api/category/6142088c6cb13f1f44d46cb9
 
 
+###
+POST http://localhost:4000/api/language/add
+Content-Type: application/json
+
+{
+     "name":"Việt Nam"
+}
+
+
+###
+GET http://localhost:4000/api/language/all
+
+
+###
+GET http://localhost:4000/api/language/61421264fcc0d010bc34d3d5
+
+
