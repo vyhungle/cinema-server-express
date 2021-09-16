@@ -14,7 +14,8 @@ Api location:
 - [Cast](#cast)
 - [Director](#director)
 - [Producer](#producer)
-- [Language](#language)
+- [Category](#category)
+- [Nation](#nation)
 - [Movie](#movie)
 
 ## `Auth`
@@ -156,7 +157,7 @@ Api location:
                "cast": obj cast
           }
           
-  ### Lấy tất cả đạo diển
+  ### Lấy tất cả đạo diễn
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/all     
  - res 
@@ -167,21 +168,240 @@ Api location:
                "casts": [obj cast]
           }
           
-  ### Lấy đạo diển theo id
+  ### Lấy đạo diễn theo id
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/:id     
+- res 
+
+          "success": boolean,
+          "message": string,
+          "values": {
+               "cast": obj cast
+          }
+
+## `Director`
+
+### Modal
+
+     {
+        "_id": string,
+        "name": string,
+        "dateOfBirth": string,
+        "image": string,
+        "joinDate": string,
+        "address": string,
+        "email": string,
+        "phoneNumber": string,
+        "introduce": string,
+        "male": booleanm
+        "createdAt": string
+      }
+      
+ ### Tạo diễn viên mới
+- Method post
+- https://server-api-cinema.herokuapp.com/api/director/add
+- body
+           
+          "name":"Craig Gillespie",
+          "dateOfBirth":"9/1/1967",
+          "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+          "joinDate":"10/10/2015",
+          "address":"Sydney, New South Wales, Australia",
+          "phoneNumber":"0986521456",
+          "email":"craig@gmail.com",
+          "introduce":"",
+          "male":true
+     
  - res 
  
           "success": boolean,
           "message": string,
           "values": {
-               "casts": [obj cast]
+               "director": obj director
           }
           
-## `Director`
+  ### Lấy tất cả diễn viên
+- Method post
+- https://server-api-cinema.herokuapp.com/api/director/all     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "directors": [obj director]
+          }
+          
+  ### Lấy diễn viên theo id
+- Method post
+- https://server-api-cinema.herokuapp.com/api/director/:id     
+- res 
+
+          "success": boolean,
+          "message": string,
+          "values": {
+               "director": obj director
+          }
+
 ## `Producer`
-## `Language`
+### Modal
+
+     {
+          "_id": string,
+          "name": string,
+          "address": string,
+          "phoneNumber": string,
+          ""email: string,
+      }
+      
+      
+## `Category`
+### Modal
+
+     {
+          "_id": string,
+          "name": string,
+          "image": string,
+     }
+
+### Tạo thể loại mới
+- Method post
+- https://server-api-cinema.herokuapp.com/api/category/add
+- body
+           
+          "name":"Việt Nam"
+     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "category": obj category
+          }
+          
+  ### Lấy tất cả thể loại
+- Method post
+- https://server-api-cinema.herokuapp.com/api/category/all     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "categories": [obj categories]
+          }
+          
+  ### Lấy thể loại theo id
+- Method post
+- https://server-api-cinema.herokuapp.com/api/category/:id     
+- res 
+
+          "success": boolean,
+          "message": string,
+          "values": {
+               "category": obj category
+          }
+      
+## `Nation`
+### Modal
+
+     {
+          "_id": string,
+          "name": string,
+     }
+
+### Tạo quốc gia mới
+- Method post
+- https://server-api-cinema.herokuapp.com/api/nation/add
+- body
+           
+          "name":"Việt Nam"
+     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "nation": obj nation
+          }
+          
+  ### Lấy tất cả quốc gia
+- Method post
+- https://server-api-cinema.herokuapp.com/api/nation/all     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "nations": [obj nations]
+          }
+          
+  ### Lấy quốc gia theo id
+- Method post
+- https://server-api-cinema.herokuapp.com/api/nation/:id     
+- res 
+
+          "success": boolean,
+          "message": string,
+          "values": {
+               "nation": obj nation
+          }
+
 ## `Movie`
+### Modal
+
+     {
+          "_id": string,
+          "name": String,
+          "moveDuration": String,
+          "image": String,
+          "trailer": String,
+          "description": String,
+          "nation": string (_id nation),
+          "cast": string (_id cast)
+     }
+
+### Tạo phim mới
+- Method post
+- https://server-api-cinema.herokuapp.com/api/movie/add
+- body
+           
+          "name":"CRUELLA",
+          "moveDuration":"120",
+          "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
+          "trailer":"https://youtu.be/gmRKv7n2If8",
+          "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
+          "nation":"61421264fcc0d010bc34d3d5",
+          "cast":"614203ba5428a850a873bad2"
+     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "movie": obj movie
+          }
+          
+  ### Lấy tất cả phim
+- Method post
+- https://server-api-cinema.herokuapp.com/api/movie/all     
+ - res 
+ 
+          "success": boolean,
+          "message": string,
+          "values": {
+               "movies": [obj movies]
+          }
+          
+  ### Lấy phim theo id
+- Method post
+- https://server-api-cinema.herokuapp.com/api/movie/:id     
+- res 
+
+          "success": boolean,
+          "message": string,
+          "values": {
+               "movie": obj movie
+          }
+
         
         
 
