@@ -1,20 +1,20 @@
 import express from "express";
 const router = express.Router();
-import Language from "../models/Language";
+import Nation from "../models/Nation";
 
 router.post("/add", async (req, res) => {
   const { name } = req.body;
 
   try {
-    const language = new Language({
+    const nation = new Nation({
       name,
     });
-    await language.save();
+    await nation.save();
     return res.json({
       success: true,
       message: "Thêm quốc gia thành công",
       values: {
-        language,
+        nation,
       },
     });
   } catch (error) {
@@ -28,12 +28,12 @@ router.post("/add", async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const languages = await Language.find();
-    if (languages) {
+    const nations = await Nation.find();
+    if (nations) {
       return res.json({
         success: true,
         message: "Lấy danh sách quốc gia thành công",
-        values: { languages },
+        values: { nations },
       });
     }
     return res.status(400).json({
@@ -52,18 +52,18 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const language = await Language.findById(req.params.id);
-    if (language) {
+    const nation = await Nation.findById(req.params.id);
+    if (nation) {
       return res.json({
         success: true,
         message: "Lấy quốc gia thành công",
-        values: { language },
+        values: { nation },
       });
     }
     return res.status(400).json({
       success: false,
       message: "Lấy quốc gia thất bại",
-      values: { language: {} },
+      values: { nation: {} },
     });
   } catch (error) {
     return res.status(500).json({

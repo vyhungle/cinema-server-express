@@ -3,7 +3,7 @@ const router = express.Router();
 import Movie from "../models/Movie";
 
 router.post("/add", async (req, res) => {
-  const { name, moveDuration, image, trailer, description, language, cast } =
+  const { name, moveDuration, image, trailer, description, nation, cast } =
     req.body;
 
   try {
@@ -13,7 +13,7 @@ router.post("/add", async (req, res) => {
       image,
       trailer,
       description,
-      language,
+      nation,
       cast,
     });
     await movie.save();

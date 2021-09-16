@@ -9,7 +9,7 @@ import castRouter from "./routers/cast";
 import directorRouter from "./routers/director";
 import categoryRouter from "./routers/category";
 import movieRouter from "./routers/movie";
-import languageRouter from "./routers/language";
+import nationRouter from "./routers/nation";
 
 require("dotenv").config();
 const app = express();
@@ -31,7 +31,7 @@ app.use("/api/cast", castRouter);
 app.use("/api/director", directorRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/movie", movieRouter);
-app.use("/api/language", languageRouter);
+app.use("/api/nation", nationRouter);
 
 //Connect db
 ConnectionMongoDB();

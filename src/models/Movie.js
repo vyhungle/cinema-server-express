@@ -6,9 +6,9 @@ const movieSchema = new Schema({
   image: String,
   trailer: String,
   description: String,
-  language: {
+  nation: {
     type: Schema.Types.ObjectId,
-    ref: "languages",
+    ref: "nations",
   },
   cast:{
     type: Schema.Types.ObjectId,
