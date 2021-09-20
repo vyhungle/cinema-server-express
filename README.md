@@ -10,6 +10,7 @@ Api location:
 
 ## `Index`
 
+- [Cienma](#cinema)
 - [Auth](#auth)
 - [Cast](#cast)
 - [Director](#director)
@@ -17,6 +18,136 @@ Api location:
 - [Category](#category)
 - [Nation](#nation)
 - [Movie](#movie)
+
+
+## `Cinema`
+
+### Modal
+
+     {
+          "_id": string,
+          name: String,
+          address: {
+               city: String,
+               district: String,
+               ward: String,
+               street: String,
+               lat: String,
+               lng: String,
+          },
+          createdAt: {
+               type: String,
+               default: new Date().toISOString(),
+          },
+      }
+
+### Thêm rạp phim mới
+
+- Method post
+- https://server-api-cinema.herokuapp.com/api/cinema/add
+- Content-Type: application/json
+- body
+
+      {
+          "name":"CGV IMC Trần Quang Khải",
+          "address":{
+               "city":"Tp. Hồ Chí Minh",
+               "district":" Q. 1",
+               "ward":"P. Tân Định",
+               "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+          }
+      }
+
+- res 
+
+      {
+          "success": boolen,
+          "message": string,
+
+          "values": {
+               "cinema": obj cinema,
+          }
+          "errors": {tên field: string...}
+      }
+
+### Chỉnh sửa rạp phim
+- Method put
+- https://server-api-cinema.herokuapp.com/api/update/:id
+- Content-Type: application/json
+- body
+
+      {
+          "name":"CGV IMC Trần Quang Khải",
+          "address":{
+               "city":"Tp. Hồ Chí Minh",
+               "district":" Q. 1",
+               "ward":"P. Tân Định",
+               "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+          }
+      }
+
+- res 
+
+      {
+          "success": boolen,
+          "message": string,
+
+          "values": {
+               "cinema": obj cinema,
+          }
+          "errors": {tên field: string...}
+      }
+
+### Xóa rạp phim
+
+- Method delete
+- https://server-api-cinema.herokuapp.com/api/cinema/delete/:id
+- Content-Type: application/json
+- res
+
+      {
+          "success": boolen,
+          "message": string,
+
+          "values": {
+               "cinema": obj cinema,
+          }
+          "errors": ""
+      }
+      
+### Lấy danh sách rạp phim
+- Method get
+- https://server-api-cinema.herokuapp.com/api/cinema/all
+- Content-Type: application/json
+- res
+
+      {
+          "success": boolen,
+          "message": string,
+
+          "values": {
+               "cinemas": [obj cinema],
+          }
+          "errors": ""
+      }
+      
+### Lấy rạp phim theo id
+- Method get
+- https://server-api-cinema.herokuapp.com/api/cinema/:id
+- Content-Type: application/json
+- res
+
+      {
+          "success": boolen,
+          "message": string,
+
+          "values": {
+               "cinema": obj cinema,
+          }
+          "errors": ""
+      }
+ 
+
 
 ## `Auth`
 
