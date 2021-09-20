@@ -355,8 +355,8 @@ Api location:
           "image": String,
           "trailer": String,
           "description": String,
-          "nation": string (_id nation),
-          "cast": string (_id cast)
+          "nation": obj nation,
+          "cast": obj cast
      }
 
 ### Tạo phim mới
@@ -369,8 +369,8 @@ Api location:
           "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
           "trailer":"https://youtu.be/gmRKv7n2If8",
           "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
-          "nation":"61421264fcc0d010bc34d3d5",
-          "cast":"614203ba5428a850a873bad2"
+          "nation":"61421264fcc0d010bc34d3d5" (_id nation),
+          "cast":"614203ba5428a850a873bad2" (_id cast)
      
  - res 
  
