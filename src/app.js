@@ -10,6 +10,7 @@ import directorRouter from "./routers/director";
 import categoryRouter from "./routers/category";
 import movieRouter from "./routers/movie";
 import nationRouter from "./routers/nation";
+import cinemaRouter from "./routers/cinema";
 
 require("dotenv").config();
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/director", directorRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/movie", movieRouter);
 app.use("/api/nation", nationRouter);
+app.use("/api/cinema", cinemaRouter);
 
 //Connect db
 ConnectionMongoDB();

@@ -149,3 +149,45 @@ GET http://localhost:4000/api/movie/all
 GET http://localhost:4000/api/movie/61429f4b3f90f01320df6461
 
 
+
+
+### rap phim
+POST http://localhost:4000/api/cinema/add
+Content-Type: application/json
+
+{
+     "name":"CGV IMC Trần Quang Khải",
+    "address":{
+        "city":"Tp. Hồ Chí Minh",
+        "district":" Q. 1",
+        "ward":"P. Tân Định",
+        "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+    }
+}
+
+###
+GET http://localhost:4000/api/cinema/all
+
+
+###
+GET http://localhost:4000/api/cinema/6148842f0c584e382c554649
+
+
+####
+PUT http://localhost:4000/api/cinema/update/6148842f0c584e382c554649
+Content-Type: application/json
+
+{
+    "name":"CGV IMC Trần Quang Khải",
+    "address":{
+        "city":"Tp. Hồ Chí Minh",
+        "district":" Q. 1",
+        "ward":"P. Tân Định",
+        "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+    }
+}
+
+
+### delete rap phim
+DELETE http://localhost:4000/api/cinema/delete/61488c7cf4b75e3910fde933
+

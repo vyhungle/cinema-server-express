@@ -83,3 +83,25 @@ module.exports.ValidateLoginInput = (username, password) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.ValidateCinema = (name, address) => {
+  var errors = {};
+
+  if (name.trim() === "") {
+    errors.name = "Vui lòng nhập tên rạp phim";
+  }
+
+  if (address.city.trim() === "" || address.city === undefined) {
+    errors.city = "Vui lòng chọn Tỉnh/Thành phố";
+  } else if (address.district.trim() === "" || address.district === undefined) {
+    errors.district = "Vui lòng chọn Quận/Huyện";
+  } else if (address.ward.trim() === "" || address.ward === undefined) {
+    errors.ward = "Vui lòng chọn Phường/Xã";
+  } else if (address.street.trim() === "" || address.street === undefined) {
+    errors.street = "Vui lòng nhập số nhà, tên đường";
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
