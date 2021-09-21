@@ -12,6 +12,7 @@ Api location:
 
 - [Cienma](#cinema)
 - [Auth](#auth)
+- [Permission](#Permission)
 - [Staff](#staff)
 - [Cast](#cast)
 - [Director](#director)
@@ -248,6 +249,32 @@ Api location:
         "user": obj User
       }
 
+## `Permission`
+
+### Modal
+
+     {
+          "_id": string,
+          "name": String,
+          "type": string (0,1,2....)
+      }
+
+## Lấy danh sách quyền truy cập
+
+- Method GET
+- https://server-api-cinema.herokuapp.com/api/permission/all
+- Content-Type: application/json
+- res
+
+      {
+        "success": boolean,
+        "message": string,
+        "values":{
+             "permissions": [obj permission]
+        }
+        "errors": ""
+      }
+
 ## `Staff`
 
 ### Modal
@@ -392,7 +419,7 @@ Api location:
           "permissionId":"6149d3ff52d8c52050d24e3c"
       }
 
-- res 
+- res
 
       {
         "success": boolen,
@@ -409,7 +436,7 @@ Api location:
 - Method PUT
 - https://server-api-cinema.herokuapp.com/api/staff/delete/:id
 - Authorization: Bearer <token>
-- res 
+- res
 
       {
         "success": boolen,
@@ -439,21 +466,20 @@ Api location:
         "createdAt": string
       }
 
-
 ### Tạo đạo diễn mới
 
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/add
 - body
-          "name":"Craig Gillespie",
-          "dateOfBirth":"9/1/1967",
-          "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-          "joinDate":"10/10/2015",
-          "address":"Sydney, New South Wales, Australia",
-          "phoneNumber":"0986521456",
-          "email":"craig@gmail.com",
-          "introduce":"",
-          "male":true
+  "name":"Craig Gillespie",
+  "dateOfBirth":"9/1/1967",
+  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+  "joinDate":"10/10/2015",
+  "address":"Sydney, New South Wales, Australia",
+  "phoneNumber":"0986521456",
+  "email":"craig@gmail.com",
+  "introduce":"",
+  "male":true
 - res
 
          "success": boolean,
@@ -461,7 +487,6 @@ Api location:
          "values": {
               "cast": obj cast
          }
-
 
 ### Lấy tất cả đạo diễn
 
@@ -474,7 +499,6 @@ Api location:
          "values": {
               "casts": [obj cast]
          }
-
 
 ### Lấy đạo diễn theo id
 
@@ -506,21 +530,20 @@ Api location:
         "createdAt": string
       }
 
-
 ### Tạo diễn viên mới
 
 - Method post
 - https://server-api-cinema.herokuapp.com/api/director/add
 - body
-          "name":"Craig Gillespie",
-          "dateOfBirth":"9/1/1967",
-          "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-          "joinDate":"10/10/2015",
-          "address":"Sydney, New South Wales, Australia",
-          "phoneNumber":"0986521456",
-          "email":"craig@gmail.com",
-          "introduce":"",
-          "male":true
+  "name":"Craig Gillespie",
+  "dateOfBirth":"9/1/1967",
+  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+  "joinDate":"10/10/2015",
+  "address":"Sydney, New South Wales, Australia",
+  "phoneNumber":"0986521456",
+  "email":"craig@gmail.com",
+  "introduce":"",
+  "male":true
 - res
 
          "success": boolean,
@@ -528,7 +551,6 @@ Api location:
          "values": {
               "director": obj director
          }
-
 
 ### Lấy tất cả diễn viên
 
@@ -541,7 +563,6 @@ Api location:
          "values": {
               "directors": [obj director]
          }
-
 
 ### Lấy diễn viên theo id
 
@@ -567,8 +588,6 @@ Api location:
           ""email: string,
       }
 
-
-
 ## `Category`
 
 ### Modal
@@ -584,7 +603,7 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/category/add
 - body
-          "name":"Việt Nam"
+  "name":"Việt Nam"
 - res
 
          "success": boolean,
@@ -592,7 +611,6 @@ Api location:
          "values": {
               "category": obj category
          }
-
 
 ### Lấy tất cả thể loại
 
@@ -605,7 +623,6 @@ Api location:
          "values": {
               "categories": [obj categories]
          }
-
 
 ### Lấy thể loại theo id
 
@@ -633,7 +650,7 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/nation/add
 - body
-          "name":"Việt Nam"
+  "name":"Việt Nam"
 - res
 
          "success": boolean,
@@ -641,7 +658,6 @@ Api location:
          "values": {
               "nation": obj nation
          }
-
 
 ### Lấy tất cả quốc gia
 
@@ -654,7 +670,6 @@ Api location:
          "values": {
               "nations": [obj nations]
          }
-
 
 ### Lấy quốc gia theo id
 
@@ -688,13 +703,13 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/movie/add
 - body
-          "name":"CRUELLA",
-          "moveDuration":"120",
-          "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
-          "trailer":"https://youtu.be/gmRKv7n2If8",
-          "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
-          "nation":"61421264fcc0d010bc34d3d5" (_id nation),
-          "cast":"614203ba5428a850a873bad2" (_id cast)
+  "name":"CRUELLA",
+  "moveDuration":"120",
+  "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
+  "trailer":"https://youtu.be/gmRKv7n2If8",
+  "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
+  "nation":"61421264fcc0d010bc34d3d5" (\_id nation),
+  "cast":"614203ba5428a850a873bad2" (\_id cast)
 - res
 
          "success": boolean,
@@ -702,7 +717,6 @@ Api location:
          "values": {
               "movie": obj movie
          }
-
 
 ### Lấy tất cả phim
 
@@ -716,7 +730,6 @@ Api location:
               "movies": [obj movies]
          }
 
-
 ### Lấy phim theo id
 
 - Method post
@@ -728,9 +741,6 @@ Api location:
           "values": {
                "movie": obj movie
           }
-
-
-
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
