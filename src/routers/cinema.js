@@ -84,7 +84,7 @@ router.get("/:id", async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Lấy rạp phim thất bại",
-      values: { cinema: {} },
+      error: "id tào lao",
     });
   } catch (error) {
     return res.status(500).json({

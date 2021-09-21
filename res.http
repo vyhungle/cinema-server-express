@@ -156,7 +156,7 @@ POST http://localhost:4000/api/cinema/add
 Content-Type: application/json
 
 {
-     "name":"CGV IMC Trần Quang Khải",
+    "name":"CGV IMC Trần Quang Khải",
     "address":{
         "city":"Tp. Hồ Chí Minh",
         "district":" Q. 1",
@@ -170,7 +170,7 @@ GET http://localhost:4000/api/cinema/all
 
 
 ###
-GET http://localhost:4000/api/cinema/6148842f0c584e382c554649
+GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
 
 
 ####
@@ -191,3 +191,76 @@ Content-Type: application/json
 ### delete rap phim
 DELETE http://localhost:4000/api/cinema/delete/61488c7cf4b75e3910fde933
 
+
+
+###
+POST http://localhost:4000/api/permission/add
+Content-Type: application/json
+
+{
+    "name":"Nhân viên",
+    "type":"2"
+}
+
+###
+GET http://localhost:4000/api/permission/all
+
+
+###
+GET http://localhost:4000/api/permission/6149d3ff52d8c52050d24e3c
+
+
+###
+DELETE http://localhost:4000/api/permission/delete/6149d4db9c68673610441a59
+
+
+### Thêm nhân viên
+POST http://localhost:4000/api/staff/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIyMzM5NjMsImV4cCI6MTYzMzQ0MzU2M30.eQfNJrqIRNtQWSBJF25dGtdnY4fJQ-m6dQw_xl9xXro
+
+{
+    "email":"26112000@gmail.com",
+    "phoneNumber":"0983782941",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "male":true,
+    "dateOfBirth":"11/26/2000",
+    "permissionId":"6149d3ff52d8c52050d24e3c"
+}
+
+#### Đăng nhập
+POST http://localhost:4000/api/staff/login
+Content-Type: application/json
+
+{
+    "username":"0983782942",    
+    "password":"123456"
+}
+
+### get my user
+GET http://localhost:4000/api/staff/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJ0eXBlIjoiMCIsImlhdCI6MTYzMjIzMTIxMSwiZXhwIjoxNjMzNDQwODExfQ.q1xLOf9YIoG-FArZDTk-UVXOF0EtKtN2gNFHvAeUZx8
+
+### Thêm nhân viên
+PUT http://localhost:4000/api/staff/update/6149de3533eba936405b08a3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjIiLCJpYXQiOjE2MzIyMzM1MjcsImV4cCI6MTYzMzQ0MzEyN30.tEnNGXnm8dy6TJVheatFxYILXS4hW3YJVybJ06jTAmw
+
+{
+    "email":"admin@gmail.com",
+    "phoneNumber":"0983782942",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "male":true,
+    "dateOfBirth":"11/26/2000",
+    "permissionId":"6149d3ff52d8c52050d24e3c"
+}
+
+####
+DELETE http://localhost:4000/api/staff/delete/6149e9f9a530c64ba4ab5e40
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIyMzM5NjMsImV4cCI6MTYzMzQ0MzU2M30.eQfNJrqIRNtQWSBJF25dGtdnY4fJQ-m6dQw_xl9xXro
+
+
+###
+GET http://localhost:4000/api/staff/6149de3533eba936405b08a3

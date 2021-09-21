@@ -105,3 +105,52 @@ module.exports.ValidateCinema = (name, address) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.ValidateStaff = (
+  email,
+  fullName,
+  phoneNumber,
+  male,
+  isEmail,
+  isPhone,
+  permissionId
+) => {
+  var errors = {};
+  const regEx =
+    /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+  const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+
+  if (fullName.trim() === "") {
+    errors.fullName = "Vui lòng nhập họ tên của nhân viên";
+  } else if (fullName.trim().length < 5) {
+    errors.fullName = "Tên không hợp lệ";
+  }
+
+  if (email.trim() === "") {
+    errors.email = "Vui lòng nhập email của nhân viên";
+  } else if (!email.match(regEx)) {
+    errors.email = "Email phải là một địa chỉ email hợp lệ";
+  } else if (isEmail) {
+    errors.email = "Email này đã tồn tại";
+  }
+
+  if (phoneNumber.trim() === "") {
+    errors.phoneNumber = "Vui lòng nhập số điện thoại";
+  } else if (!phoneNumber.match(vnf_regex)) {
+    errors.phoneNumber = "Số điện thoại phải là số điện thoại hợp lệ";
+  } else if (isPhone) {
+    errors.phoneNumber = "Số điện thoại này đã tồn tại";
+  }
+
+  if (typeof male !== "boolean" || male === undefined) {
+    errors.male = "Vui lòng chọn giới tính của nhân viên";
+  }
+
+  if (permissionId.trim() === "") {
+    errors.permission = "Vui lòng chọn quyền truy cập của nhân viên";
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
