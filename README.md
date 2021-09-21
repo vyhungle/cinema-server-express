@@ -259,7 +259,7 @@ Api location:
           "type": string (0,1,2....)
       }
 
-## Lấy danh sách quyền truy cập
+### Lấy danh sách quyền truy cập
 
 - Method GET
 - https://server-api-cinema.herokuapp.com/api/permission/all
