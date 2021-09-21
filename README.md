@@ -433,7 +433,7 @@ Api location:
 
 ### Xóa nhân viên (tài khoảng thêm có type = 0 và 1 mới được xóa)
 
-- Method PUT
+- Method DELETE
 - https://server-api-cinema.herokuapp.com/api/staff/delete/:id
 - Authorization: Bearer <token>
 - res
