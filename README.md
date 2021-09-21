@@ -471,15 +471,16 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/add
 - body
-  "name":"Craig Gillespie",
-  "dateOfBirth":"9/1/1967",
-  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-  "joinDate":"10/10/2015",
-  "address":"Sydney, New South Wales, Australia",
-  "phoneNumber":"0986521456",
-  "email":"craig@gmail.com",
-  "introduce":"",
-  "male":true
+     
+       "name":"Craig Gillespie",
+       "dateOfBirth":"9/1/1967",
+       "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+       "joinDate":"10/10/2015",
+       "address":"Sydney, New South Wales, Australia",
+       "phoneNumber":"0986521456",
+       "email":"craig@gmail.com",
+       "introduce":"",
+       "male":true
 - res
 
          "success": boolean,
@@ -535,15 +536,16 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/director/add
 - body
-  "name":"Craig Gillespie",
-  "dateOfBirth":"9/1/1967",
-  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-  "joinDate":"10/10/2015",
-  "address":"Sydney, New South Wales, Australia",
-  "phoneNumber":"0986521456",
-  "email":"craig@gmail.com",
-  "introduce":"",
-  "male":true
+  
+       "name":"Craig Gillespie",
+       "dateOfBirth":"9/1/1967",
+       "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+       "joinDate":"10/10/2015",
+       "address":"Sydney, New South Wales, Australia",
+       "phoneNumber":"0986521456",
+       "email":"craig@gmail.com",
+       "introduce":"",
+       "male":true
 - res
 
          "success": boolean,
