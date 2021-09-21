@@ -12,13 +12,13 @@ Api location:
 
 - [Cienma](#cinema)
 - [Auth](#auth)
+- [Staff](#staff)
 - [Cast](#cast)
 - [Director](#director)
 - [Producer](#producer)
 - [Category](#category)
 - [Nation](#nation)
 - [Movie](#movie)
-
 
 ## `Cinema`
 
@@ -58,7 +58,7 @@ Api location:
           }
       }
 
-- res 
+- res
 
       {
           "success": boolen,
@@ -71,6 +71,7 @@ Api location:
       }
 
 ### Chỉnh sửa rạp phim
+
 - Method put
 - https://server-api-cinema.herokuapp.com/api/update/:id
 - Content-Type: application/json
@@ -86,7 +87,7 @@ Api location:
           }
       }
 
-- res 
+- res
 
       {
           "success": boolen,
@@ -114,8 +115,9 @@ Api location:
           }
           "errors": ""
       }
-      
+
 ### Lấy danh sách rạp phim
+
 - Method get
 - https://server-api-cinema.herokuapp.com/api/cinema/all
 - Content-Type: application/json
@@ -130,8 +132,9 @@ Api location:
           }
           "errors": ""
       }
-      
+
 ### Lấy rạp phim theo id
+
 - Method get
 - https://server-api-cinema.herokuapp.com/api/cinema/:id
 - Content-Type: application/json
@@ -146,8 +149,6 @@ Api location:
           }
           "errors": ""
       }
- 
-
 
 ## `Auth`
 
@@ -246,8 +247,181 @@ Api location:
         "message": string,
         "user": obj User
       }
-      
- ## `Cast`
+
+## `Staff`
+
+### Modal
+
+     {
+        "_id": string,
+        "email": string,
+        "phoneNumber": string,
+        "profile": {
+               "fullName": String,
+               "avatar": String,
+               "dateOfBirth": String,
+               "male": Boolean,
+               "address": String,
+         },
+          "createdAt": string,
+          "permission": {
+               "_id": string,
+               "name": string,
+               "type": string (0,1,2,....)
+          },
+      }
+
+### Thêm nhân viên (tài khoảng thêm có type = 0 và 1 mới được thêm)
+
+- Method post
+- https://server-api-cinema.herokuapp.com/api/staff/register
+- Content-Type: application/json
+- Authorization: Bearer <token>
+- body
+
+      {
+          "email":"26112000@gmail.com",
+          "phoneNumber":"0983782941",
+          "fullName":"Lê Nguyễn Hùng Vỹ",
+          "male":true,
+          "dateOfBirth":"11/26/2000",
+          "permissionId":"6149d3ff52d8c52050d24e3c"
+      }
+
+- res (nếu đăng ký thành công trả về values, ngược lại trả về errors)
+
+      {
+        "success": boolen,
+        "message": string,
+
+        "values": {
+              "token": string,
+              "staff": obj Staff
+          }
+        "errors": {tên field: string...}
+      }
+
+### Đăng nhập
+
+- Method post
+- https://server-api-cinema.herokuapp.com/api/staff/login
+- Content-Type: application/json
+- body
+
+      {
+        "username": string(email hoặc phoneNumber),
+        "password": string,
+      }
+
+- res (nếu đăng nhập thành công trả về values, ngược lại trả về errors)
+
+      {
+        "success": boolen,
+        "message": string,
+
+        "values": {
+              "token": string,
+              "staff": obj staff
+              }
+        "errors": {tên field: string...}
+      }
+
+### Lấy thông tin của nhân viên đăng nhập
+
+- Method GET
+- https://server-api-cinema.herokuapp.com/api/staff/me
+- Content-Type: application/json
+- Authorization: Bearer <token>
+- res
+
+      {
+        "success": boolean,
+        "message": string,
+        "values":{
+             "staff": obj staff
+        }
+        "errors": ""
+      }
+
+### Lấy thông tin của nhân viên theo id
+
+- Method GET
+- https://server-api-cinema.herokuapp.com/api/staff/:id
+- Content-Type: application/json
+- res
+
+      {
+        "success": boolean,
+        "message": string,
+        "values":{
+             "staff": obj staff
+        }
+        "errors": ""
+      }
+
+### Lấy danh sách nhân viên
+
+- Method GET
+- https://server-api-cinema.herokuapp.com/api/staff/all
+- Content-Type: application/json
+- res
+
+      {
+        "success": boolean,
+        "message": string,
+        "values":{
+             "staffs": [obj staff]
+        }
+        "errors": ""
+      }
+
+### Sửa nhân viên (tài khoảng thêm có type = 0 và 1 mới được sửa)
+
+- Method PUT
+- https://server-api-cinema.herokuapp.com/api/staff/update
+- Content-Type: application/json
+- Authorization: Bearer <token>
+- body
+
+      {
+          "email":"26112000@gmail.com",
+          "phoneNumber":"0983782941",
+          "fullName":"Lê Nguyễn Hùng Vỹ",
+          "male":true,
+          "dateOfBirth":"11/26/2000",
+          "permissionId":"6149d3ff52d8c52050d24e3c"
+      }
+
+- res 
+
+      {
+        "success": boolen,
+        "message": string,
+
+        "values": {
+              "staff": obj Staff
+          }
+        "errors": ""
+      }
+
+### Xóa nhân viên (tài khoảng thêm có type = 0 và 1 mới được xóa)
+
+- Method PUT
+- https://server-api-cinema.herokuapp.com/api/staff/delete/:id
+- Authorization: Bearer <token>
+- res 
+
+      {
+        "success": boolen,
+        "message": string,
+
+        "values": {
+              "staff": obj Staff
+          }
+        "errors": ""
+      }
+
+## `Cast`
 
 ### Modal
 
@@ -264,12 +438,13 @@ Api location:
         "male": booleanm
         "createdAt": string
       }
-      
- ### Tạo đạo diễn mới
+
+
+### Tạo đạo diễn mới
+
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/add
 - body
-           
           "name":"Craig Gillespie",
           "dateOfBirth":"9/1/1967",
           "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
@@ -279,30 +454,33 @@ Api location:
           "email":"craig@gmail.com",
           "introduce":"",
           "male":true
-     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "cast": obj cast
-          }
-          
-  ### Lấy tất cả đạo diễn
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "cast": obj cast
+         }
+
+
+### Lấy tất cả đạo diễn
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/cast/all     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "casts": [obj cast]
-          }
-          
-  ### Lấy đạo diễn theo id
+- https://server-api-cinema.herokuapp.com/api/cast/all
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "casts": [obj cast]
+         }
+
+
+### Lấy đạo diễn theo id
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/cast/:id     
-- res 
+- https://server-api-cinema.herokuapp.com/api/cast/:id
+- res
 
           "success": boolean,
           "message": string,
@@ -327,12 +505,13 @@ Api location:
         "male": booleanm
         "createdAt": string
       }
-      
- ### Tạo diễn viên mới
+
+
+### Tạo diễn viên mới
+
 - Method post
 - https://server-api-cinema.herokuapp.com/api/director/add
 - body
-           
           "name":"Craig Gillespie",
           "dateOfBirth":"9/1/1967",
           "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
@@ -342,30 +521,33 @@ Api location:
           "email":"craig@gmail.com",
           "introduce":"",
           "male":true
-     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "director": obj director
-          }
-          
-  ### Lấy tất cả diễn viên
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "director": obj director
+         }
+
+
+### Lấy tất cả diễn viên
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/director/all     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "directors": [obj director]
-          }
-          
-  ### Lấy diễn viên theo id
+- https://server-api-cinema.herokuapp.com/api/director/all
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "directors": [obj director]
+         }
+
+
+### Lấy diễn viên theo id
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/director/:id     
-- res 
+- https://server-api-cinema.herokuapp.com/api/director/:id
+- res
 
           "success": boolean,
           "message": string,
@@ -374,6 +556,7 @@ Api location:
           }
 
 ## `Producer`
+
 ### Modal
 
      {
@@ -383,9 +566,11 @@ Api location:
           "phoneNumber": string,
           ""email: string,
       }
-      
-      
+
+
+
 ## `Category`
+
 ### Modal
 
      {
@@ -395,43 +580,47 @@ Api location:
      }
 
 ### Tạo thể loại mới
+
 - Method post
 - https://server-api-cinema.herokuapp.com/api/category/add
 - body
-           
           "name":"Việt Nam"
-     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "category": obj category
-          }
-          
-  ### Lấy tất cả thể loại
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "category": obj category
+         }
+
+
+### Lấy tất cả thể loại
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/category/all     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "categories": [obj categories]
-          }
-          
-  ### Lấy thể loại theo id
+- https://server-api-cinema.herokuapp.com/api/category/all
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "categories": [obj categories]
+         }
+
+
+### Lấy thể loại theo id
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/category/:id     
-- res 
+- https://server-api-cinema.herokuapp.com/api/category/:id
+- res
 
           "success": boolean,
           "message": string,
           "values": {
                "category": obj category
           }
-      
+
 ## `Nation`
+
 ### Modal
 
      {
@@ -440,35 +629,38 @@ Api location:
      }
 
 ### Tạo quốc gia mới
+
 - Method post
 - https://server-api-cinema.herokuapp.com/api/nation/add
 - body
-           
           "name":"Việt Nam"
-     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "nation": obj nation
-          }
-          
-  ### Lấy tất cả quốc gia
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "nation": obj nation
+         }
+
+
+### Lấy tất cả quốc gia
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/nation/all     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "nations": [obj nations]
-          }
-          
-  ### Lấy quốc gia theo id
+- https://server-api-cinema.herokuapp.com/api/nation/all
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "nations": [obj nations]
+         }
+
+
+### Lấy quốc gia theo id
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/nation/:id     
-- res 
+- https://server-api-cinema.herokuapp.com/api/nation/:id
+- res
 
           "success": boolean,
           "message": string,
@@ -477,6 +669,7 @@ Api location:
           }
 
 ## `Movie`
+
 ### Modal
 
      {
@@ -491,10 +684,10 @@ Api location:
      }
 
 ### Tạo phim mới
+
 - Method post
 - https://server-api-cinema.herokuapp.com/api/movie/add
 - body
-           
           "name":"CRUELLA",
           "moveDuration":"120",
           "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
@@ -502,30 +695,33 @@ Api location:
           "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
           "nation":"61421264fcc0d010bc34d3d5" (_id nation),
           "cast":"614203ba5428a850a873bad2" (_id cast)
-     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "movie": obj movie
-          }
-          
-  ### Lấy tất cả phim
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "movie": obj movie
+         }
+
+
+### Lấy tất cả phim
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/movie/all     
- - res 
- 
-          "success": boolean,
-          "message": string,
-          "values": {
-               "movies": [obj movies]
-          }
-          
-  ### Lấy phim theo id
+- https://server-api-cinema.herokuapp.com/api/movie/all
+- res
+
+         "success": boolean,
+         "message": string,
+         "values": {
+              "movies": [obj movies]
+         }
+
+
+### Lấy phim theo id
+
 - Method post
-- https://server-api-cinema.herokuapp.com/api/movie/:id     
-- res 
+- https://server-api-cinema.herokuapp.com/api/movie/:id
+- res
 
           "success": boolean,
           "message": string,
@@ -533,8 +729,8 @@ Api location:
                "movie": obj movie
           }
 
-        
-        
+
+
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
