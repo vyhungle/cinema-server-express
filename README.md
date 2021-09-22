@@ -298,7 +298,7 @@ Api location:
           },
       }
 
-### Thêm nhân viên (tài khoảng thêm có type = 0 và 1 mới được thêm)
+### Thêm nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 
 - Method post
 - https://server-api-cinema.herokuapp.com/api/staff/register
@@ -402,8 +402,7 @@ Api location:
         "errors": ""
       }
 
-### Sửa nhân viên (tài khoảng thêm có type = 0 và 1 mới được sửa)
-
+### Sửa nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 - Method PUT
 - https://server-api-cinema.herokuapp.com/api/staff/update
 - Content-Type: application/json
@@ -431,7 +430,7 @@ Api location:
         "errors": ""
       }
 
-### Xóa nhân viên (tài khoảng thêm có type = 0 và 1 mới được xóa)
+### Xóa nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 
 - Method DELETE
 - https://server-api-cinema.herokuapp.com/api/staff/delete/:id
