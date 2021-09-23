@@ -39,10 +39,10 @@ router.post("/add", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -57,16 +57,16 @@ router.get("/all", async (req, res) => {
         values: { cinemas },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy danh sách rạp phim thất bại",
       values: { cinemas: [] },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -81,16 +81,16 @@ router.get("/:id", async (req, res) => {
         values: { cinema },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy rạp phim thất bại",
       error: "id tào lao",
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -129,10 +129,10 @@ router.put("/update/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -149,16 +149,16 @@ router.delete("/delete/:id", async (req, res) => {
         },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Xóa rạp phim thất bại",
       error: "id tào lao",
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });

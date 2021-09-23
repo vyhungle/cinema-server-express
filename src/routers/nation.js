@@ -18,10 +18,10 @@ router.post("/add", async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -36,16 +36,16 @@ router.get("/all", async (req, res) => {
         values: { nations },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy danh sách quốc gia thất bại",
       values: { languages: [] },
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -60,16 +60,16 @@ router.get("/:id", async (req, res) => {
         values: { nation },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy quốc gia thất bại",
       values: { nation: {} },
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });

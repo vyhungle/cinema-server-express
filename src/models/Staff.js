@@ -30,6 +30,10 @@ const staffSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "permissions",
   },
+  cinema: {
+    type: Schema.Types.ObjectId,
+    ref: "cinemas",
+  },
 });
 
 module.exports = model("staffs", staffSchema);

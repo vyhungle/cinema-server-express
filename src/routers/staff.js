@@ -3,7 +3,11 @@ const router = express.Router();
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import { ValidateLoginInput, ValidateStaff } from "../utils/validators";
+import {
+  ValidateLoginInput,
+  ValidateStaff,
+  ValidateChangePassword,
+} from "../utils/validators";
 import Staff from "../models/Staff";
 import verifyToken from "../middleware/staff";
 
@@ -41,9 +45,9 @@ router.get("/all", async (req, res) => {
       message: "Lấy dữ liệu thất bại",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -54,7 +58,8 @@ router.get("/get/:id", async (req, res) => {
   try {
     const staff = await Staff.findById(req.params.id)
       .select("-password")
-      .populate("permission");
+      .populate("permission")
+      .populate("cinema");
     return res.json({
       success: true,
       message: "Lấy dữ liệu thành công",
@@ -78,7 +83,8 @@ router.get("/me", verifyToken, async (req, res) => {
   try {
     const staff = await Staff.findById(req.staffId)
       .select("-password")
-      .populate("permission");
+      .populate("permission")
+      .populate("cinema");
     return res.json({
       success: true,
       message: "Lấy dữ liệu thành công",
@@ -88,9 +94,9 @@ router.get("/me", verifyToken, async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -108,6 +114,7 @@ router.post("/register", verifyToken, async (req, res) => {
     male,
     avatar,
     permissionId,
+    cinemaId,
   } = req.body;
   try {
     if (req.type < 2) {
@@ -123,7 +130,8 @@ router.post("/register", verifyToken, async (req, res) => {
         male,
         isEmail,
         isPhone,
-        permissionId
+        permissionId,
+        cinemaId
       );
       if (!valid) {
         res.json({
@@ -146,10 +154,13 @@ router.post("/register", verifyToken, async (req, res) => {
           },
           createdAt: new Date().toISOString(),
           permission: permissionId,
+          cinema: cinemaId,
         });
 
         await newStaff.save();
-        const staff = await Staff.findById(newStaff._id).populate("permission");
+        const staff = await Staff.findById(newStaff._id)
+          .populate("permission")
+          .populate("cinema");
         const token = generateToken(staff);
 
         res.json({
@@ -170,9 +181,9 @@ router.post("/register", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -183,12 +194,12 @@ router.post("/register", verifyToken, async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const checkEmail = await Staff.findOne({ email: username }).populate(
-      "permission"
-    );
-    const checkPhone = await Staff.findOne({ phoneNumber: username }).populate(
-      "permission"
-    );
+    const checkEmail = await Staff.findOne({ email: username })
+      .populate("permission")
+      .populate("cinema");
+    const checkPhone = await Staff.findOne({ phoneNumber: username })
+      .populate("permission")
+      .populate("cinema");
     const { valid, errors } = ValidateLoginInput(username, password);
     if (!checkEmail && !checkPhone) {
       if (username !== "") {
@@ -228,9 +239,9 @@ router.post("/login", async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -252,6 +263,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
         male,
         avatar,
         permissionId,
+        cinemaId,
       } = req.body;
       let isEmail = false;
       let isPhone = false;
@@ -272,7 +284,8 @@ router.put("/update/:id", verifyToken, async (req, res) => {
           male,
           isEmail,
           isPhone,
-          permissionId
+          permissionId,
+          cinemaId
         );
         if (!valid) {
           return res.json({
@@ -283,7 +296,8 @@ router.put("/update/:id", verifyToken, async (req, res) => {
         } else {
           oldStaff.email = email;
           oldStaff.phoneNumber = phoneNumber;
-          oldStaff.permissionId = permissionId;
+          oldStaff.permission = permissionId;
+          oldStaff.cinema = cinemaId;
 
           oldStaff.profile.fullName = fullName;
           oldStaff.profile.male = male;
@@ -293,18 +307,23 @@ router.put("/update/:id", verifyToken, async (req, res) => {
 
           await oldStaff.save();
 
-          const staff = await Staff.findById(oldStaff._id);
+          const staff = await Staff.findById(oldStaff._id)
+            .populate("permission")
+            .populate("cinema");
 
           return res.json({
             success: true,
             message: "Sửa nhân viên thành công",
             values: {
-              staff,
+              staff: {
+                ...staff._doc,
+                password: undefined,
+              },
             },
           });
         }
       }
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Sửa nhân viên thất bại",
         errors: "Không tìm thấy nhân viên này",
@@ -315,9 +334,9 @@ router.put("/update/:id", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -338,7 +357,7 @@ router.delete("/delete/:id", verifyToken, async (req, res) => {
           },
         });
       }
-      res.status(400).json({
+      res.json({
         success: false,
         message: "Xóa nhân viên thất bại",
       });
@@ -348,9 +367,51 @@ router.delete("/delete/:id", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
+      errors: error.message,
+    });
+  }
+});
+
+router.put("/change-password", verifyToken, async (req, res) => {
+  try {
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+    const staff = await Staff.findById({ _id: req.staffId });
+    if (staff) {
+      const match = await bcrypt.compare(oldPassword, staff.password);
+      const { valid, errors } = ValidateChangePassword(
+        oldPassword,
+        newPassword,
+        confirmPassword,
+        match
+      );
+      if (!valid) {
+        return res.json({
+          success: false,
+          message: "Đổi mật không khẩu thất bại",
+          values: {
+            errors,
+          },
+        });
+      }
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
+      staff.password = hashedPassword;
+      await staff.save();
+      return res.json({
+        success: true,
+        message: "Đổi mật khẩu thành công",
+      });
+    }
+    res.json({
+      success: false,
+      message: "Không tìm thấy nhân viên này",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }

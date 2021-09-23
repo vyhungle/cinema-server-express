@@ -113,7 +113,8 @@ module.exports.ValidateStaff = (
   male,
   isEmail,
   isPhone,
-  permissionId
+  permissionId,
+  cinemaId
 ) => {
   var errors = {};
   const regEx =
@@ -148,6 +149,36 @@ module.exports.ValidateStaff = (
 
   if (permissionId.trim() === "") {
     errors.permission = "Vui lòng chọn quyền truy cập của nhân viên";
+  }
+  if (cinemaId.trim() === "") {
+    errors.cinema = "Vui lòng chọn rạp phim";
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
+module.exports.ValidateChangePassword = (
+  oldPassword,
+  newPassword,
+  confirmPassword,
+  match
+) => {
+  var errors = {};
+
+  if (oldPassword.trim() === "") {
+    errors.oldPassword = "Vui lòng nhập mật khẩu cũ";
+  } else if (!match) {
+    errors.oldPassword = "Mật khẩu cũ không chính sát";
+  }
+  if (newPassword.trim() === "") {
+    errors.newPassword = "Vui lòng nhập mật khẩu mới";
+  } else if (newPassword.trim().length < 6) {
+    errors.newPassword = "Mật khẩu phải có ít nhất 6 ký tự";
+  }
+  if (confirmPassword.trim() !== newPassword.trim()) {
+    errors.confirmPassword = "Mật khẩu xác nhận phải giống mật khẩu mới";
   }
   return {
     errors,

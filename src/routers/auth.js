@@ -44,10 +44,10 @@ router.get("/me", verifyToken, async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lấy dữ liệu thất bại",
-      error,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -124,9 +124,9 @@ router.post("/register", async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }
@@ -187,9 +187,9 @@ router.post("/login", async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
+      message: "Lỗi server 500!",
       errors: error.message,
     });
   }

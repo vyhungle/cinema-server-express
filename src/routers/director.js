@@ -36,10 +36,10 @@ router.post("/add", async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -54,16 +54,16 @@ router.get("/all", async (req, res) => {
         values: { directors },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy danh sách diễn viên thất bại",
       values: { directors: [] },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -78,16 +78,16 @@ router.get("/:id", async (req, res) => {
         values: { director },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy diễn viên thất bại",
       values: { director: {} },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });

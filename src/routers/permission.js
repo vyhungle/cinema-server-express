@@ -19,10 +19,10 @@ router.post("/add", async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
@@ -37,16 +37,16 @@ router.get("/all", async (req, res) => {
         values: { permissions },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Lấy danh sách quyền truy cập thất bại",
       error: "",
     });
   } catch (error) {
-    return res.status(500).json({
+    res.json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi server 500!",
+      errors: error.message,
     });
   }
 });
