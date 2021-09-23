@@ -259,7 +259,7 @@ Api location:
           "type": string (0,1,2....)
       }
 
-## Lấy danh sách quyền truy cập
+### Lấy danh sách quyền truy cập
 
 - Method GET
 - https://server-api-cinema.herokuapp.com/api/permission/all
@@ -298,7 +298,7 @@ Api location:
           },
       }
 
-### Thêm nhân viên (tài khoảng thêm có type = 0 và 1 mới được thêm)
+### Thêm nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 
 - Method post
 - https://server-api-cinema.herokuapp.com/api/staff/register
@@ -402,8 +402,7 @@ Api location:
         "errors": ""
       }
 
-### Sửa nhân viên (tài khoảng thêm có type = 0 và 1 mới được sửa)
-
+### Sửa nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 - Method PUT
 - https://server-api-cinema.herokuapp.com/api/staff/update
 - Content-Type: application/json
@@ -431,9 +430,9 @@ Api location:
         "errors": ""
       }
 
-### Xóa nhân viên (tài khoảng thêm có type = 0 và 1 mới được xóa)
+### Xóa nhân viên ( type = 0 và 1 mới có quyền thoa tác )
 
-- Method PUT
+- Method DELETE
 - https://server-api-cinema.herokuapp.com/api/staff/delete/:id
 - Authorization: Bearer <token>
 - res
@@ -471,15 +470,16 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/cast/add
 - body
-  "name":"Craig Gillespie",
-  "dateOfBirth":"9/1/1967",
-  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-  "joinDate":"10/10/2015",
-  "address":"Sydney, New South Wales, Australia",
-  "phoneNumber":"0986521456",
-  "email":"craig@gmail.com",
-  "introduce":"",
-  "male":true
+     
+       "name":"Craig Gillespie",
+       "dateOfBirth":"9/1/1967",
+       "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+       "joinDate":"10/10/2015",
+       "address":"Sydney, New South Wales, Australia",
+       "phoneNumber":"0986521456",
+       "email":"craig@gmail.com",
+       "introduce":"",
+       "male":true
 - res
 
          "success": boolean,
@@ -535,15 +535,16 @@ Api location:
 - Method post
 - https://server-api-cinema.herokuapp.com/api/director/add
 - body
-  "name":"Craig Gillespie",
-  "dateOfBirth":"9/1/1967",
-  "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
-  "joinDate":"10/10/2015",
-  "address":"Sydney, New South Wales, Australia",
-  "phoneNumber":"0986521456",
-  "email":"craig@gmail.com",
-  "introduce":"",
-  "male":true
+  
+       "name":"Craig Gillespie",
+       "dateOfBirth":"9/1/1967",
+       "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+       "joinDate":"10/10/2015",
+       "address":"Sydney, New South Wales, Australia",
+       "phoneNumber":"0986521456",
+       "email":"craig@gmail.com",
+       "introduce":"",
+       "male":true
 - res
 
          "success": boolean,
