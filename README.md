@@ -296,6 +296,7 @@ Api location:
                "name": string,
                "type": string (0,1,2,....)
           },
+          "cinema": obj cinema
       }
 
 ### Thêm nhân viên ( type = 0 và 1 mới có quyền thoa tác )
@@ -313,6 +314,7 @@ Api location:
           "male":true,
           "dateOfBirth":"11/26/2000",
           "permissionId":"6149d3ff52d8c52050d24e3c"
+          "cinemaId":"614c03db576b5d00376801a6"
       }
 
 - res (nếu đăng ký thành công trả về values, ngược lại trả về errors)
@@ -446,7 +448,24 @@ Api location:
           }
         "errors": ""
       }
+### Đổi mật khẩu
+- Method PUT
+- https://server-api-cinema.herokuapp.com/api/staff/change-password
+- Authorization: Bearer <token>
+- body
+     
+      {
+         "oldPassword": "vykt@2000",
+         "newPassword": "123456",
+         "confirmPassword": "123456"
+      }
+- res
 
+      {
+        "success": boolen,
+        "message": string,
+        "errors": {fleld....}
+      }
 ## `Cast`
 
 ### Modal
