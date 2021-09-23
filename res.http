@@ -159,9 +159,9 @@ Content-Type: application/json
     "name":"CGV IMC Trần Quang Khải",
     "address":{
         "city":"Tp. Hồ Chí Minh",
-        "district":" Q. 1",
-        "ward":"P. Tân Định",
-        "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+        "district":" Q.1",
+        "ward":"Bến Nghé",
+        "street":"116 Nguyễn Du"
     }
 }
 
@@ -240,7 +240,8 @@ Content-Type: application/json
 ### get my user
 GET http://localhost:4000/api/staff/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJ0eXBlIjoiMCIsImlhdCI6MTYzMjIzMTIxMSwiZXhwIjoxNjMzNDQwODExfQ.q1xLOf9YIoG-FArZDTk-UVXOF0EtKtN2gNFHvAeUZx8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIzOTc5NjIsImV4cCI6MTYzMzYwNzU2Mn0.K2uMCFmelqsXhezRJEyvp305yb3EVkN4blQPhRT5h-g
+
 
 ### Thêm nhân viên
 PUT http://localhost:4000/api/staff/update/6149de3533eba936405b08a3
@@ -263,4 +264,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1M
 
 
 ###
-GET http://localhost:4000/api/staff/6149de3533eba936405b08a3
+GET http://localhost:4000/api/staff/get/6149de3533eba936405b08a3

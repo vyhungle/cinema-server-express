@@ -50,8 +50,7 @@ router.get("/all", async (req, res) => {
 });
 
 // lấy nhân viên theo id
-
-router.get("/:id", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
     const staff = await Staff.findById(req.params.id)
       .select("-password")
