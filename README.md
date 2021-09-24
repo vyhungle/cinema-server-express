@@ -74,7 +74,7 @@ Api location:
 ### Chỉnh sửa rạp phim
 
 - Method put
-- https://server-api-cinema.herokuapp.com/api/update/:id
+- https://server-api-cinema.herokuapp.com/api/cinema/update/:id
 - Content-Type: application/json
 - body
 
