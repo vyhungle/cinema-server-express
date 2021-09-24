@@ -19,9 +19,9 @@ router.post("/add", async (req, res) => {
       },
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -43,9 +43,9 @@ router.get("/all", async (req, res) => {
       error: "",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -61,16 +61,15 @@ router.get("/:id", async (req, res) => {
         values: { permission },
       });
     }
-    return res.status(400).json({
+    return res.json({
       success: false,
-      message: "Lấy thể loại phim thất bại",
-      error: "id tào lao",
+      message: "Lấy thể loại phim thất bại, không tìm thấy id",
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi 400!",
+      errors: error.message,
     });
   }
 });
@@ -89,14 +88,13 @@ router.delete("/delete/:id", async (req, res) => {
     }
     return res.status(400).json({
       success: false,
-      message: "Xóa thể loại phim thất bại",
-      error: "id tào lao",
+      message: "Xóa thể loại phim thất bại, không tìm thấy id",
     });
   } catch (error) {
-    return res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server!",
-      error: error.message,
+      message: "Lỗi 400!",
+      errors: error.message,
     });
   }
 });

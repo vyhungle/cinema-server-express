@@ -39,9 +39,9 @@ router.post("/add", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -87,9 +87,9 @@ router.get("/:id", async (req, res) => {
       error: "id tào lao",
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -129,9 +129,9 @@ router.put("/update/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -155,9 +155,9 @@ router.delete("/delete/:id", async (req, res) => {
       error: "id tào lao",
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }

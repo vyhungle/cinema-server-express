@@ -45,9 +45,9 @@ router.get("/all", async (req, res) => {
       message: "Lấy dữ liệu thất bại",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -94,9 +94,9 @@ router.get("/me", verifyToken, async (req, res) => {
       },
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -181,9 +181,9 @@ router.post("/register", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -239,9 +239,9 @@ router.post("/login", async (req, res) => {
       }
     }
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -334,9 +334,9 @@ router.put("/update/:id", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -367,9 +367,9 @@ router.delete("/delete/:id", verifyToken, async (req, res) => {
       message: "Bạn không có quyền này",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -409,9 +409,9 @@ router.put("/change-password", verifyToken, async (req, res) => {
       message: "Không tìm thấy nhân viên này",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }

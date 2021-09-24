@@ -38,9 +38,9 @@ router.post("/add", async (req, res) => {
       },
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -62,9 +62,9 @@ router.get("/all", async (req, res) => {
       values: { casts: [] },
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -86,9 +86,9 @@ router.get("/:id", async (req, res) => {
       values: { cast: {} },
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }

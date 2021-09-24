@@ -44,9 +44,9 @@ router.get("/me", verifyToken, async (req, res) => {
       },
     });
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -124,9 +124,9 @@ router.post("/register", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
@@ -187,9 +187,9 @@ router.post("/login", async (req, res) => {
       }
     }
   } catch (error) {
-    return res.json({
+    res.status(400).json({
       success: false,
-      message: "Lỗi server 500!",
+      message: "Lỗi 400!",
       errors: error.message,
     });
   }
