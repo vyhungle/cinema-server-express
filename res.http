@@ -278,3 +278,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGM3Y2Q3O
     "newPassword":"123456",
     "confirmPassword":"123456"
 }
+
+####
+POST http://localhost:4000/api/screen/add
+Content-Type: application/json
+
+{
+    "name":"IMAX"
+}
+
+###
+GET http://localhost:4000/api/screen/all
+
+
+###
+POST http://localhost:4000/api/screenDetail/add
+Content-Type: application/json
+
+{
+    "screenId":"614ebe7d04f1a516b8b5b2bf",
+    "movieId":"61429f4b3f90f01320df6461"
+}
+
+######
+PUT http://localhost:4000/api/screenDetail/update/614ec2f46eb7414d68583f82
+Content-Type: application/json
+
+{
+    "screenId":"614ebe7404f1a516b8b5b2bd",
+    "movieId":"61429f4b3f90f01320df6461"
+}
+
+###
+GET http://localhost:4000/api/screenDetail/all
+
+###
+GET http://localhost:4000/api/screenDetail/find-screen/614ebe7404f1a516b8b5b2bd
+
+###
+GET http://localhost:4000/api/screenDetail/find-movie/61429f4b3f90f01320df6461
+

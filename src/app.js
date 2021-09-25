@@ -13,6 +13,8 @@ import nationRouter from "./routers/nation";
 import cinemaRouter from "./routers/cinema";
 import permissionRouter from "./routers/permission";
 import staffRouter from "./routers/staff";
+import screenRouter from "./routers/screen";
+import screenDetailRouter from "./routers/screenDetail";
 
 require("dotenv").config();
 const app = express();
@@ -38,6 +40,8 @@ app.use("/api/nation", nationRouter);
 app.use("/api/cinema", cinemaRouter);
 app.use("/api/permission", permissionRouter);
 app.use("/api/staff", staffRouter);
+app.use("/api/screen", screenRouter);
+app.use("/api/screenDetail", screenDetailRouter);
 
 //Connect db
 ConnectionMongoDB();
