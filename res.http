@@ -318,3 +318,15 @@ GET http://localhost:4000/api/screenDetail/find-screen/614ebe7404f1a516b8b5b2bd
 ###
 GET http://localhost:4000/api/screenDetail/find-movie/61429f4b3f90f01320df6461
 
+
+###
+GET http://localhost:4000/api/calendar/get-date
+Content-Type: application/json
+
+{
+    "roomId":"",
+    "time":"",
+    "year":2021,
+    "month":9
+}
+

@@ -971,6 +971,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
   integrity sha512-S63Dlv4zIPb8x6MMTgDq5WWRJQe56iBEY0O3SOFA9JrRienkOVDXSXBjjJw6HTNQYSE2JI6GMCR6LVbIMHJVvA==
 
+"@zhengxs/calendar-data@^0.1.0-rc.2":
+  version "0.1.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@zhengxs/calendar-data/-/calendar-data-0.1.0-rc.2.tgz#1105e8ef0f985690242cae003eb462d14fa89824"
+  integrity sha512-m3/MnX9lBEPW0zndYSH9hIUtexGIYQBC/GSFdmNMwin6cQseU/1Ez0+OjwAAfSPp98ttUAXtzmwmuVsmApx3qg==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -1316,6 +1321,16 @@ cacheable-request@^6.0.0:
     lowercase-keys "^2.0.0"
     normalize-url "^4.1.0"
     responselike "^1.0.2"
+
+calendar-data-generate@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/calendar-data-generate/-/calendar-data-generate-1.0.3.tgz#c54be48de84aca72452e6eab81d6dd2b7fdd452f"
+  integrity sha512-B5Gzp1Z+KASQX+LdUNb5fjFvv2ONhLet4vGV6wJbvw0fFSPPW/vbundamN6vJ6RZEghiR8n09vsKLMX+f5sFpQ==
+
+calendar-dates@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/calendar-dates/-/calendar-dates-2.7.0.tgz#b0cba2cbd0616fba3cf0f51735dd7d9ad7bb6b66"
+  integrity sha512-TFfAUDYwuX4FC9iCfkf33P+2UZIZ3boIlaq7XvgvnF800H4mJO29Nid9o19q/C27G9+B1TqtwQKnFXg97JJGhg==
 
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"

@@ -9,3 +9,94 @@ export const checkIsEmptyAddress = (oldAddress, address) => {
   }
   return false;
 };
+
+const formatDate = (date) => {
+  const newDate = new Date(date);
+  const day = String(newDate.getDate()).padStart(2, "0");
+  const month = newDate.getMonth();
+  const year = newDate.getFullYear();
+  return `${day}/${month + 1}/${year}`;
+};
+
+const pushDay = (res, date) => {
+  const now = Date.now();
+  var days = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+  if (days[date.getDay()] === "Thứ 2") {
+    res.monday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Thứ 3") {
+    res.tuesday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Thứ 4") {
+    res.wednesday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Thứ 5") {
+    res.thursday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Thứ 6") {
+    res.friday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Thứ 7") {
+    res.saturday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  } else if (days[date.getDay()] === "Chủ nhật") {
+    res.sunday.days.push({
+      date: formatDate(date),
+      status: date < now ? false : true,
+    });
+  }
+  return res;
+};
+
+export const getDaysInMonth = (year, month) => {
+  var date = new Date(`${year}/${month}/1`);
+
+  var res = {
+    monday: {
+      name: "Thứ 2",
+      days: [],
+    },
+    tuesday: {
+      name: "Thứ 3",
+      days: [],
+    },
+    wednesday: {
+      name: "Thứ 4",
+      days: [],
+    },
+    thursday: {
+      name: "Thứ 5",
+      days: [],
+    },
+    friday: {
+      name: "Thứ 6",
+      days: [],
+    },
+    saturday: {
+      name: "Thứ 7",
+      days: [],
+    },
+    sunday: {
+      name: "Chủ nhật",
+      days: [],
+    },
+  };
+  do {
+    pushDay(res, date);
+    date.setDate(date.getDate() + 1);
+  } while (date.getMonth() !== month);
+
+  return res;
+};
