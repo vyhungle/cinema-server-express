@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const movieSchema = new Schema({
   name: String,
-  moveDuration: String,
+  moveDuration: Number,
   image: String,
   trailer: String,
   description: String,

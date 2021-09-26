@@ -185,3 +185,40 @@ module.exports.ValidateChangePassword = (
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.ValidateRoom = (
+  name,
+  rowNumber,
+  seatsInRow,
+  screenId,
+  cinemaId
+) => {
+  var errors = {};
+
+  if (name.trim() === "") {
+    errors.name = "Vui lòng nhập tên rạp phim";
+  }
+  if (rowNumber === undefined) {
+    errors.rowNumber = "Vui lòng nhập số hàng ghế cho rạp";
+  } else if (rowNumber < 10) {
+    errors.rowNumber = "Số hàng ghế phải lớn hơn 10";
+  }
+
+  if (seatsInRow === undefined) {
+    errors.seatsInRow = "Vui lòng nhập số ghế cho một hàng";
+  } else if (seatsInRow < 10) {
+    errors.seatsInRow = "Số  ghế cho một hàng phải lớn hơn 10";
+  }
+
+  if (screenId.trim() === "") {
+    errors.screenId = "Vui lòng chọn loại màng hình";
+  }
+  if (cinemaId.trim() === "") {
+    errors.cinemaId = "Vui lòng chọn rạp phim";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
