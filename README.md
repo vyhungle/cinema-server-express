@@ -729,7 +729,8 @@ Api location:
   "trailer":"https://youtu.be/gmRKv7n2If8",
   "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
   "nation":"61421264fcc0d010bc34d3d5" (\_id nation),
-  "cast":"614203ba5428a850a873bad2" (\_id cast)
+  "cast":"614203ba5428a850a873bad2" (\_id cast),
+  "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"] // list mã màng hình
 - res
 
          "success": boolean,
