@@ -364,4 +364,17 @@ GET http://localhost:4000/api/room/all
 DELETE http://localhost:4000/api/room/delete/615014788c46a51a64563a95
 
 
+####
+POST http://localhost:4000/api/timeSlot/add
+Content-Type: application/json
+
+{
+    "name":"22 giờ",
+    "time":"22:00 PM" 
+    
+}
+
+###
+GET http://localhost:4000/api/timeSlot/all
+
 
