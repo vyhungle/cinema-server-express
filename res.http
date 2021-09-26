@@ -131,13 +131,14 @@ POST http://localhost:4000/api/movie/add
 Content-Type: application/json
 
 {
-        "name":"CRUELLA",
+    "name":"CRUELLA",
       "moveDuration":"120",
       "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
       "trailer":"https://youtu.be/gmRKv7n2If8",
       "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
       "nation":"61421264fcc0d010bc34d3d5",
-      "cast":"614203ba5428a850a873bad2"
+      "cast":"614203ba5428a850a873bad2",
+      "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"]
 }
 
 
@@ -387,8 +388,20 @@ Content-Type: application/json
     "timeSlotId":"61501a880c04f36facc2997f" 
     
 }
-
 ###
-GET http://localhost:4000/api/timeSlot/all
+GET http://localhost:4000/api/roomDetail/get-times/615014848c46a51a64563a9a
+
+####
+POST http://localhost:4000/api/premiere/add
+Content-Type: application/json
+
+{
+    "movieId":"61429f4b3f90f01320df6461",
+     "screenDetailId":"614ec2f46eb7414d68583f82"
+}
+
+
+
+
 
 

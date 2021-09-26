@@ -1,9 +1,13 @@
 import express from "express";
 const router = express.Router();
+import request from "supertest";
+import { addPremiere } from "../api/serverAPI";
+
 import ScreenDetail from "../models/ScreenDetail";
 
 router.post("/add", async (req, res) => {
   const { screenId, movieId } = req.body;
+  const client = request(req.app);
 
   try {
     const isScreenDetail = await ScreenDetail.findOne({
@@ -16,6 +20,9 @@ router.post("/add", async (req, res) => {
         movie: movieId,
       });
       await screenDetail.save();
+
+      addPremiere(client, "/api/premiere/add", movieId, screenDetail._id);
+
       const newScreenDetail = await ScreenDetail.findById(screenDetail._id)
         .populate("movie")
         .populate("screen");

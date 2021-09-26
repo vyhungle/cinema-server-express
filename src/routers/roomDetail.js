@@ -7,7 +7,6 @@ router.post("/add", async (req, res) => {
   const { roomId, timeSlotId } = req.body;
   try {
     const { valid, errors } = ValidateRoomDetail(roomId, timeSlotId);
-    console.log(valid, errors);
     if (!valid) {
       console.log("error");
       return res.json({
@@ -43,6 +42,29 @@ router.post("/add", async (req, res) => {
         roomDetail: newRoomDetail,
       },
     });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-times/:id", async (req, res) => {
+  try {
+    const times = await RoomDetail.find({ room: req.params.id })
+      .populate("timeSlot")
+      .populate("room");
+    if (times) {
+      return res.json({
+        success: true,
+        message: "Lấy danh sách khung giờ theo id phòng thành công",
+        values: {
+          roomDetails: times,
+        },
+      });
+    }
   } catch (error) {
     res.status(400).json({
       success: false,

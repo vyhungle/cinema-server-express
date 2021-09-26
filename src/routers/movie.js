@@ -1,10 +1,22 @@
 import express from "express";
 const router = express.Router();
+import request from "supertest";
+
 import Movie from "../models/Movie";
+import { addScreenDetail } from "../api/serverAPI";
 
 router.post("/add", async (req, res) => {
-  const { name, moveDuration, image, trailer, description, nation, cast } =
-    req.body;
+  const client = request(req.app);
+  const {
+    name,
+    moveDuration,
+    image,
+    trailer,
+    description,
+    nation,
+    cast,
+    screensId,
+  } = req.body;
 
   try {
     const movie = new Movie({
@@ -17,6 +29,10 @@ router.post("/add", async (req, res) => {
       cast,
     });
     await movie.save();
+
+    // thêm định dạnh phim
+    addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
+    
     return res.json({
       success: true,
       message: "Thêm phim thành công",
@@ -42,7 +58,8 @@ router.get("/all", async (req, res) => {
         message: "Lấy danh sách thể lo phim thành công",
         values: { movies },
       });
-    }Pp
+    }
+    Pp;
     return res.json({
       success: false,
       message: "Lấy danh sách phim thất bại",
