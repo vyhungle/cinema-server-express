@@ -18,6 +18,7 @@ import screenDetailRouter from "./routers/screenDetail";
 import calendarRouter from "./routers/calendar";
 import roomRouter from "./routers/room";
 import timeSlotRouter from "./routers/timeSlot";
+import roomDetailRouter from "./routers/roomDetail";
 
 require("dotenv").config();
 const app = express();
@@ -48,6 +49,7 @@ app.use("/api/screenDetail", screenDetailRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/room", roomRouter);
 app.use("/api/timeSlot", timeSlotRouter);
+app.use("/api/roomDetail", roomDetailRouter);
 
 //Connect db
 ConnectionMongoDB();

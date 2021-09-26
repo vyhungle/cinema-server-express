@@ -7,7 +7,7 @@ const roomDetailSchema = new Schema({
   },
   timeSlot: {
     type: Schema.Types.ObjectId,
-    ref: "timeSlots",
+    ref: "timeslots",
   },
 });
 

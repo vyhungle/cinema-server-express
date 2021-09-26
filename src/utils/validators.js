@@ -222,3 +222,19 @@ module.exports.ValidateRoom = (
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.ValidateRoomDetail = (roomId, timeSlotId) => {
+  var errors = {};
+
+  if (roomId.trim() === "") {
+    errors.roomId = "Vui lòng chọn phòng chiếu";
+  }
+  if (timeSlotId.trim() === "") {
+    errors.timeSlotId = "Vui lòng chọn khung giờ chiếu";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};

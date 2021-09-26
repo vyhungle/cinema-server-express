@@ -378,3 +378,17 @@ Content-Type: application/json
 GET http://localhost:4000/api/timeSlot/all
 
 
+###
+POST http://localhost:4000/api/roomDetail/add
+Content-Type: application/json
+
+{
+    "roomId":"615014848c46a51a64563a9a",
+    "timeSlotId":"61501a880c04f36facc2997f" 
+    
+}
+
+###
+GET http://localhost:4000/api/timeSlot/all
+
+
