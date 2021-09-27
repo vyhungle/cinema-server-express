@@ -30,7 +30,7 @@ router.post("/add", async (req, res) => {
     await director.save();
     return res.json({
       success: true,
-      message: "Thêm diễn viên thành công",
+      message: "Thêm đạo diễn thành công",
       values: {
         director,
       },
@@ -50,13 +50,13 @@ router.get("/all", async (req, res) => {
     if (directors) {
       return res.json({
         success: true,
-        message: "Lấy danh sách diễn viên thành công",
+        message: "Lấy danh sách đạo diễn thành công",
         values: { directors },
       });
     }
     return res.json({
       success: false,
-      message: "Lấy danh sách diễn viên thất bại",
+      message: "Lấy danh sách đạo diễn thất bại",
       values: { directors: [] },
     });
   } catch (error) {
@@ -74,13 +74,13 @@ router.get("/:id", async (req, res) => {
     if (director) {
       return res.json({
         success: true,
-        message: "Lấy diễn viên thành công",
+        message: "Lấy đạo diễn thành công",
         values: { director },
       });
     }
     return res.json({
       success: false,
-      message: "Lấy diễn viên thất bại",
+      message: "Lấy đạo diễn thất bại",
       values: { director: {} },
     });
   } catch (error) {

@@ -3,7 +3,7 @@ const router = express.Router();
 import request from "supertest";
 
 import Movie from "../models/Movie";
-import { addScreenDetail } from "../api/serverAPI";
+import { addCategoryDetail, addScreenDetail } from "../api/serverAPI";
 import { ValidateMovie } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -14,9 +14,10 @@ router.post("/add", async (req, res) => {
     image,
     trailer,
     description,
-    director,
+    directorId,
     cast,
     screensId,
+    categoryId,
   } = req.body;
 
   try {
@@ -25,7 +26,7 @@ router.post("/add", async (req, res) => {
       moveDuration,
       image,
       trailer,
-      director,
+      directorId,
       cast
     );
     if (valid) {
@@ -35,12 +36,15 @@ router.post("/add", async (req, res) => {
         image,
         trailer,
         description,
-        director,
+        director: directorId,
         cast,
       });
       await movie.save();
       // thêm định dạnh phim
-      // addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
+      addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
+      // thêm thể loại
+      addCategoryDetail(client, categoryId, "/api/categoryDetail/add", movie._id);
+
       return res.json({
         success: true,
         message: "Thêm phim thành công",

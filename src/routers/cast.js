@@ -32,7 +32,7 @@ router.post("/add", async (req, res) => {
     await cast.save();
     return res.json({
       success: true,
-      message: "Thêm đạo diển thành công",
+      message: "Thêm diễn viên thành công",
       values: {
         cast,
       },
@@ -82,7 +82,7 @@ router.get("/:id", async (req, res) => {
     }
     return res.json({
       success: false,
-      message: "Lấy đạo diển thất bại",
+      message: "Lấy diễn viên thất bại",
       values: { cast: {} },
     });
   } catch (error) {

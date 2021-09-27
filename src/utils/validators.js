@@ -244,7 +244,7 @@ export const ValidateMovie = (
   moveDuration,
   image,
   trailer,
-  director,
+  directorId,
   cast
 ) => {
   let errors = {};
@@ -260,8 +260,8 @@ export const ValidateMovie = (
   if (trailer.trim() === "") {
     errors.trailer = "Vui lòng chọn trailer";
   }
-  if (director.trim() === "") {
-    errors.director = "Vui lòng chọn đạo diễn";
+  if (directorId.trim() === "") {
+    errors.directorId = "Vui lòng chọn đạo diễn";
   }
   if (cast.trim() === "") {
     errors.cast = "Vui lòng nhập diễn viên";

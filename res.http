@@ -95,8 +95,8 @@ POST http://localhost:4000/api/category/add
 Content-Type: application/json
 
 {
-     "name":"Craig Gillespie",   
-    "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png"
+     "name":"Tội phạm",   
+    "image": ""
      
 }
 
@@ -136,9 +136,10 @@ Content-Type: application/json
       "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
       "trailer":"https://youtu.be/gmRKv7n2If8",
       "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
-      "director":"6151c0bac6c71f4db8851253",
+      "directorId":"6151c0bac6c71f4db8851253",
       "cast":"Emma Stone, Emma Thompson, Mark Strong",
-      "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"]
+      "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"],
+      "categoryId":["6151c6c2109695099c420081","6151c6c9109695099c420083"]
 }
 
 
@@ -401,7 +402,14 @@ Content-Type: application/json
 }
 
 
+####
+POST http://localhost:4000/api/categoryDetail/add
+Content-Type: application/json
 
+{
+    "movieId":"6151c76e46017d4410b06652",
+    "categoryId":"6151c6c2109695099c420081"
+}
 
 
 
