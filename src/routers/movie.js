@@ -4,6 +4,7 @@ import request from "supertest";
 
 import Movie from "../models/Movie";
 import { addScreenDetail } from "../api/serverAPI";
+import { ValidateMovie } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -13,32 +14,46 @@ router.post("/add", async (req, res) => {
     image,
     trailer,
     description,
-    nation,
+    director,
     cast,
     screensId,
   } = req.body;
 
   try {
-    const movie = new Movie({
+    const { valid, errors } = ValidateMovie(
       name,
       moveDuration,
       image,
       trailer,
-      description,
-      nation,
-      cast,
-    });
-    await movie.save();
+      director,
+      cast
+    );
+    if (valid) {
+      const movie = new Movie({
+        name,
+        moveDuration,
+        image,
+        trailer,
+        description,
+        director,
+        cast,
+      });
+      await movie.save();
+      // thêm định dạnh phim
+      // addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
+      return res.json({
+        success: true,
+        message: "Thêm phim thành công",
+        values: {
+          movie,
+        },
+      });
+    }
 
-    // thêm định dạnh phim
-    addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
-    
-    return res.json({
-      success: true,
-      message: "Thêm phim thành công",
-      values: {
-        movie,
-      },
+    return req.json({
+      success: false,
+      message: "Tạo phim thất bại",
+      errors,
     });
   } catch (error) {
     res.status(400).json({

@@ -6,13 +6,10 @@ const movieSchema = new Schema({
   image: String,
   trailer: String,
   description: String,
-  nation: {
+  cast: String,
+  director: {
     type: Schema.Types.ObjectId,
-    ref: "nations",
+    ref: "directors",
   },
-  cast:{
-    type: Schema.Types.ObjectId,
-    ref: "casts",
-  }
 });
 module.exports = model("movies", movieSchema);

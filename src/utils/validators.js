@@ -238,3 +238,37 @@ module.exports.ValidateRoomDetail = (roomId, timeSlotId) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+export const ValidateMovie = (
+  name,
+  moveDuration,
+  image,
+  trailer,
+  director,
+  cast
+) => {
+  let errors = {};
+  if (name.trim() === "") {
+    errors.name = "Vui lòng nhập tên phim";
+  }
+  if (moveDuration === undefined) {
+    errors.moveDuration = "Vui lòng nhập thời lượng phim";
+  }
+  if (image.trim() === "") {
+    errors.image = "Vui lòng chọn poster";
+  }
+  if (trailer.trim() === "") {
+    errors.trailer = "Vui lòng chọn trailer";
+  }
+  if (director.trim() === "") {
+    errors.director = "Vui lòng chọn đạo diễn";
+  }
+  if (cast.trim() === "") {
+    errors.cast = "Vui lòng nhập diễn viên";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
