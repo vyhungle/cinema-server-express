@@ -11,4 +11,4 @@ const roomDetailSchema = new Schema({
   },
 });
 
-module.exports = model("roomDetails", roomDetailSchema);
+module.exports = model("roomdetails", roomDetailSchema);

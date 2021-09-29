@@ -20,6 +20,7 @@ import timeSlotRouter from "./routers/timeSlot";
 import roomDetailRouter from "./routers/roomDetail";
 import premiereRouter from "./routers/premiere";
 import categoryDetailRouter from "./routers/categoryDetail";
+import showTimeRouter from "./routers/showTime";
 
 require("dotenv").config();
 const app = express();
@@ -52,6 +53,7 @@ app.use("/api/timeSlot", timeSlotRouter);
 app.use("/api/roomDetail", roomDetailRouter);
 app.use("/api/premiere", premiereRouter);
 app.use("/api/categoryDetail", categoryDetailRouter);
+app.use("/api/showTime", showTimeRouter);
 
 //Connect db
 ConnectionMongoDB();

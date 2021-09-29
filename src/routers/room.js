@@ -1,10 +1,15 @@
 import express from "express";
+import { addRoomDetail } from "../api/serverAPI";
 const router = express.Router();
+import request from "supertest";
+
 import Room from "../models/Room";
 import { ValidateRoom } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
-  const { name, rowNumber, seatsInRow, screenId, cinemaId } = req.body;
+  const client = request(req.app);
+  const { name, rowNumber, seatsInRow, screenId, cinemaId, timeSlotsId } =
+    req.body;
 
   try {
     const { valid, errors } = ValidateRoom(
@@ -29,6 +34,9 @@ router.post("/add", async (req, res) => {
       cinema: cinemaId,
     });
     await room.save();
+    // them chi tiet phong
+    addRoomDetail(client, timeSlotsId, "/api/roomDetail/add", room._id);
+
     const newRoom = await Room.findById(room._id)
       .populate("cinema")
       .populate("screen");

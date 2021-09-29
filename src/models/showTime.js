@@ -1,17 +1,15 @@
 import { model, Schema } from "mongoose";
 
 const showTimeSchema = new Schema({
-  price: Number,
   status: Boolean,
-  moveDuration: Number,
   date: String,
-  screenDetail: {
+  room: {
     type: Schema.Types.ObjectId,
-    ref: "screenDetails",
+    ref: "rooms",
   },
-  cinema: {
+  premiere: {
     type: Schema.Types.ObjectId,
-    ref: "cinemas",
+    ref: "premieres",
   },
   timeSlot: {
     type: Schema.Types.ObjectId,

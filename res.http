@@ -339,11 +339,12 @@ POST http://localhost:4000/api/room/add
 Content-Type: application/json
 
 {
-    "name":"A1", 
+    "name":"A4", 
     "rowNumber":10, 
     "seatsInRow":10, 
-    "screenId":"614ebe7d04f1a516b8b5b2bf",
-    "cinemaId":"614c03db576b5d00376801a6"
+    "screenId":"614ebe7404f1a516b8b5b2bd",
+    "cinemaId":"614c03db576b5d00376801a6",
+    "timeSlotsId":["6154592b543dc74d680458c8","6154592b543dc74d680458c8","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"]
 }
 
 
@@ -371,8 +372,7 @@ POST http://localhost:4000/api/timeSlot/add
 Content-Type: application/json
 
 {
-    "name":"22 giờ",
-    "time":"22:00 PM" 
+    "time":"20:30" 
     
 }
 
@@ -413,3 +413,57 @@ Content-Type: application/json
 
 
 
+
+#### lấy danh sách khung giờ
+GET http://localhost:4000/api/timeSlot/all
+
+#### Thêm phòng
+POST http://localhost:4000/api/room/add
+Content-Type: application/json
+
+{
+    "name":"A1",
+    "rowNumber":10, 
+    "seatsInRow":10,
+    "screenId":"614ebe7404f1a516b8b5b2bd", 
+    "cinemaId":"614c03db576b5d00376801a6", 
+    "timeSlotsId":["6154592b543dc74d680458c8","6154593a543dc74d680458ca","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"] // danh sách khung giờ
+}
+
+### get phim theo màng hình
+GET http://localhost:4000/api/premiere/find-screen/614ebe7404f1a516b8b5b2bd
+
+
+### lấy danh sách khung giờ theo ngày và phòng
+GET http://localhost:4000/api/timeSlot/list-time
+Content-Type: application/json
+
+{
+    "dateStart":"9/29/2021", // chỉ dùng date start vì mới làm thêm 1 ngày à, dateStart là ngày muống thêm lịch
+    "dateEnd":"1/10/2021", // tạm thời k dùng 
+    "roomId":"61546d3254698823ccb8cbfd" // mã phòng
+}
+
+
+
+###
+POST http://localhost:4000/api/showTime/add
+Content-Type: application/json
+
+{
+    "roomId":"61546d3254698823ccb8cbfd",
+    "premiereId":"61547c7b81058c2a702f8035",
+    "timeSlotId":"6154592b543dc74d680458c8",
+    "date":"9/29/2021"
+}
+
+
+####
+GET http://localhost:4000/api/timeSlot/list-time
+Content-Type: application/json
+
+{
+    "dateStart":"9/29/2021",
+    "dateEnd":"1/10/2021", 
+    "roomId":"61546d3254698823ccb8cbfd" 
+}
