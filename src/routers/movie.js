@@ -3,7 +3,7 @@ const router = express.Router();
 import request from "supertest";
 
 import Movie from "../models/Movie";
-import { addCategoryDetail, addScreenDetail } from "../api/serverAPI";
+import { addCategoryDetail, addPremiere } from "../api/serverAPI";
 import { ValidateMovie } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -40,10 +40,15 @@ router.post("/add", async (req, res) => {
         cast,
       });
       await movie.save();
-      // thêm định dạnh phim
-      addScreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
+      // thêm xuất chiếu phim
+      addPremiere(client, screensId, "/api/premiere/add", movie._id);
       // thêm thể loại
-      addCategoryDetail(client, categoryId, "/api/categoryDetail/add", movie._id);
+      addCategoryDetail(
+        client,
+        categoryId,
+        "/api/categoryDetail/add",
+        movie._id
+      );
 
       return res.json({
         success: true,
