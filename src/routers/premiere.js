@@ -1,7 +1,5 @@
 import express from "express";
 const router = express.Router();
-import request from "supertest";
-import { addPremiere } from "../api/serverAPI";
 
 import Premiere from "../models/Premiere";
 
