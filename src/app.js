@@ -20,8 +20,8 @@ import timeSlotRouter from "./routers/timeSlot";
 import roomDetailRouter from "./routers/roomDetail";
 import premiereRouter from "./routers/premiere";
 import categoryDetailRouter from "./routers/categoryDetail";
-import showTimeRouter from "./routers/showTime";
-import tickerRouter from "./routers/ticker";
+// import showTimeRouter from "./routers/showTime";
+// import tickerRouter from "./routers/ticker";
 
 require("dotenv").config();
 const app = express();
@@ -55,7 +55,7 @@ app.use("/api/roomDetail", roomDetailRouter);
 app.use("/api/premiere", premiereRouter);
 app.use("/api/categoryDetail", categoryDetailRouter);
 // app.use("/api/showTime", showTimeRouter);
-app.use("/api/ticker", tickerRouter);
+// app.use("/api/ticker", tickerRouter);
 
 //Connect db
 ConnectionMongoDB();
