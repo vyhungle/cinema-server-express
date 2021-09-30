@@ -17,4 +17,4 @@ const showTimeSchema = new Schema({
   },
 });
 
-module.exports = model("showTimes", showTimeSchema);
+module.exports = model("showtimes", showTimeSchema);

@@ -32,7 +32,6 @@ export const addRoomDetail = async (client, data, link, roomId) => {
 };
 
 export const addTicker = async (client, link, body) => {
-  console.log(body);
   await client
     .post(link)
     .send(body)

@@ -4,9 +4,9 @@ const tickerSchema = new Schema({
   seatName: String,
   price: Number,
   status: Boolean,
-  premiere: {
+  showTime: {
     type: Schema.Types.ObjectId,
-    ref: "premieres",
+    ref: "showtimes",
   },
 });
 module.exports = model("tickers", tickerSchema);

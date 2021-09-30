@@ -39,7 +39,7 @@ router.post("/add", async (req, res) => {
           price: is_weekend
             ? findShowTime.premiere.screen.weekendPrice
             : findShowTime.premiere.screen.weekdayPrice,
-          premiere: premiereId,
+          showTime: findShowTime._id,
         });
       }
     });

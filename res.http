@@ -480,3 +480,6 @@ Content-Type: application/json
     "price":120,
     "premiere":"61547c7b81058c2a702f8037"
 }
+
+###
+GET http://localhost:4000/api/ticker/get/6155c034ca59e447ec58e1f0
