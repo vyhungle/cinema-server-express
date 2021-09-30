@@ -30,3 +30,13 @@ export const addRoomDetail = async (client, data, link, roomId) => {
       .expect(200);
   });
 };
+
+export const addTicker = async (client, link, body) => {
+  console.log(body);
+  await client
+    .post(link)
+    .send(body)
+    .set("Accept", "application/json")
+    .expect("Content-Type", /json/)
+    .expect(200);
+};

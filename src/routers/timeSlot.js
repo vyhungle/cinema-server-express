@@ -66,9 +66,6 @@ router.get("/list-time", async (req, res) => {
     }
 
     if (timeSlots.length > 0) {
-      // filterRoomDetail = roomDetail.filter(
-      //   (item) => !timeSlots.includes(item.timeSlot._id)
-      // );
       roomDetail.map((room, index) => {
         timeSlots.map((time) => {
           if (room.timeSlot._id.toString() === time.toString()) {
@@ -83,7 +80,6 @@ router.get("/list-time", async (req, res) => {
       newTimeSlots.push(item.timeSlot);
     });
 
-    // console.log(start.getDate(), end.getDate);
     return res.json({
       success: true,
       message: "lấy danh sách khung giờ thành công",

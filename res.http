@@ -453,10 +453,12 @@ Content-Type: application/json
 {
     "roomId":"61546d3254698823ccb8cbfd",
     "premiereId":"61547c7b81058c2a702f8035",
-    "timeSlotId":"6154592b543dc74d680458c8",
-    "date":"9/29/2021"
+    "timeSlotsId":["6154595f543dc74d680458d0"],
+    "date":"10/3/2021"
 }
 
+####
+GET http://localhost:4000/api/showTime/all
 
 ####
 GET http://localhost:4000/api/timeSlot/list-time
@@ -465,5 +467,16 @@ Content-Type: application/json
 {
     "dateStart":"9/29/2021",
     "dateEnd":"1/10/2021", 
-    "roomId":"61546d3254698823ccb8cbfd" 
+   "roomId":"61546d3254698823ccb8cbfd" 
+}
+
+####
+POST http://localhost:4000/api/ticker/add
+Content-Type: application/json
+
+{
+    "rowNumber":1,
+    "seatInRow":1,
+    "price":120,
+    "premiere":"61547c7b81058c2a702f8037"
 }
