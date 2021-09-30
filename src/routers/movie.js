@@ -79,11 +79,10 @@ router.get("/all", async (req, res) => {
     if (movies) {
       return res.json({
         success: true,
-        message: "Lấy danh sách thể lo phim thành công",
+        message: "Lấy danh sách thể loai phim thành công",
         values: { movies },
       });
     }
-    Pp;
     return res.json({
       success: false,
       message: "Lấy danh sách phim thất bại",

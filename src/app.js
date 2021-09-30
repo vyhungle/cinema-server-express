@@ -54,7 +54,7 @@ app.use("/api/timeSlot", timeSlotRouter);
 app.use("/api/roomDetail", roomDetailRouter);
 app.use("/api/premiere", premiereRouter);
 app.use("/api/categoryDetail", categoryDetailRouter);
-app.use("/api/showTime", showTimeRouter);
+// app.use("/api/showTime", showTimeRouter);
 app.use("/api/ticker", tickerRouter);
 
 //Connect db
