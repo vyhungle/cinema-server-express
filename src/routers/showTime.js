@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import ShowTime from "../models/ShowTime";
+import ShowTime from "../models/ShowTime"; //fix log
 import request from "supertest";
 import { addTicker } from "../api/serverAPI";
 
