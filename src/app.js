@@ -4,7 +4,6 @@ import http from "http";
 
 import { ConnectionMongoDB } from "./config/mongodb";
 import authRouter from "./routers/auth";
-import otpRouter from "./routers/otp";
 import castRouter from "./routers/cast";
 import directorRouter from "./routers/director";
 import categoryRouter from "./routers/category";
@@ -38,7 +37,6 @@ app.set("json spaces", 2);
 
 //Router
 app.use("/api/auth", authRouter);
-app.use("/api/otp", otpRouter);
 app.use("/api/cast", castRouter);
 app.use("/api/director", directorRouter);
 app.use("/api/category", categoryRouter);
