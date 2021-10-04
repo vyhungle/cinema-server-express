@@ -81,7 +81,7 @@ router.post("/add", async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const movies = await Movie.find();
+    const movies = await Movie.find().populate("director");
 
     if (movies) {
       for (let i = 0; i < movies.length; i++) {
