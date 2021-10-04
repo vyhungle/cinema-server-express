@@ -7,6 +7,7 @@ const movieSchema = new Schema({
   trailer: String,
   description: String,
   cast: String,
+  age: Number,
   director: {
     type: Schema.Types.ObjectId,
     ref: "directors",

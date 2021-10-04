@@ -1,0 +1,487 @@
+### Đăng ký
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+    "email":"lnhv.26112000@gmail.com",
+    "phoneNumber":"0983782942",
+    "password":"vykt2000",
+    "confirmPassword":"vykt2000",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "address":{
+        "city":"TP.HCM",
+        "district":"Tân phú",
+        "ward":"Tây thạnh",
+        "street":"37, T4A"
+    },
+    "dateOfBirth":"11/26/2000"
+}
+
+#### Đăng nhập
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+    "username":"0983782942",    
+    "password":"vykt2000"
+}
+
+### get my user
+GET http://localhost:4000/api/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4NzM2YWE4MjY4NDE0ODFiMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzE3MDk3NTYsImV4cCI6MTYzMjkxOTM1Nn0.r_ypgz-r67R6Vxq7-UrE7nYWuZNZ4DOZYYF7wlC5nvE
+
+
+### send otp
+POST http://localhost:4000/api/otp/send
+Content-Type: application/json
+
+{
+    "phoneNumber":"0993783942"
+}
+
+
+###
+POST http://localhost:4000/api/cast/add
+Content-Type: application/json
+
+{
+     "name":"Craig Gillespie",
+      "dateOfBirth":"9/1/1967",
+      "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+      "joinDate":"10/10/2015",
+      "address":"Sydney, New South Wales, Australia",
+      "phoneNumber":"0986521456",
+      "email":"craig@gmail.com",
+      "introduce":"",
+      "male":true
+}
+
+###
+GET http://localhost:4000/api/cast/all
+
+
+###
+GET http://localhost:4000/api/cast/614203ba5428a850a873bad2
+
+
+
+###
+POST http://localhost:4000/api/director/add
+Content-Type: application/json
+
+{
+     "name":"Craig Gillespie",
+      "dateOfBirth":"9/1/1967",
+      "image": "https://www.galaxycine.vn/media/c/r/craig-doc.png",
+      "joinDate":"10/10/2015",
+      "address":"Sydney, New South Wales, Australia",
+      "phoneNumber":"0986521456",
+      "email":"craig@gmail.com",
+      "introduce":"",
+      "male":true
+}
+
+###
+GET http://localhost:4000/api/director/all
+
+
+###
+GET http://localhost:4000/api/director/614207275f7f1a20b40891fe
+
+
+###
+POST http://localhost:4000/api/category/add
+Content-Type: application/json
+
+{
+     "name":"Tội phạm",   
+    "image": ""
+     
+}
+
+###
+GET http://localhost:4000/api/category/all
+
+
+###
+GET http://localhost:4000/api/category/6142088c6cb13f1f44d46cb9
+
+
+###
+POST http://localhost:4000/api/nation/add
+Content-Type: application/json
+
+{
+     "name":"Việt Nam"
+}
+
+
+###
+GET http://localhost:4000/api/nation/all
+
+
+###
+GET http://localhost:4000/api/nation/61429ef5037f994594168179
+
+
+
+###
+POST http://localhost:4000/api/movie/add
+Content-Type: application/json
+
+{
+    "name":"DEMO",
+      "moveDuration":"120",
+      "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
+      "trailer":"https://youtu.be/gmRKv7n2If8",
+      "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
+      "directorId":"6151c0bac6c71f4db8851253",
+      "cast":"Emma Stone, Emma Thompson, Mark Strong",
+      "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"],
+      "categoryId":["6151c6c2109695099c420081","6151c6c9109695099c420083"],
+      "age":12
+      
+}
+
+
+###
+GET http://localhost:4000/api/movie/all
+
+
+###
+GET http://localhost:4000/api/movie/6157d0b101fba123784a0d4b
+
+
+
+
+### rap phim
+POST http://localhost:4000/api/cinema/add
+Content-Type: application/json
+
+{
+    "name":"CGV IMC Trần Quang Khải",
+    "address":{
+        "city":"Tp. Hồ Chí Minh",
+        "district":" Q.1",
+        "ward":"Bến Nghé",
+        "street":"116 Nguyễn Du"
+    }
+}
+
+###
+GET http://localhost:4000/api/cinema/all
+
+
+###
+GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
+
+
+####
+PUT http://localhost:4000/api/cinema/update/6148842f0c584e382c554649
+Content-Type: application/json
+
+{
+    "name":"CGV IMC Trần Quang Khải",
+    "address":{
+        "city":"Tp. Hồ Chí Minh",
+        "district":" Q. 1",
+        "ward":"P. Tân Định",
+        "street":"TTVH Đa Năng, 62 Trần Quang Khải"
+    }
+}
+
+
+### delete rap phim
+DELETE http://localhost:4000/api/cinema/delete/61488c7cf4b75e3910fde933
+
+
+
+###
+POST http://localhost:4000/api/permission/add
+Content-Type: application/json
+
+{
+    "name":"Nhân viên",
+    "type":"2"
+}
+
+###
+GET http://localhost:4000/api/permission/all
+
+
+###
+GET http://localhost:4000/api/permission/6149d3ff52d8c52050d24e3c
+
+
+###
+DELETE http://localhost:4000/api/permission/delete/6149d4db9c68673610441a59
+
+
+### Thêm nhân viên
+POST http://localhost:4000/api/staff/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIyMzM5NjMsImV4cCI6MTYzMzQ0MzU2M30.eQfNJrqIRNtQWSBJF25dGtdnY4fJQ-m6dQw_xl9xXro
+
+{
+    "email":"admin@gmail.com",
+    "phoneNumber":"0983782941",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "male":true,
+    "dateOfBirth":"11/26/2000",
+    "permissionId":"6149d3ff52d8c52050d24e3c",
+    "cinemaId":"614c03db576b5d00376801a6"
+}
+
+#### Đăng nhập
+POST http://localhost:4000/api/staff/login
+Content-Type: application/json
+
+{
+    "username":"admin@gmail.com",    
+    "password":"123456"
+}
+
+### get my user
+GET http://localhost:4000/api/staff/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGM3MGViMTJmMTIzMzQzY2ZiMjE2ZCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIzOTk2MzksImV4cCI6MTYzMzYwOTIzOX0.6NggPsQaCni83J13lIycqs2G5NvDSO8pNcNurvccIDg
+
+
+### Thêm nhân viên
+PUT http://localhost:4000/api/staff/update/614c70eb12f123343cfb216d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGM3MGViMTJmMTIzMzQzY2ZiMjE2ZCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIzOTk2MzksImV4cCI6MTYzMzYwOTIzOX0.6NggPsQaCni83J13lIycqs2G5NvDSO8pNcNurvccIDg
+
+{
+    "email":"admin@gmail.com",
+    "phoneNumber":"0983782942",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "male":true,
+    "dateOfBirth":"11/26/2000",
+    "permissionId":"6149d3ff52d8c52050d24e3c",
+    "cinemaId":"614c03db576b5d00376801a6"
+}
+
+####
+DELETE http://localhost:4000/api/staff/delete/6149e9f9a530c64ba4ab5e40
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIyMzM5NjMsImV4cCI6MTYzMzQ0MzU2M30.eQfNJrqIRNtQWSBJF25dGtdnY4fJQ-m6dQw_xl9xXro
+
+
+###
+GET http://localhost:4000/api/staff/get/6149de3533eba936405b08a3
+
+###
+PUT http://localhost:4000/api/staff/change-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGM3Y2Q3OWZmYTE0MmM4YzNiZTU5ZiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzI0MDI3MjEsImV4cCI6MTYzMzYxMjMyMX0.3k2Sn_rYt8i5f1b2aNX3t5e1O9B6V_wudhhjRqJS3ls
+
+{
+    "oldPassword":"vykt@2000",
+    "newPassword":"123456",
+    "confirmPassword":"123456"
+}
+
+####
+POST http://localhost:4000/api/screen/add
+Content-Type: application/json
+
+{
+    "name":"IMAX"
+}
+
+###
+GET http://localhost:4000/api/screen/all
+
+
+###
+POST http://localhost:4000/api/screenDetail/add
+Content-Type: application/json
+
+{
+    "screenId":"614ebe7d04f1a516b8b5b2bf",
+    "movieId":"61429f4b3f90f01320df6461"
+}
+
+######
+PUT http://localhost:4000/api/screenDetail/update/614ec2f46eb7414d68583f82
+Content-Type: application/json
+
+{
+    "screenId":"614ebe7404f1a516b8b5b2bd",
+    "movieId":"61429f4b3f90f01320df6461"
+}
+
+###
+GET http://localhost:4000/api/screenDetail/all
+
+###
+GET http://localhost:4000/api/screenDetail/find-screen/614ebe7404f1a516b8b5b2bd
+
+###
+GET http://localhost:4000/api/screenDetail/find-movie/61429f4b3f90f01320df6461
+
+
+###
+GET http://localhost:4000/api/calendar/get-date
+Content-Type: application/json
+
+{
+    "roomId":"",
+    "time":"",
+    "year":2021,
+    "month":10
+}
+
+
+
+####
+POST http://localhost:4000/api/room/add
+Content-Type: application/json
+
+{
+    "name":"A4", 
+    "rowNumber":10, 
+    "seatsInRow":10, 
+    "screenId":"614ebe7404f1a516b8b5b2bd",
+    "cinemaId":"614c03db576b5d00376801a6",
+    "timeSlotsId":["6154592b543dc74d680458c8","6154592b543dc74d680458c8","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"]
+}
+
+
+####
+PUT http://localhost:4000/api/room/update/615014848c46a51a64563a9a
+Content-Type: application/json
+
+{
+    "name":"A2", 
+    "rowNumber":20, 
+    "seatsInRow":10, 
+    "screenId":"614ebe7d04f1a516b8b5b2bf",
+    "cinemaId":"614c03db576b5d00376801a6"
+}
+
+###
+GET http://localhost:4000/api/room/all
+
+###
+DELETE http://localhost:4000/api/room/delete/615014788c46a51a64563a95
+
+
+####
+POST http://localhost:4000/api/timeSlot/add
+Content-Type: application/json
+
+{
+    "time":"20:30" 
+    
+}
+
+###
+GET http://localhost:4000/api/timeSlot/all
+
+
+###
+POST http://localhost:4000/api/roomDetail/add
+Content-Type: application/json
+
+{
+    "roomId":"615014848c46a51a64563a9a",
+    "timeSlotId":"61501a880c04f36facc2997f" 
+    
+}
+###
+GET http://localhost:4000/api/roomDetail/get-times/615014848c46a51a64563a9a
+
+####
+POST http://localhost:4000/api/premiere/add
+Content-Type: application/json
+
+{
+    "movieId":"61429f4b3f90f01320df6461",
+     "screenDetailId":"614ec2f46eb7414d68583f82"
+}
+
+
+####
+POST http://localhost:4000/api/categoryDetail/add
+Content-Type: application/json
+
+{
+    "movieId":"6151c76e46017d4410b06652",
+    "categoryId":"6151c6c2109695099c420081"
+}
+
+
+
+
+#### lấy danh sách khung giờ
+GET http://localhost:4000/api/timeSlot/all
+
+#### Thêm phòng
+POST http://localhost:4000/api/room/add
+Content-Type: application/json
+
+{
+    "name":"A1",
+    "rowNumber":10, 
+    "seatsInRow":10,
+    "screenId":"614ebe7404f1a516b8b5b2bd", 
+    "cinemaId":"614c03db576b5d00376801a6", 
+    "timeSlotsId":["6154592b543dc74d680458c8","6154593a543dc74d680458ca","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"] // danh sách khung giờ
+}
+
+### get phim theo màng hình
+GET http://localhost:4000/api/premiere/find-screen/614ebe7404f1a516b8b5b2bd
+
+
+### lấy danh sách khung giờ theo ngày và phòng
+GET http://localhost:4000/api/timeSlot/list-time
+Content-Type: application/json
+
+{
+    "dateStart":"9/29/2021", // chỉ dùng date start vì mới làm thêm 1 ngày à, dateStart là ngày muống thêm lịch
+    "dateEnd":"1/10/2021", // tạm thời k dùng 
+    "roomId":"61546d3254698823ccb8cbfd" // mã phòng
+}
+
+
+
+###
+POST http://localhost:4000/api/showTime/add
+Content-Type: application/json
+
+{
+    "roomId":"61546d3254698823ccb8cbfd",
+    "premiereId":"61547c7b81058c2a702f8035",
+    "timeSlotsId":["6154595f543dc74d680458d0"],
+    "date":"10/3/2021"
+}
+
+####
+GET http://localhost:4000/api/showTime/all
+
+####
+GET http://localhost:4000/api/timeSlot/list-time
+Content-Type: application/json
+
+{
+    "dateStart":"9/29/2021",
+    "dateEnd":"1/10/2021", 
+   "roomId":"61546d3254698823ccb8cbfd" 
+}
+
+####
+POST http://localhost:4000/api/ticker/add
+Content-Type: application/json
+
+{
+    "rowNumber":1,
+    "seatInRow":1,
+    "price":120,
+    "premiere":"61547c7b81058c2a702f8037"
+}
+
+###
+GET http://localhost:4000/api/ticker/get/6155c034ca59e447ec58e1f0

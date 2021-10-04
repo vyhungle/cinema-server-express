@@ -3,7 +3,10 @@ const router = express.Router();
 import request from "supertest";
 
 import Movie from "../models/Movie";
-import { addCategoryDetail, addPremiere } from "../api/serverAPI";
+import CategoryDetail from "../models/CategoryDetail";
+import ScreenDetail from "../models/ScreenDetail";
+
+import { addCategoryDetail, addSCreenDetail } from "../api/serverAPI";
 import { ValidateMovie } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -18,6 +21,7 @@ router.post("/add", async (req, res) => {
     cast,
     screensId,
     categoryId,
+    age,
   } = req.body;
 
   try {
@@ -27,7 +31,8 @@ router.post("/add", async (req, res) => {
       image,
       trailer,
       directorId,
-      cast
+      cast,
+      age
     );
     if (valid) {
       const movie = new Movie({
@@ -38,10 +43,11 @@ router.post("/add", async (req, res) => {
         description,
         director: directorId,
         cast,
+        age,
       });
       await movie.save();
       // thêm xuất chiếu phim
-      addPremiere(client, screensId, "/api/premiere/add", movie._id);
+      addSCreenDetail(client, screensId, "/api/screenDetail/add", movie._id);
       // thêm thể loại
       addCategoryDetail(
         client,
@@ -76,13 +82,37 @@ router.post("/add", async (req, res) => {
 router.get("/all", async (req, res) => {
   try {
     const movies = await Movie.find();
+
     if (movies) {
+      for (let i = 0; i < movies.length; i++) {
+        const categoryDetail = await CategoryDetail.find({
+          movie: movies[i]._id,
+        }).populate("category");
+        const screenDetail = await ScreenDetail.find({
+          movie: movies[i]._id,
+        }).populate("screen");
+
+        const categories = [];
+        for (let item of categoryDetail) {
+          categories.push(item.category);
+        }
+
+        const screens = [];
+        for (let item of screenDetail) {
+          screens.push(item.screen);
+        }
+        movies[i] = { ...movies[i]._doc, categories, screens };
+      }
+
       return res.json({
         success: true,
         message: "Lấy danh sách thể loai phim thành công",
-        values: { movies },
+        values: {
+          movies,
+        },
       });
     }
+
     return res.json({
       success: false,
       message: "Lấy danh sách phim thất bại",

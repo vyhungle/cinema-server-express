@@ -245,7 +245,8 @@ export const ValidateMovie = (
   image,
   trailer,
   directorId,
-  cast
+  cast,
+  age
 ) => {
   let errors = {};
   if (name.trim() === "") {
@@ -265,6 +266,9 @@ export const ValidateMovie = (
   }
   if (cast.trim() === "") {
     errors.cast = "Vui lòng nhập diễn viên";
+  }
+  if (typeof age !== "number" || age===undefined) {
+    errors.cast = "Vui lòng nhập tuổi";
   }
 
   return {
