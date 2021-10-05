@@ -38,6 +38,15 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.delete("/delete-movie/:id", async (req, res) => {
+  try {
+    await ScreenDetail.find({ movie: req.params.id }, function (err, docs) {
+      docs.remove();
+    });
+    return true;
+  } catch (error) {}
+});
+
 router.put("/update/:id", async (req, res) => {
   const { screenId, movieId } = req.body;
   try {
