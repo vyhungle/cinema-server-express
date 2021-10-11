@@ -492,7 +492,7 @@ GET http://localhost:4000/api/showTime/all
 Content-Type: application/json
 
 {
-    "dateStart":"10/12/2021",
+    "dateStart":"10/16/2021",
     "dateEnd":"10/13/2021"
    
 }
@@ -520,3 +520,32 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4000/api/ticker/get/6155c034ca59e447ec58e1f0
+
+
+
+
+####
+POST http://localhost:4000/api/movieDetail/add
+Content-Type: application/json
+
+{
+    "movieId":"61644b3cdf1b9d2700e43b29",
+    "cinemaId":"614c03db576b5d00376801a6",
+    "dateStart":"10/12/2021",
+    "dateEnd":"12/2/2021"
+}
+
+####
+PUT http://localhost:4000/api/movieDetail/update/61645f8613ad8061d871a29e
+Content-Type: application/json
+
+{
+    "movieId":"61644b3cdf1b9d2700e43b29",
+    "cinemaId":"614c8a9e192439003768b5c1",
+    "dateStart":"10/14/2021",
+    "dateEnd":"12/4/2021"
+}
+
+
+###
+GET http://localhost:4000/api/movieDetail/get-movie-in-cinema/614c8a9e192439003768b5c1

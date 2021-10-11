@@ -1,3 +1,8 @@
+const isEmpty = (value) => {
+  if (value === undefined || value === null || value.trim() === "") return true;
+  return false;
+};
+
 module.exports.ValidateRegisterInput = (
   isEmail,
   isPhone,
@@ -14,13 +19,13 @@ module.exports.ValidateRegisterInput = (
     /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
   const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 
-  if (fullName.trim() === "") {
+  if (isEmpty(fullName)) {
     errors.fullName = "Vui lòng nhập họ tên";
   } else if (fullName.length < 5) {
     errors.fullName = "Họ tên không được nhỏ hơn 5 ký tự";
   }
 
-  if (phoneNumber.trim() === "") {
+  if (isEmpty(phoneNumber)) {
     errors.phoneNumber = "Vui lòng nhập số điện thoại";
   } else if (!phoneNumber.match(vnf_regex)) {
     errors.phoneNumber = "Số điện thoại phải là số điện thoại hợp lệ";
@@ -28,7 +33,7 @@ module.exports.ValidateRegisterInput = (
     errors.phoneNumber = "Số điện thoại này đã tồn tại";
   }
 
-  if (email.trim() === "") {
+  if (isEmpty(email)) {
     errors.email = "Vui lòng nhập email";
   } else if (!email.match(regEx)) {
     errors.email = "Email phải là một địa chỉ email hợp lệ";
@@ -36,7 +41,7 @@ module.exports.ValidateRegisterInput = (
     errors.email = "Email này đã tồn tại";
   }
 
-  if (password.trim() === "") {
+  if (isEmpty(password)) {
     errors.password = "Vui lòng nhập mật khẩu";
   } else if (password.length < 5) {
     errors.password = "Mật khẩu không được nhỏ hơn 5 ký tự";
@@ -44,17 +49,17 @@ module.exports.ValidateRegisterInput = (
     errors.confirmPassword = "mật khẩu phải trùng khớp";
   }
 
-  if (address.city.trim() === "" || address.city === undefined) {
+  if (isEmpty(address.city)) {
     errors.city = "Vui lòng chọn Tỉnh/Thành phố";
-  } else if (address.district.trim() === "" || address.district === undefined) {
+  } else if (isEmpty(address.district)) {
     errors.district = "Vui lòng chọn Quận/Huyện";
-  } else if (address.ward.trim() === "" || address.ward === undefined) {
+  } else if (isEmpty(address.ward)) {
     errors.ward = "Vui lòng chọn Phường/Xã";
-  } else if (address.street.trim() === "" || address.street === undefined) {
+  } else if (isEmpty(address.street)) {
     errors.street = "Vui lòng nhập số nhà, tên đường";
   }
 
-  if (dateOfBirth.trim() === "") {
+  if (isEmpty(dateOfBirth)) {
     errors.dateOfBirth = "Vui lòng chọn ngày sinh";
   } else if (new Date(dateOfBirth) > Date.now()) {
     errors.dateOfBirth = "Vui lòng chọn lại ngày sinh";
@@ -71,11 +76,11 @@ module.exports.ValidateLoginInput = (username, password) => {
   const regEx =
     /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 
-  if (username.trim() === "") {
+  if (isEmpty(username)) {
     errors.username = "Vui lòng nhập số điện thoại hoặc email";
   }
 
-  if (password.trim() === "") {
+  if (isEmpty(password)) {
     errors.password = "Vui lòng nhập mật khẩu";
   }
   return {
@@ -87,17 +92,17 @@ module.exports.ValidateLoginInput = (username, password) => {
 module.exports.ValidateCinema = (name, address) => {
   var errors = {};
 
-  if (name.trim() === "") {
+  if (isEmpty(name)) {
     errors.name = "Vui lòng nhập tên rạp phim";
   }
 
-  if (address.city.trim() === "" || address.city === undefined) {
+  if (isEmpty(address.city)) {
     errors.city = "Vui lòng chọn Tỉnh/Thành phố";
-  } else if (address.district.trim() === "" || address.district === undefined) {
+  } else if (isEmpty(address.district)) {
     errors.district = "Vui lòng chọn Quận/Huyện";
-  } else if (address.ward.trim() === "" || address.ward === undefined) {
+  } else if (isEmpty(address.ward)) {
     errors.ward = "Vui lòng chọn Phường/Xã";
-  } else if (address.street.trim() === "" || address.street === undefined) {
+  } else if (isEmpty(address.street)) {
     errors.street = "Vui lòng nhập số nhà, tên đường";
   }
   return {
@@ -121,13 +126,13 @@ module.exports.ValidateStaff = (
     /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
   const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 
-  if (fullName.trim() === "") {
+  if (isEmpty(fullName)) {
     errors.fullName = "Vui lòng nhập họ tên của nhân viên";
   } else if (fullName.trim().length < 5) {
     errors.fullName = "Tên không hợp lệ";
   }
 
-  if (email.trim() === "") {
+  if (isEmpty(email)) {
     errors.email = "Vui lòng nhập email của nhân viên";
   } else if (!email.match(regEx)) {
     errors.email = "Email phải là một địa chỉ email hợp lệ";
@@ -135,7 +140,7 @@ module.exports.ValidateStaff = (
     errors.email = "Email này đã tồn tại";
   }
 
-  if (phoneNumber.trim() === "") {
+  if (isEmpty(phoneNumber)) {
     errors.phoneNumber = "Vui lòng nhập số điện thoại";
   } else if (!phoneNumber.match(vnf_regex)) {
     errors.phoneNumber = "Số điện thoại phải là số điện thoại hợp lệ";
@@ -147,10 +152,10 @@ module.exports.ValidateStaff = (
     errors.male = "Vui lòng chọn giới tính của nhân viên";
   }
 
-  if (permissionId.trim() === "") {
+  if (isEmpty(permissionId)) {
     errors.permission = "Vui lòng chọn quyền truy cập của nhân viên";
   }
-  if (cinemaId.trim() === "") {
+  if (isEmpty(cinemaId)) {
     errors.cinema = "Vui lòng chọn rạp phim";
   }
   return {
@@ -167,12 +172,12 @@ module.exports.ValidateChangePassword = (
 ) => {
   var errors = {};
 
-  if (oldPassword.trim() === "") {
+  if (isEmpty(oldPassword)) {
     errors.oldPassword = "Vui lòng nhập mật khẩu cũ";
   } else if (!match) {
     errors.oldPassword = "Mật khẩu cũ không chính sát";
   }
-  if (newPassword.trim() === "") {
+  if (isEmpty(newPassword)) {
     errors.newPassword = "Vui lòng nhập mật khẩu mới";
   } else if (newPassword.trim().length < 6) {
     errors.newPassword = "Mật khẩu phải có ít nhất 6 ký tự";
@@ -195,7 +200,7 @@ module.exports.ValidateRoom = (
 ) => {
   var errors = {};
 
-  if (name.trim() === "") {
+  if (isEmpty(name)) {
     errors.name = "Vui lòng nhập tên rạp phim";
   }
   if (rowNumber === undefined) {
@@ -210,10 +215,10 @@ module.exports.ValidateRoom = (
     errors.seatsInRow = "Số  ghế cho một hàng phải lớn hơn 10";
   }
 
-  if (screenId.trim() === "") {
+  if (isEmpty(screenId)) {
     errors.screenId = "Vui lòng chọn loại màng hình";
   }
-  if (cinemaId.trim() === "") {
+  if (isEmpty(cinemaId)) {
     errors.cinemaId = "Vui lòng chọn rạp phim";
   }
 
@@ -226,10 +231,10 @@ module.exports.ValidateRoom = (
 module.exports.ValidateRoomDetail = (roomId, timeSlotId) => {
   var errors = {};
 
-  if (roomId.trim() === "") {
+  if (isEmpty(roomId)) {
     errors.roomId = "Vui lòng chọn phòng chiếu";
   }
-  if (timeSlotId.trim() === "") {
+  if (isEmpty(timeSlotId)) {
     errors.timeSlotId = "Vui lòng chọn khung giờ chiếu";
   }
 
@@ -249,22 +254,22 @@ export const ValidateMovie = (
   age
 ) => {
   let errors = {};
-  if (name.trim() === "") {
+  if (isEmpty(name)) {
     errors.name = "Vui lòng nhập tên phim";
   }
   if (moveDuration === undefined) {
     errors.moveDuration = "Vui lòng nhập thời lượng phim";
   }
-  if (image.trim() === "") {
+  if (isEmpty(image)) {
     errors.image = "Vui lòng chọn poster";
   }
-  if (trailer.trim() === "") {
+  if (isEmpty(trailer)) {
     errors.trailer = "Vui lòng chọn trailer";
   }
-  if (directorId.trim() === "") {
+  if (isEmpty(directorId)) {
     errors.directorId = "Vui lòng chọn đạo diễn";
   }
-  if (cast.trim() === "") {
+  if (isEmpty(cast)) {
     errors.cast = "Vui lòng nhập diễn viên";
   }
   if (typeof age !== "number" || age === undefined) {
@@ -289,29 +294,59 @@ export const ValidateShowTime = (
   const _dateStart = new Date(dateStart);
   const _dateEnd = new Date(dateEnd);
 
-  if (dateStart.trim() === "") {
+  if (isEmpty(dateStart)) {
     errors.dateStart = "Vui lòng chọn ngày bắt đầu";
   } else if (_dateStart < Date.now()) {
-    errors.dateStart =
-      "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại";
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại";
   } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
     errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
   }
 
-  if (screenDetailId.trim() === "") {
+  if (isEmpty(screenDetailId)) {
     errors.screenDetailId = "Vui lòng chọn phim.";
   }
 
-  if (cinemaId.trim() === "") {
+  if (isEmpty(cinemaId)) {
     errors.cinemaId = "Vui lòng chọn rạp.";
   }
 
   if (body === [] || body === undefined || body === null) {
-    errors.body = "Vui lòng chọn phòng, khung giờ để xếp lịch chiếu";
+    errors.showTimes = "Vui lòng chọn phòng, khung giờ để xếp lịch chiếu";
   }
 
   return {
     errors,
     valid: Object.keys(errors).length < 1,
   };
+};
+
+export const ValidateMovieDetail = (movieId, cinemaId, dateStart, dateEnd) => {
+  let errors = {};
+
+  const _dateStart = new Date(dateStart);
+  const _dateEnd = new Date(dateEnd);
+
+  if(isEmpty(movieId)){
+    errors.movieId="Vui lòng chọn phim."
+  }
+
+  if(isEmpty(cinemaId)){
+    errors.cinemaId="Vui lòng chọn rạp."
+  }
+
+  if (isEmpty(dateStart)) {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu.";
+  } else if (_dateStart < Date.now()) {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại.";
+  } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
+  }
+
+  if (isEmpty(dateEnd)){
+    errors.dateEnd="Vui lòng chọn ngày kết thúc"
+  }
+    return {
+      errors,
+      valid: Object.keys(errors).length < 1,
+    };
 };
