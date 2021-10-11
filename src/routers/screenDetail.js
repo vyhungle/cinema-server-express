@@ -115,4 +115,36 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/get-movie/:id", async (req, res) => {
+  try {
+    const movies = await ScreenDetail.find({ screen: req.params.id }).populate(
+      "movie"
+    );
+    if (movies) {
+      const response = [];
+      movies.map((item) => {
+        response.push(item.movie);
+      });
+      res.json({
+        success: true,
+        message: "Lấy danh sách phim theo mã màng hình thành công",
+        movies: movies,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: "Lấy danh sách phim theo mã màng hình thất bại",
+        movies: [],
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+
+});
+
 module.exports = router;

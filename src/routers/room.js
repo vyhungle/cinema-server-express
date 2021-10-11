@@ -150,4 +150,28 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/get-room-by-screen/:id", async (req, res) => {
+  try {
+    const rooms = await Room.find({ screen: req.params.id });
+    if (rooms) {
+      return res.json({
+        success: true,
+        message: "Lấy danh sách phòng theo mã màng hình thành công.",
+        rooms,
+      });
+    }
+    return res.json({
+      success: false,
+      message: "Lấy danh sách phòng theo mã màng hình thất bại.",
+      rooms: [],
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
 module.exports = router;

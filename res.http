@@ -310,7 +310,7 @@ POST http://localhost:4000/api/screen/add
 Content-Type: application/json
 
 {
-    "name":"IMAX"
+    "name":"3D"
 }
 
 ###
@@ -386,6 +386,9 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4000/api/room/all
+
+###
+GET http://localhost:4000/api/room/get-room-by-screen/614ebe7404f1a516b8b5b2bd
 
 ###
 DELETE http://localhost:4000/api/room/delete/615014788c46a51a64563a95
@@ -475,10 +478,14 @@ POST http://localhost:4000/api/showTime/add
 Content-Type: application/json
 
 {
-    "roomId":"61546d3254698823ccb8cbfd",
-    "premiereId":"61547c7b81058c2a702f8035",
-    "timeSlotsId":["6154595f543dc74d680458d0"],
-    "date":"10/3/2021"
+    "dateStart":"10/12/2021",
+    "dateEnd":"10/15/2021",
+    "screenDetailId":"61644b3cdf1b9d2700e43b34",
+    "cinemaId":"614c03db576b5d00376801a6",
+    "body":[
+        {"roomId":"61546d3254698823ccb8cbfd","times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"]},
+        {"roomId":"6164461c8f5ac35aecd5616e","times":["6157d524b029ee0037ccbd26"]}
+    ]
 }
 
 ####

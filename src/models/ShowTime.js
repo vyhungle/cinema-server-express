@@ -2,18 +2,13 @@ import { model, Schema } from "mongoose";
 
 const showTimeSchema = new Schema({
   status: Boolean,
-  date: String,
-  room: {
+  cinema: {
     type: Schema.Types.ObjectId,
-    ref: "rooms",
+    ref: "cinemas",
   },
-  premiere: {
+  screenDetail: {
     type: Schema.Types.ObjectId,
-    ref: "premieres",
-  },
-  timeSlot: {
-    type: Schema.Types.ObjectId,
-    ref: "timeslots",
+    ref: "screendetails",
   },
 });
 

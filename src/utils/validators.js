@@ -267,8 +267,47 @@ export const ValidateMovie = (
   if (cast.trim() === "") {
     errors.cast = "Vui lòng nhập diễn viên";
   }
-  if (typeof age !== "number" || age===undefined) {
+  if (typeof age !== "number" || age === undefined) {
     errors.cast = "Vui lòng nhập tuổi";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
+export const ValidateShowTime = (
+  dateStart,
+  dateEnd,
+  screenDetailId,
+  cinemaId,
+  body
+) => {
+  let errors = {};
+
+  const _dateStart = new Date(dateStart);
+  const _dateEnd = new Date(dateEnd);
+
+  if (dateStart.trim() === "") {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu";
+  } else if (_dateStart < Date.now()) {
+    errors.dateStart =
+      "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại";
+  } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
+  }
+
+  if (screenDetailId.trim() === "") {
+    errors.screenDetailId = "Vui lòng chọn phim.";
+  }
+
+  if (cinemaId.trim() === "") {
+    errors.cinemaId = "Vui lòng chọn rạp.";
+  }
+
+  if (body === [] || body === undefined || body === null) {
+    errors.body = "Vui lòng chọn phòng, khung giờ để xếp lịch chiếu";
   }
 
   return {
