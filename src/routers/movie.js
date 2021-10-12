@@ -207,7 +207,7 @@ router.get("/all", async (req, res) => {
 
     if (movies) {
       for (let i = 0; i < movies.length; i++) {
-        movies[i] = await await getMovie(movies[i]);
+        movies[i] = await getMovie(movies[i]);
       }
       return res.json({
         success: true,
