@@ -3,6 +3,7 @@ const router = express.Router();
 import request from "supertest";
 
 import Movie from "../models/Movie";
+import MovieDetail from "../models/MovieDetail";
 import CategoryDetail from "../models/CategoryDetail";
 import ScreenDetail from "../models/ScreenDetail";
 
@@ -156,21 +157,28 @@ router.put("/update/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
   try {
-    const movie = await Movie.findById(req.params.id).deleteOne().exec();
-    if (movie) {
-      // delete screen detail
-      await ScreenDetail.find({ movie: req.params.id }).deleteMany().exec();
-      // delete category detail
-      await CategoryDetail.find({ movie: req.params.id }).deleteMany().exec();
+    const check = await MovieDetail.find({ movie: req.params.id });
+    if (check.length === 0) {
+      const movie = await Movie.findById(req.params.id).deleteOne().exec();
+      if (movie) {
+        // delete screen detail
+        await ScreenDetail.find({ movie: req.params.id }).deleteMany().exec();
+        // delete category detail
+        await CategoryDetail.find({ movie: req.params.id }).deleteMany().exec();
 
+        return res.json({
+          success: true,
+          message: "Xóa phim thành công",
+        });
+      }
       return res.json({
-        success: true,
-        message: "Xóa phim thành công",
+        success: false,
+        message: "xóa phim thất bại",
       });
     }
-    return req.json({
+    return res.json({
       success: false,
-      message: "xóa phim thất bại",
+      message: "Hiện tại có rạp đang chiếu, nên không thể xóa phim này.",
     });
   } catch (error) {
     res.status(400).json({
