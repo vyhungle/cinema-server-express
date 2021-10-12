@@ -181,31 +181,34 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+const getMovie = async (movie) => {
+  const categoryDetail = await CategoryDetail.find({
+    movie: movie.id,
+  }).populate("category");
+  const screenDetail = await ScreenDetail.find({
+    movie: movie.id,
+  }).populate("screen");
+
+  const categories = [];
+  for (let item of categoryDetail) {
+    categories.push(item.category);
+  }
+
+  const screens = [];
+  for (let item of screenDetail) {
+    screens.push(item.screen);
+  }
+  return { ...movie._doc, categories, screens };
+};
+
 router.get("/all", async (req, res) => {
   try {
     const movies = await Movie.find().populate("director");
 
     if (movies) {
       for (let i = 0; i < movies.length; i++) {
-        const categoryDetail = await CategoryDetail.find({
-          movie: movies[i]._id,
-        }).populate("category");
-        const screenDetail = await ScreenDetail.find({
-          movie: movies[i]._id,
-        }).populate("screen");
-
-        const categories = [];
-        for (let item of categoryDetail) {
-          categories.push(item.category);
-        }
-
-        const screens = [];
-        for (let item of screenDetail) {
-          screens.push(item.screen);
-        }
-        movies[i] = { ...movies[i]._doc, categories, screens };
+        movies[i] = await await getMovie(movies[i]);
       }
-
       return res.json({
         success: true,
         message: "Lấy danh sách thể loai phim thành công",
@@ -214,7 +217,6 @@ router.get("/all", async (req, res) => {
         },
       });
     }
-
     return res.json({
       success: false,
       message: "Lấy danh sách phim thất bại",
@@ -236,13 +238,14 @@ router.get("/:id", async (req, res) => {
       return res.json({
         success: true,
         message: "Lấy phim thành công",
-        values: { movie },
+        values: {
+          movie: await getMovie(movie),
+        },
       });
     }
     return res.json({
       success: false,
       message: "Lấy phim thất bại",
-      values: { movie: {} },
     });
   } catch (error) {
     res.status(400).json({
