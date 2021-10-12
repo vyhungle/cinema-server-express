@@ -754,7 +754,7 @@ Api location:
                "movie": obj movie
           }
 
-## `ShowTime Lịch chiếu`
+## `ShowTime`
 
 ### Modal
 
