@@ -20,6 +20,7 @@ Api location:
 - [Category](#category)
 - [Nation](#nation)
 - [Movie](#movie)
+- [ShowTime](#showTime)
 
 ## `Cinema`
 
@@ -596,17 +597,6 @@ Api location:
                "director": obj director
           }
 
-## `Producer`
-
-### Modal
-
-     {
-          "_id": string,
-          "name": string,
-          "address": string,
-          "phoneNumber": string,
-          ""email: string,
-      }
 
 ## `Category`
 
@@ -763,6 +753,74 @@ Api location:
           "values": {
                "movie": obj movie
           }
+
+## `ShowTime Lịch chiếu`
+
+### Modal
+
+     {
+          "_id": string,
+          status: Boolean,
+          cinema: String,
+          screenDetail: String,
+     }
+
+### Tạo Lịch chiếu
+
+- Method post
+- https://server-api-cinema.herokuapp.com/api/showTime/add
+- body
+     
+          "dateStart":"10/16/2021",
+          "dateEnd":"10/20/2021"  // có thể bỏ trống
+          "screenDetailId":"61644b3cdf1b9d2700e43b34",
+          "cinemaId":"614c03db576b5d00376801a6",
+          "showTimes":[
+               {"roomId":"61546d3254698823ccb8cbfd","times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"]},
+               {"roomId":"6164461c8f5ac35aecd5616e","times":["6157d524b029ee0037ccbd26"]}
+          ]
+
+- res
+
+          "success": true,
+          "message": "Thêm lịch chiếu thành công"
+
+          "success": false,
+          "errors": {
+               "dateStart": "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.",
+               "screenDetailId": "Vui lòng chọn phim.",
+               "cinemaId": "Vui lòng chọn rạp.",
+               "showTimes": "Vui lòng chọn phòng, khung giờ để xếp lịch chiếu"
+          }
+
+### Lấy lịch chiếu theo khoảng thời gian
+
+- Method get
+- https://server-api-cinema.herokuapp.com/api/showTime/all
+-body
+
+          "dateStart":"10/16/2021",
+          "dateEnd":"10/13/2021"
+
+- res
+
+          "success": boolean,
+          "message": string,
+          "showTimes": [
+               {
+                    "_id": "6164539756461e3668c85741",
+                    "date": "10/16/2021",
+                    "room": {
+                         "_id": "61546d3254698823ccb8cbfd",
+                         "name": "A1",
+                         "rowNumber": 10,
+                         "seatsInRow": 10,
+                         "screen": "614ebe7404f1a516b8b5b2bd",
+                         "cinema": "614c03db576b5d00376801a6",
+                         "__v": 0
+                    },
+               }
+          ]
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
