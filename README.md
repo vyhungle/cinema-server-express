@@ -761,8 +761,8 @@ Api location:
      {
           "_id": string,
           status: Boolean,
-          cinema: String,
-          screenDetail: String,
+          cinema: obj cinema,
+          screenDetail: obj {screen, movie},
      }
 
 ### Tạo Lịch chiếu
