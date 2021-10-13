@@ -241,7 +241,7 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const movie = await Movie.findById(req.params.id);
+    const movie = await Movie.findById(req.params.id).populate("director");
     if (movie) {
       return res.json({
         success: true,

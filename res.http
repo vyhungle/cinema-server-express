@@ -138,7 +138,7 @@ Content-Type: application/json
       "description":"Cruella lấy bối cảnh London thập niên 70, sau cuộc cách mạng văn hóa và âm nhạc. Emma Stone vào vai nhà thiết kế trẻ tuổi Estella – một cô gái trẻ tham vọng, chịu thương chịu khó nhưng lại bị đánh giá thấp trong nghề. Chẳng cam lòng, cô nàng quyết tâm tạo dựng tên tuổi trong ngành thời trang.",
       "directorId":"6151c0bac6c71f4db8851253",
       "cast":"Emma Stone, Emma Thompson, Mark Strong",
-      "screensId":["614ebe7404f1a516b8b5b2bd","614ebe7d04f1a516b8b5b2bf","614ebe8904f1a516b8b5b2c1"],
+      "screensId":["61644b08df1b9d2700e43b23","61644b0edf1b9d2700e43b25","61644b12df1b9d2700e43b27"],
       "categoryId":["6151c6c2109695099c420081","6151c6c9109695099c420083"],
       "age":12
       
@@ -172,7 +172,7 @@ GET http://localhost:4000/api/movie/all
 
 
 ###
-GET http://localhost:4000/api/movie/61653b6c4691860037404dc8
+GET http://localhost:4000/api/movie/616687444d9261003761f340
 
 
 
@@ -388,7 +388,7 @@ Content-Type: application/json
 GET http://localhost:4000/api/room/all
 
 ###
-GET http://localhost:4000/api/room/get-room-by-screen/614ebe7404f1a516b8b5b2bd
+GET http://localhost:4000/api/room/get-room-by-screen/61644b12df1b9d2700e43b27
 
 ###
 DELETE http://localhost:4000/api/room/delete/615014788c46a51a64563a95
@@ -449,16 +449,16 @@ POST http://localhost:4000/api/room/add
 Content-Type: application/json
 
 {
-    "name":"A1",
+    "name":"A2",
     "rowNumber":10, 
     "seatsInRow":10,
-    "screenId":"614ebe7404f1a516b8b5b2bd", 
+    "screenId":"61644b12df1b9d2700e43b27", 
     "cinemaId":"614c03db576b5d00376801a6", 
-    "timeSlotsId":["6154592b543dc74d680458c8","6154593a543dc74d680458ca","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"] // danh sách khung giờ
+    "timeSlotsId":["6154592b543dc74d680458c8","6154593a543dc74d680458ca","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"] 
 }
 
 ### get phim theo màng hình
-GET http://localhost:4000/api/premiere/find-screen/614ebe7404f1a516b8b5b2bd
+GET http://localhost:4000/api/premiere/find-screen/61644b12df1b9d2700e43b27
 
 
 ### lấy danh sách khung giờ theo ngày và phòng
