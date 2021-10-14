@@ -898,6 +898,8 @@ Api location:
 - Method get
 - https://server-api-cinema.herokuapp.com/api/all
 - res 
+
+
           "success": Boolean,
           "message": String,
           "values":{
@@ -909,6 +911,7 @@ Api location:
 - Method get
 - https://server-api-cinema.herokuapp.com/get-room-by-screen/all
 - res 
+
           "success": Boolean,
           "message": String,
           "values":{
@@ -919,9 +922,10 @@ Api location:
 - Method delete
 - https://server-api-cinema.herokuapp.com/delete/all
 - res 
+
           "success": Boolean,
           "message": String,
-          
+
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
