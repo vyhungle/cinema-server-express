@@ -8,8 +8,7 @@ import { ValidateRoom } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
-  const { name, rowNumber, seatsInRow, screenId, cinemaId, timeSlotsId } =
-    req.body;
+  const { name, rowNumber, seatsInRow, screenId, cinemaId } = req.body;
 
   try {
     const { valid, errors } = ValidateRoom(
@@ -34,8 +33,6 @@ router.post("/add", async (req, res) => {
       cinema: cinemaId,
     });
     await room.save();
-    // them chi tiet phong
-    addRoomDetail(client, timeSlotsId, "/api/roomDetail/add", room._id);
 
     const newRoom = await Room.findById(room._id)
       .populate("cinema")
@@ -129,7 +126,7 @@ router.delete("/delete/:id", async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const rooms = await Room.find();
+    const rooms = await Room.find().populate("cinema").populate("screen");
     if (rooms) {
       return res.json({
         success: true,
@@ -152,7 +149,9 @@ router.get("/all", async (req, res) => {
 
 router.get("/get-room-by-screen/:id", async (req, res) => {
   try {
-    const rooms = await Room.find({ screen: req.params.id });
+    const rooms = await Room.find({ screen: req.params.id })
+      .populate("cinema")
+      .populate("screen");
     if (rooms) {
       return res.json({
         success: true,

@@ -363,12 +363,12 @@ POST http://localhost:4000/api/room/add
 Content-Type: application/json
 
 {
-    "name":"A4", 
+    "name":"B3", 
     "rowNumber":10, 
     "seatsInRow":10, 
-    "screenId":"614ebe7404f1a516b8b5b2bd",
-    "cinemaId":"614c03db576b5d00376801a6",
-    "timeSlotsId":["6154592b543dc74d680458c8","6154592b543dc74d680458c8","61545946543dc74d680458cc","6154594e543dc74d680458ce","6154595f543dc74d680458d0","61545979543dc74d680458d2"]
+    "screenId":"61644b08df1b9d2700e43b23",
+    "cinemaId":"614c03db576b5d00376801a6"
+    
 }
 
 
