@@ -920,7 +920,7 @@ Api location:
 
 ### xóa phòng
 - Method delete
-- https://server-api-cinema.herokuapp.com/delete/all
+- https://server-api-cinema.herokuapp.com/delete/:id
 - res 
 
           "success": Boolean,
