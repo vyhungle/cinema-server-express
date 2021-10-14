@@ -896,7 +896,7 @@ Api location:
           },
 ### lấy danh sách room
 - Method get
-- https://server-api-cinema.herokuapp.com/api/all
+- https://server-api-cinema.herokuapp.com/api/room/all
 - res 
 
 
