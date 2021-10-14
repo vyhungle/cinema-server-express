@@ -5,7 +5,11 @@ import moment from "moment";
 import ShowTime from "../models/ShowTime"; //fix log
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import { ValidateShowTime } from "../utils/validators";
-
+const getDate = (parentDate, childDate) => {
+  return childDate === "" || childDate === undefined || childDate === null
+    ? parentDate
+    : childDate;
+};
 router.post("/add", async (req, res) => {
   const { dateStart, dateEnd, screenDetailId, cinemaId, showTimes } = req.body;
   try {
@@ -28,11 +32,13 @@ router.post("/add", async (req, res) => {
 
       showTimes.map((item) => {
         item.times.map(async (time) => {
-          const date_start = new Date(dateStart);
+          const date_start = new Date(getDate(dateStart, item.dateStart));
           const date_end =
-            dateEnd === "" || dateEnd === undefined || dateEnd === null
-              ? new Date(dateStart)
-              : new Date(dateEnd);
+            getDate(dateEnd, item.dateEnd) === "" ||
+            getDate(dateEnd, item.dateEnd) === undefined ||
+            getDate(dateEnd, item.dateEnd) === null
+              ? new Date(date_start)
+              : new Date(getDate(dateEnd, item.dateEnd));
           do {
             const checkShowTimeDetail = await ShowTimeDetail.findOne({
               room: item.roomId,

@@ -479,9 +479,13 @@ Content-Type: application/json
 
 {
     "dateStart":"10/16/2021",
-    "dateEnd":"10/15/2021",
-    "screenDetailId":"",
-    "cinemaId":""
+    "dateEnd":"10/17/2021",
+    "screenDetailId":"61644b3cdf1b9d2700e43b34", 
+    "cinemaId":"614c03db576b5d00376801a6", 
+    "showTimes":[
+         {"roomId":"61546d3254698823ccb8cbfd","times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"], "dateStart":"10/18/2021", "dateEnd":"10/20/2021"},
+         {"roomId":"6164461c8f5ac35aecd5616e","times":["6157d524b029ee0037ccbd26"],"dateStart":"10/16/2021"}
+    ]
     
 }
 
