@@ -771,16 +771,16 @@ Api location:
 - https://server-api-cinema.herokuapp.com/api/showTime/add
 - body
      
-          "dateStart":"10/16/2021",
-          "dateEnd":"10/20/2021"  // có thể bỏ trống
+          "dateStart":"10/16/2021", // ngày bắt đầu tạo lịch
+          "dateEnd":"10/20/2021"  // ngày kết thúc tạo lich, có thể bỏ trống
           "screenDetailId":"61644b3cdf1b9d2700e43b34", // mã định dạng
           "cinemaId":"614c03db576b5d00376801a6", // mã rạp
           "showTimes":[
                {
-                    "roomId":"61546d3254698823ccb8cbfd",
-                    "times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"], 
-                    "dateStart": có thể có hoặc không, 
-                    "dateEnd": có thể có hoặc không
+                    "roomId":"61546d3254698823ccb8cbfd", // mã phòng
+                    "times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"], // list khung giờ
+                    "dateStart": "MM/dd/yyy" // ngày bắt đầu tạo lịch, có thể có hoặc không, 
+                    "dateEnd": "MM/dd/yyy" // ngày kết thúc tạo lịch, có thể có hoặc không
                },
                {
                     "roomId":"6164461c8f5ac35aecd5616e",
