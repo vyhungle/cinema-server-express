@@ -54,8 +54,7 @@ router.post("/add", async (req, res) => {
 });
 
 router.put("/update/:id", async (req, res) => {
-  const { name, rowNumber, seatsInRow, screenId, cinemaId, timeSlotsId } =
-    req.body;
+  const { name, rowNumber, seatsInRow, screenId, cinemaId } = req.body;
 
   try {
     const oldRoom = await Room.findById(req.params.id);

@@ -21,6 +21,7 @@ Api location:
 - [Nation](#nation)
 - [Movie](#movie)
 - [ShowTime](#showTime)
+- [Room](#room)
 
 ## `Cinema`
 
@@ -831,6 +832,96 @@ Api location:
                     },
                }
           ]
+
+
+
+## `Room`
+
+### Modal
+
+     {
+          "_id": string,
+          name: String,
+          rowNumber: Number,
+          seatsInRow: Number,
+          screen: obj screen,
+          cinema: obj cinema
+     }
+
+### Tạo phòng
+
+- Method post
+- https://server-api-cinema.herokuapp.com/api/room/add
+- body
+     
+          "name":"A2",
+          "rowNumber":10, 
+          "seatsInRow":10,
+          "screenId":"61644b12df1b9d2700e43b27", 
+          "cinemaId":"614c03db576b5d00376801a6", 
+
+- res
+
+          "success": String,
+          "message": String,
+          "values": {
+               "_id": String,
+               "name": String,
+               "room": obj room
+               "cinema": obj cinema,
+               "createdAt": String,
+          },
+
+### Update phòng
+- Method put
+- https://server-api-cinema.herokuapp.com/api/room/:id
+- body
+     
+          "name":"A2",
+          "rowNumber":10, 
+          "seatsInRow":10,
+          "screenId":"61644b12df1b9d2700e43b27", 
+          "cinemaId":"614c03db576b5d00376801a6", 
+
+- res
+
+          "success": Boolean,
+          "message": String,
+          "values": {
+               "_id": String,
+               "name": String,
+               "room": obj room
+               "cinema": obj cinema,
+               "createdAt": String,
+          },
+### lấy danh sách room
+- Method get
+- https://server-api-cinema.herokuapp.com/api/all
+- res 
+          "success": Boolean,
+          "message": String,
+          "values":{
+               rooms:[obj room]
+          }
+
+
+### lấy danh sách room theo mã màng hình
+- Method get
+- https://server-api-cinema.herokuapp.com/get-room-by-screen/all
+- res 
+          "success": Boolean,
+          "message": String,
+          "values":{
+               rooms:[obj room]
+          }
+
+### xóa phòng
+- Method delete
+- https://server-api-cinema.herokuapp.com/delete/all
+- res 
+          "success": Boolean,
+          "message": String,
+          
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [dill]: https://github.com/joemccann/dillinger
