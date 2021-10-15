@@ -65,7 +65,7 @@ router.post("/add", async (req, res) => {
         message: "Thêm lịch chiếu thành công",
       });
     }
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Thêm lịch chiếu thất bại",
       errors,
@@ -79,7 +79,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/all", async (req, res) => {
+router.post("/get-list-showtime", async (req, res) => {
   const { dateStart, dateEnd } = req.body;
   try {
     const date_start = new Date(dateStart);
