@@ -806,8 +806,8 @@ Api location:
 
 ### Lấy lịch chiếu theo khoảng thời gian
 
-- Method get
-- https://server-api-cinema.herokuapp.com/api/showTime/all
+- Method post
+- https://server-api-cinema.herokuapp.com/api/showTime/get-list-showtime
 - body
 
           "dateStart":"10/16/2021", ngày bắt đầu (thứ 2)
