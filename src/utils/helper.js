@@ -101,12 +101,17 @@ export const getDaysInMonth = (year, month) => {
   return res;
 };
 
+const parseTime = (time) => {
+  const flag = time.split(":");
+  return parseFloat(flag[0], 10) + parseFloat(flag[1] / 60, 10);
+};
+
 const mergeTimes = (times, obj, dateParent, dateChild) => {
   const res = times;
   if (dateParent === dateChild) {
     res.push(obj);
   }
-  return res;
+  return res.sort((a, b) => parseTime(a.time) - parseTime(b.time));
 };
 
 export const mergeShowTime = (showTimes) => {
