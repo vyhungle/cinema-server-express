@@ -821,15 +821,11 @@ Api location:
                {
                     "_id": "6164539756461e3668c85741",
                     "date": "10/16/2021",
-                    "room": {
-                         "_id": "61546d3254698823ccb8cbfd",
-                         "name": "A1",
-                         "rowNumber": 10,
-                         "seatsInRow": 10,
-                         "screen": "614ebe7404f1a516b8b5b2bd",
-                         "cinema": "614c03db576b5d00376801a6",
-                         "__v": 0
-                    },
+                    "times":[
+                         time: String,
+                         room: obj room,
+                         movie: obj movie
+                    ]
                }
           ]
 
