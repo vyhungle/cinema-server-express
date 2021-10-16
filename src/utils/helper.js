@@ -106,12 +106,35 @@ const parseTime = (time) => {
   return parseFloat(flag[0], 10) + parseFloat(flag[1] / 60, 10);
 };
 
-const mergeTimes = (times, obj, dateParent, dateChild) => {
-  const res = times;
+const mergeTimes = (times) => {
+  let res = [];
+  times.forEach((item) => {
+    const isTime = res.some((x) => x.time === item.time);
+    if (isTime) {
+      const index = res.findIndex((x) => x.time === item.time);
+      res[index].movieRoom.push({ room: item.room, movie: item.movie });
+    } else {
+      res.push({
+        time: item.time,
+        movieRoom: [
+          {
+            room: item.room,
+            movie: item.movie,
+          },
+        ],
+      });
+    }
+  });
+  return res;
+};
+
+const mergeDates = (times, obj, dateParent, dateChild) => {
+  let res = times;
   if (dateParent === dateChild) {
     res.push(obj);
   }
   return res.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  // return res
 };
 
 export const mergeShowTime = (showTimes) => {
@@ -122,7 +145,7 @@ export const mergeShowTime = (showTimes) => {
       const index = res.findIndex((x) => x.date === element.date);
       res[index] = {
         date: res[index].date,
-        times: mergeTimes(
+        times: mergeDates(
           res[index].times,
           {
             time: element.timeSlot.time,
@@ -145,6 +168,10 @@ export const mergeShowTime = (showTimes) => {
         ],
       });
     }
+  });
+
+  res.forEach((item, index) => {
+    res[index].times = mergeTimes(item.times);
   });
   return res;
 };
