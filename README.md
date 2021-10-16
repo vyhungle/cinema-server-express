@@ -823,8 +823,12 @@ Api location:
                     "date": "10/16/2021",
                     "times":[
                          time: String,
-                         room: obj room,
-                         movie: obj movie
+                         movieRoom:[
+                              {
+                                   room: obj room,
+                                   movie: obj movie
+                              }
+                         ]
                     ]
                }
           ]
@@ -906,6 +910,17 @@ Api location:
 ### lấy danh sách room theo mã màng hình
 - Method get
 - https://server-api-cinema.herokuapp.com/get-room-by-screen/all
+- res 
+
+          "success": Boolean,
+          "message": String,
+          "values":{
+               rooms:[obj room]
+          }
+
+### lấy danh sách room theo mã phim
+- Method get
+- https://server-api-cinema.herokuapp.com/get-by-movie/all
 - res 
 
           "success": Boolean,

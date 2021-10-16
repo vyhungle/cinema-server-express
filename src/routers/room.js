@@ -4,6 +4,7 @@ const router = express.Router();
 import request from "supertest";
 
 import Room from "../models/Room";
+import ScreenDetail from "../models/ScreenDetail";
 import { ValidateRoom } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -162,6 +163,31 @@ router.get("/get-room-by-screen/:id", async (req, res) => {
       success: false,
       message: "Lấy danh sách phòng theo mã màng hình thất bại.",
       rooms: [],
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-by-movie/:id", async (req, res) => {
+  try {
+    const listDetail = await ScreenDetail.find({ movie: req.params.id });
+    let listRooms = [];
+    for (let item of listDetail) {
+      const rooms = await Room.find({ screen: item.screen })
+        .populate("cinema")
+        .populate("screen");
+      listRooms = [...listRooms, rooms];
+    }
+
+    return res.json({
+      success: true,
+      message: "Lấy danh sách phòng chiếu thành công",
+      values: { rooms: listRooms },
     });
   } catch (error) {
     res.status(400).json({
