@@ -100,3 +100,40 @@ export const getDaysInMonth = (year, month) => {
 
   return res;
 };
+
+const mergeTimes = (times, obj, dateParent, dateChild) => {
+  const res = times;
+  if (dateParent === dateChild) {
+    res.push(obj);
+  }
+  return res;
+};
+
+export const mergeShowTime = (showTimes) => {
+  let res = [];
+  showTimes.forEach((element) => {
+    const isDate = res.some((x) => x.date === element.date);
+    if (isDate) {
+      const index = res.findIndex((x) => x.date === element.date);
+      res[index] = {
+        date: res[index].date,
+        times: mergeTimes(
+          res[index].times,
+          {
+            time: element.timeSlot.time,
+            room: element.room,
+            movie: element.showTime.screenDetail.movie,
+          },
+          element.date,
+          res[index].date
+        ),
+      };
+    } else {
+      res.push({
+        date: element.date,
+        times: [{ time: element.timeSlot.time, room: element.room }],
+      });
+    }
+  });
+  return res;
+};

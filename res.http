@@ -131,7 +131,7 @@ POST http://localhost:4000/api/movie/add
 Content-Type: application/json
 
 {
-    "name":"DEMO",
+    "name":"CRUELLA",
       "moveDuration":"120",
       "image":"https://www.galaxycine.vn/media/2021/5/6/1200x1800_1620271790120.jpg",
       "trailer":"https://youtu.be/gmRKv7n2If8",
@@ -363,10 +363,10 @@ POST http://localhost:4000/api/room/add
 Content-Type: application/json
 
 {
-    "name":"C3", 
+    "name":"A3", 
     "rowNumber":10, 
     "seatsInRow":10, 
-    "screenId":"61644b08df1b9d2700e43b23",
+    "screenId":"61644b12df1b9d2700e43b27",
     "cinemaId":"614c03db576b5d00376801a6"
     
 }
@@ -493,8 +493,8 @@ POST http://localhost:4000/api/showTime/get-list-showtime
 Content-Type: application/json
 
 {
-    "dateStart":"10/16/2021",
-    "dateEnd":"10/13/2021"
+    "dateStart":"11/1/2021",
+    "dateEnd":"11/7/2021"
    
 }
 

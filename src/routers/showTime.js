@@ -4,6 +4,7 @@ import moment from "moment";
 
 import ShowTime from "../models/ShowTime"; //fix log
 import ShowTimeDetail from "../models/ShowTimeDetail";
+import { mergeShowTime } from "../utils/helper";
 import { ValidateShowTime } from "../utils/validators";
 const getDate = (parentDate, childDate) => {
   return childDate === "" || childDate === undefined || childDate === null
@@ -94,7 +95,14 @@ router.post("/get-list-showtime", async (req, res) => {
       })
         .populate("room")
         .populate("timeSlot")
-        .populate("showTime");
+        .populate({
+          path: "showTime",
+          populate: {
+            path: "screenDetail",
+            populate: "movie",
+          },
+        });
+
       showTimes = showTimes.concat(showTimeList);
       date_start.setDate(date_start.getDate() + 1);
     } while (date_start <= date_end);
@@ -102,7 +110,7 @@ router.post("/get-list-showtime", async (req, res) => {
     return res.json({
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
-      showTimes,
+      showTimes: mergeShowTime(showTimes),
     });
   } catch (error) {
     res.status(400).json({
