@@ -6,9 +6,9 @@ const showTimeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "cinemas",
   },
-  screenDetail: {
+  movie: {
     type: Schema.Types.ObjectId,
-    ref: "screendetails",
+    ref: "movies",
   },
 });
 

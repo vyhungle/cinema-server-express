@@ -285,7 +285,7 @@ export const ValidateMovie = (
 export const ValidateShowTime = (
   dateStart,
   dateEnd,
-  screenDetailId,
+  movieId,
   cinemaId,
   body
 ) => {
@@ -302,8 +302,8 @@ export const ValidateShowTime = (
     errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
   }
 
-  if (isEmpty(screenDetailId)) {
-    errors.screenDetailId = "Vui lòng chọn phim.";
+  if (isEmpty(movieId)) {
+    errors.movieId = "Vui lòng chọn phim.";
   }
 
   if (isEmpty(cinemaId)) {

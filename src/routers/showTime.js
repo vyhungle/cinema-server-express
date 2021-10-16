@@ -12,18 +12,18 @@ const getDate = (parentDate, childDate) => {
     : childDate;
 };
 router.post("/add", async (req, res) => {
-  const { dateStart, dateEnd, screenDetailId, cinemaId, showTimes } = req.body;
+  const { dateStart, dateEnd, movieId, cinemaId, showTimes } = req.body;
   try {
     const { errors, valid } = ValidateShowTime(
       dateStart,
       dateEnd,
-      screenDetailId,
+      movieId,
       cinemaId,
       showTimes
     );
     if (valid) {
       const newShowTime = await ShowTime({
-        screenDetail: screenDetailId,
+        movie: movieId,
         cinema: cinemaId,
         status: true,
       });
@@ -98,8 +98,7 @@ router.post("/get-list-showtime", async (req, res) => {
         .populate({
           path: "showTime",
           populate: {
-            path: "screenDetail",
-            populate: "movie",
+            path: "movie",
           },
         });
 

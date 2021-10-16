@@ -774,7 +774,7 @@ Api location:
      
           "dateStart":"10/16/2021", // ngày bắt đầu tạo lịch
           "dateEnd":"10/20/2021"  // ngày kết thúc tạo lich, có thể bỏ trống
-          "screenDetailId":"61644b3cdf1b9d2700e43b34", // mã định dạng
+          "movieId":"61644b3cdf1b9d2700e43b34", // mã phim
           "cinemaId":"614c03db576b5d00376801a6", // mã rạp
           "showTimes":[
                {
