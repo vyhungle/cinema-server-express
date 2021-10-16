@@ -131,7 +131,13 @@ export const mergeShowTime = (showTimes) => {
     } else {
       res.push({
         date: element.date,
-        times: [{ time: element.timeSlot.time, room: element.room }],
+        times: [
+          {
+            time: element.timeSlot.time,
+            room: element.room,
+            movie: element.showTime.screenDetail.movie,
+          },
+        ],
       });
     }
   });
