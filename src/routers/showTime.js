@@ -93,7 +93,12 @@ router.post("/get-list-showtime", async (req, res) => {
       const showTimeList = await ShowTimeDetail.find({
         date: moment(date_start).format("L"),
       })
-        .populate("room")
+        .populate({
+          path: "room",
+          populate: {
+            path: "screen",
+          },
+        })
         .populate("timeSlot")
         .populate({
           path: "showTime",
