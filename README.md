@@ -909,7 +909,7 @@ Api location:
 
 ### lấy danh sách room theo mã màng hình
 - Method get
-- https://server-api-cinema.herokuapp.com/get-room-by-screen/all
+- https://server-api-cinema.herokuapp.com/get-room-by-screen/:id
 - res 
 
           "success": Boolean,
@@ -920,7 +920,7 @@ Api location:
 
 ### lấy danh sách room theo mã phim
 - Method get
-- https://server-api-cinema.herokuapp.com/get-by-movie/all
+- https://server-api-cinema.herokuapp.com/get-by-movie/:id
 - res 
 
           "success": Boolean,
