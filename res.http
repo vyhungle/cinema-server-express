@@ -391,7 +391,8 @@ GET http://localhost:4000/api/room/all
 GET http://localhost:4000/api/room/get-room-by-screen/61644b12df1b9d2700e43b27
 
 ###
-GET http://localhost:4000/api/room/get-by-movie/6169a42f038631344897c7c6
+GET http://localhost:4000/api/room/get-by-movie/616a41d1c24a660037796ac2
+
 
 ###
 DELETE http://localhost:4000/api/room/delete/615014788c46a51a64563a95

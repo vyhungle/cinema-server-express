@@ -181,7 +181,7 @@ router.get("/get-by-movie/:id", async (req, res) => {
       const rooms = await Room.find({ screen: item.screen })
         .populate("cinema")
         .populate("screen");
-      listRooms = [...listRooms, rooms];
+      listRooms = listRooms.concat(rooms);
     }
 
     return res.json({
