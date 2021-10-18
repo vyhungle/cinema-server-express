@@ -734,12 +734,14 @@ Api location:
 ### Lấy tất cả phim
 
 - Method post
-- https://server-api-cinema.herokuapp.com/api/movie/all
+- https://server-api-cinema.herokuapp.com/api/movie/all?page=1&limit=2
 - res
 
          "success": boolean,
          "message": string,
          "values": {
+              "pageNumber": number,
+              "hasMore": boolean,
               "movies": [obj movies]
          }
 
