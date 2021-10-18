@@ -210,8 +210,17 @@ const getMovie = async (movie) => {
 };
 
 router.get("/all", async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
   try {
-    const movies = await Movie.find().populate("director");
+    let countSize = 0;
+    Movie.count({}, function (err, count) {
+      countSize = count;
+    });
+
+    const movies = await Movie.find()
+      .populate("director")
+      .limit(parseInt(limit, 10))
+      .skip((parseInt(page, 10) - 1) * parseInt(limit, 10));
 
     if (movies) {
       for (let i = 0; i < movies.length; i++) {
@@ -221,6 +230,8 @@ router.get("/all", async (req, res) => {
         success: true,
         message: "Lấy danh sách thể loai phim thành công",
         values: {
+          pageNumber: countSize / parseInt(limit, 10),
+          hasMore: countSize > parseInt(limit, 10) * parseInt(page, 10),
           movies,
         },
       });
