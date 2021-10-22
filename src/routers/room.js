@@ -5,7 +5,9 @@ import request from "supertest";
 
 import Room from "../models/Room";
 import ScreenDetail from "../models/ScreenDetail";
+import TimeSlot from "../models/TimeSlot";
 import { ValidateRoom } from "../utils/validators";
+import { addTimeSlotInRoom } from "../utils/helper";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -176,6 +178,7 @@ router.get("/get-room-by-screen/:id", async (req, res) => {
 router.get("/get-by-movie/:id", async (req, res) => {
   try {
     const listDetail = await ScreenDetail.find({ movie: req.params.id });
+    const timeSlots = await TimeSlot.find();
     let listRooms = [];
     for (let item of listDetail) {
       const rooms = await Room.find({ screen: item.screen })
@@ -187,7 +190,7 @@ router.get("/get-by-movie/:id", async (req, res) => {
     return res.json({
       success: true,
       message: "Lấy danh sách phòng chiếu thành công",
-      values: { rooms: listRooms },
+      values: { rooms: addTimeSlotInRoom(listRooms, timeSlots) },
     });
   } catch (error) {
     res.status(400).json({

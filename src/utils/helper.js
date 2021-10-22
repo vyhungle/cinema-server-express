@@ -176,3 +176,10 @@ export const mergeShowTime = (showTimes) => {
   return res;
 };
 
+export const addTimeSlotInRoom = (rooms, timeSlot) => {
+  let res = [];
+  rooms.forEach((item) => {
+    res.push({ ...item._doc, timeSlot });
+  });
+  return res;
+};
