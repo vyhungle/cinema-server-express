@@ -178,8 +178,11 @@ export const mergeShowTime = (showTimes) => {
 
 export const addTimeSlotInRoom = (rooms, timeSlot) => {
   let res = [];
+  const timeSort = timeSlot.sort(
+    (a, b) => parseTime(a.time) - parseTime(b.time)
+  );
   rooms.forEach((item) => {
-    res.push({ ...item._doc, timeSlot });
+    res.push({ ...item._doc, timeSlots: timeSort });
   });
   return res;
 };
