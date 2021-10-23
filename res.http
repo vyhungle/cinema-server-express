@@ -520,14 +520,12 @@ POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
 
 {
-    "rowNumber":1,
-    "seatInRow":1,
-    "price":120,
-    "premiere":"61547c7b81058c2a702f8037"
+    "seatNames":["A4","A5"],
+    "showTimeDetailId":"616a505bf2e7e915d4d53cc5"
 }
 
 ###
-GET http://localhost:4000/api/ticker/get/6155c034ca59e447ec58e1f0
+GET http://localhost:4000/api/ticker/get-list-ticker/616a505bf2e7e915d4d53cc5
 
 
 

@@ -287,3 +287,18 @@ export const resShowTimeByDate = (data) => {
   });
   return showTimes;
 };
+
+export const checkWeekend = (date) => {
+  const dayOfWeek = new Date(date).getDay();
+  return dayOfWeek === 6 || dayOfWeek === 0;
+};
+
+export const renderStringSeat = (values) => {
+  let res = "";
+  for (let i = 0; i < values.length; i++) {
+    if (i < values.length - 1) {
+      res += `${values[i]}, `;
+    } else res += `${values[i]}.`;
+  }
+  return res;
+};

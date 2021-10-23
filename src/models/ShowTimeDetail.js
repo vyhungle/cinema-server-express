@@ -16,4 +16,4 @@ const showTimeDetailSchema = new Schema({
   },
 });
 
-module.exports = model("showtimeDetails", showTimeDetailSchema);
+module.exports = model("showtimedetails", showTimeDetailSchema);
