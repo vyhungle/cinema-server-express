@@ -1,3 +1,5 @@
+import { ID_SCREEN_2D, ID_SCREEN_3D, ID_SCREEN_IMAX } from "./constaints";
+
 export const checkIsEmptyAddress = (oldAddress, address) => {
   if (
     oldAddress.city.trim() === address.city.trim() &&
@@ -185,4 +187,103 @@ export const addTimeSlotInRoom = (rooms, timeSlot) => {
     res.push({ ...item._doc, timeSlots: timeSort });
   });
   return res;
+};
+
+export const resShowTimeByDate = (data) => {
+  const showTimes = [];
+  data.forEach((item) => {
+    if (!showTimes.some((x) => x._id === item.showTime._id)) {
+      showTimes.push({
+        _id: item.showTime._id,
+        movie: item.showTime.movie,
+        screen2D: {
+          title: "2D",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_2D
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+        screen3D: {
+          title: "3D",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_3D
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+        screenIMAX: {
+          title: "IMAX",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_IMAX
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+      });
+    } else {
+      const index = showTimes.findIndex((x) => x._id === item.showTime._id);
+      showTimes[index] = {
+        ...showTimes[index],
+        screen2D: {
+          ...showTimes[index].screen2D,
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_2D
+              ? [
+                  ...showTimes[index].screen2D.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : showTimes[index].screen2D.showTimesDetails,
+        },
+        screen3D: {
+          ...showTimes[index].screen3D,
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_3D
+              ? [
+                  ...showTimes[index].screen3D.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : showTimes[index].screen3D.showTimesDetails,
+        },
+        screenIMAX: {
+          ...showTimes[index].screenIMAX,
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_IMAX
+              ? [
+                  ...showTimes[index].screenIMAX.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : showTimes[index].screenIMAX.showTimesDetails,
+        },
+      };
+    }
+  });
+  return showTimes;
 };
