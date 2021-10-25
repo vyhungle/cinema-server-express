@@ -69,7 +69,8 @@ router.get("/get-list-ticker/:id", async (req, res) => {
       .populate({
         path: "showTime",
         populate: { path: "movie" },
-      });
+      })
+      .populate("timeSlot");
     return res.json({
       success: true,
       message: "lấy danh sách vé thành công",
