@@ -302,3 +302,13 @@ export const renderStringSeat = (values) => {
   }
   return res;
 };
+
+export const getCinemaLocation = (cinemas) => {
+  const locations = [];
+  cinemas.map((item) => {
+    if (!locations.some((x) => x === item.address.city)) {
+      locations.push(item.address.city);
+    }
+  });
+  return locations;
+};

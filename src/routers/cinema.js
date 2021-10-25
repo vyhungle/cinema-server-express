@@ -3,7 +3,7 @@ import { getGeoLocation } from "../api/geolocation";
 const router = express.Router();
 
 import Cinema from "../models/Cinema";
-import { checkIsEmptyAddress } from "../utils/helper";
+import { checkIsEmptyAddress, getCinemaLocation } from "../utils/helper";
 import { ValidateCinema } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -153,6 +153,25 @@ router.delete("/delete/:id", async (req, res) => {
       success: false,
       message: "Xóa rạp phim thất bại",
       error: "id tào lao",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/locations", async (req, res) => {
+  try {
+    const cinemas = await Cinema.find();
+    return res.json({
+      success: true,
+      message: "",
+      values: {
+        locations: getCinemaLocation(cinemas),
+      },
     });
   } catch (error) {
     res.status(400).json({

@@ -558,3 +558,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4000/api/movieDetail/get-movie-in-cinema/614c8a9e192439003768b5c1
+
+###
+GET http://localhost:4000/api/cinema/get/locations
