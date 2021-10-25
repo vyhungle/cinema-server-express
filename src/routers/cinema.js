@@ -168,9 +168,29 @@ router.get("/get/locations", async (req, res) => {
     const cinemas = await Cinema.find();
     return res.json({
       success: true,
-      message: "",
+      message: "Lấy danh sách location thành công.",
       values: {
         locations: getCinemaLocation(cinemas),
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/cinema-by", async (req, res) => {
+  try {
+    const { location } = req.query;
+    const cinemas = await Cinema.find();
+    return res.json({
+      success: true,
+      message: "lấy danh sách cinema thành công",
+      values: {
+        cinemas: cinemas.filter((x) => x.address.city === location),
       },
     });
   } catch (error) {

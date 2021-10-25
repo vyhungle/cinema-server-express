@@ -561,3 +561,6 @@ GET http://localhost:4000/api/movieDetail/get-movie-in-cinema/614c8a9e1924390037
 
 ###
 GET http://localhost:4000/api/cinema/get/locations
+
+###
+GET http://localhost:4000/api/cinema/get/cinema-by?location=Tỉnh Bắc Kạn
