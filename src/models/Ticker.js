@@ -1,9 +1,10 @@
 import { Schema, model } from "mongoose";
 
 const tickerSchema = new Schema({
+  idSeat: String,
   seatName: String,
   price: Number,
-  status: Boolean,
+  status: Number,
   showTimeDetail: {
     type: Schema.Types.ObjectId,
     ref: "showtimedetails",

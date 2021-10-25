@@ -5,7 +5,8 @@ import ShowTimeDetail from "../models/ShowTimeDetail";
 import { checkWeekend, renderStringSeat } from "../utils/helper";
 
 router.post("/add", async (req, res) => {
-  const { seatNames, showTimeDetailId } = req.body;
+  const { data, showTimeDetailId } = req.body;
+  // seatNames, showTimeDetailId, price, idSeat, status
   try {
     // lấy chi tiết lịch chiếu
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId).populate({
@@ -15,13 +16,14 @@ router.post("/add", async (req, res) => {
 
     // kiểm tra vé trùng
     let duplicateSeat = [];
-    for (let i = 0; i < seatNames.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       const isTicker = await Ticker.findOne({
-        seatName: seatNames[i],
+        seatName: data[i].seatName,
         showTimeDetail: showTimeDetailId,
+        idSeat: data[i].idSeat,
       });
       if (isTicker) {
-        duplicateSeat.push(seatNames[i]);
+        duplicateSeat.push(data[i].seatName);
       }
     }
     // nếu có vé trùng return
@@ -35,14 +37,15 @@ router.post("/add", async (req, res) => {
     }
 
     // tạo vé
-    seatNames.forEach(async (item) => {
-      const price = checkWeekend(stDetail.date)
+    data.forEach(async (item) => {
+      const priceBefore = checkWeekend(stDetail.date)
         ? stDetail.room.screen.weekendPrice
         : stDetail.room.screen.weekdayPrice;
       const newTicker = new Ticker({
-        seatName: item,
-        price,
-        status: true,
+        idSeat: item.idSeat,
+        seatName: item.seatName,
+        price: item.price || priceBefore,
+        status: item.status,
         showTimeDetail: showTimeDetailId,
       });
       await newTicker.save();

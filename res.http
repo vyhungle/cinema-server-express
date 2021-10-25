@@ -520,7 +520,10 @@ POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
 
 {
-    "seatNames":["A4","A5"],
+    "data":[
+        {"seatName":"A4", "price":12000, "idSeat":1, "status":1},
+        {"seatName":"A5", "price":12000, "idSeat":1, "status":1}
+    ],
     "showTimeDetailId":"616a505bf2e7e915d4d53cc5"
 }
 
