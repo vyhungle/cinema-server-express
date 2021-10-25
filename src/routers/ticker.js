@@ -63,12 +63,19 @@ router.post("/add", async (req, res) => {
 
 router.get("/get-list-ticker/:id", async (req, res) => {
   try {
-    const tickers = await Ticker.find({ showTimeDetail: req.params.id });
+    const tickets = await Ticker.find({ showTimeDetail: req.params.id });
+    const stDetail = await ShowTimeDetail.findById(req.params.id)
+      .populate({ path: "room", populate: { path: "screen" } })
+      .populate({
+        path: "showTime",
+        populate: { path: "movie" },
+      });
     return res.json({
       success: true,
       message: "lấy danh sách vé thành công",
       values: {
-        tickers,
+        tickets,
+        showTimeDetail: stDetail,
       },
     });
   } catch (error) {
@@ -82,12 +89,12 @@ router.get("/get-list-ticker/:id", async (req, res) => {
 
 router.get("/get/:id", async (req, res) => {
   try {
-    const tickers = await Ticker.find({ showTime: req.params.id });
+    const tickets = await Ticker.find({ showTime: req.params.id });
 
     return res.json({
       success: true,
       message: "Lấy danh sách vé thành công",
-      tickers,
+      tickets,
     });
   } catch (error) {
     res.status(400).json({
