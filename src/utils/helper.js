@@ -189,9 +189,14 @@ export const addTimeSlotInRoom = (rooms, timeSlot) => {
   return res;
 };
 
+const sortTimeSlot = (data) => {
+  data.sort((a, b) => parseTime(a.timeSlot.time) - parseTime(b.timeSlot.time));
+  return data;
+};
+
 export const resShowTimeByDate = (data) => {
   const showTimes = [];
-  data.forEach((item) => {
+  sortTimeSlot(data).forEach((item) => {
     if (!showTimes.some((x) => x.movie._id === item.showTime.movie._id)) {
       showTimes.push({
         // _id: item.showTime._id,

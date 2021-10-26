@@ -125,8 +125,6 @@ router.post("/get-list-showtime", async (req, res) => {
   }
 });
 
-module.exports = router;
-
 router.get("/get-list-showtime-by-date", async (req, res) => {
   const { date } = req.query;
   try {
