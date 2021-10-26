@@ -192,9 +192,9 @@ export const addTimeSlotInRoom = (rooms, timeSlot) => {
 export const resShowTimeByDate = (data) => {
   const showTimes = [];
   data.forEach((item) => {
-    if (!showTimes.some((x) => x._id === item.showTime._id)) {
+    if (!showTimes.some((x) => x.movie._id === item.showTime.movie._id)) {
       showTimes.push({
-        _id: item.showTime._id,
+        // _id: item.showTime._id,
         movie: item.showTime.movie,
         screen2D: {
           title: "2D",
@@ -237,7 +237,9 @@ export const resShowTimeByDate = (data) => {
         },
       });
     } else {
-      const index = showTimes.findIndex((x) => x._id === item.showTime._id);
+      const index = showTimes.findIndex(
+        (x) => x.movie._id === item.showTime.movie._id
+      );
       showTimes[index] = {
         ...showTimes[index],
         screen2D: {
