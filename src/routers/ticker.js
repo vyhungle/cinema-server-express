@@ -2,7 +2,11 @@ import express from "express";
 const router = express.Router();
 import Ticker from "../models/Ticker";
 import ShowTimeDetail from "../models/ShowTimeDetail";
-import { checkWeekend, renderStringSeat } from "../utils/helper";
+import {
+  checkWeekend,
+  renderObjTicket,
+  renderStringSeat,
+} from "../utils/helper";
 
 router.post("/add", async (req, res) => {
   const { data, showTimeDetailId } = req.body;
@@ -78,7 +82,12 @@ router.get("/get-list-ticker/:id", async (req, res) => {
       success: true,
       message: "lấy danh sách vé thành công",
       values: {
-        tickets,
+        tickets: renderObjTicket(
+          tickets,
+          stDetail.room,
+          stDetail.date,
+          stDetail._id
+        ),
         showTimeDetail: stDetail,
       },
     });

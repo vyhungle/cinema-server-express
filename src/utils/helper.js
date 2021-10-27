@@ -1,4 +1,5 @@
 import { ID_SCREEN_2D, ID_SCREEN_3D, ID_SCREEN_IMAX } from "./constaints";
+var md5 = require("md5");
 
 export const checkIsEmptyAddress = (oldAddress, address) => {
   if (
@@ -318,4 +319,80 @@ export const getCinemaLocation = (cinemas) => {
     }
   });
   return locations;
+};
+
+export const renderObjTicket = (tickets, room, date, id) => {
+  const res = [];
+  const alphabet = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+  const ticketCount = room.rowNumber * room.seatsInRow;
+
+  for (let i = 1; i <= ticketCount; i++) {
+    const index = Math.floor((i % 10 === 0 ? i - 1 : i) / 10);
+    if (!res.some((x) => x.nameRow === alphabet[index])) {
+      res.push({
+        nameRow: alphabet[index],
+        tickets: [
+          {
+            idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
+            seatName: `${alphabet[index]}${i - index * 10}`,
+            price: checkWeekend(date)
+              ? room.screen.weekendPrice
+              : room.screen.weekdayPrice,
+            status: 0,
+            showTimesDetails: id,
+          },
+        ],
+      });
+    } else {
+      res[index].tickets = [
+        ...res[index].tickets,
+        {
+          idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
+          seatName: `${alphabet[index]}${i - index * 10}`,
+          price: checkWeekend(date)
+            ? room.screen.weekendPrice
+            : room.screen.weekdayPrice,
+          status: 0,
+          showTimesDetails: id,
+        },
+      ];
+    }
+    res.map((item, index) => {
+      item.tickets.map((fakeTicket, fakeIndex) => {
+        tickets.map((realTicket) => {
+          if (fakeTicket.idSeat === realTicket.idSeat) {
+            res[index].tickets[fakeIndex] = realTicket;
+          }
+        });
+      });
+    });
+  }
+  return res;
 };
