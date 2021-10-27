@@ -358,7 +358,7 @@ export const renderObjTicket = (tickets, room, date, id) => {
     if (!res.some((x) => x.nameRow === alphabet[index])) {
       res.push({
         nameRow: alphabet[index],
-        seatsName: [
+        nameSeats: [
           {
             idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
             seatName: `${alphabet[index]}${i - index * 10}`,
@@ -371,8 +371,8 @@ export const renderObjTicket = (tickets, room, date, id) => {
         ],
       });
     } else {
-      res[index].seatsName = [
-        ...res[index].seatsName,
+      res[index].nameSeats = [
+        ...res[index].nameSeats,
         {
           idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
           seatName: `${alphabet[index]}${i - index * 10}`,
@@ -385,10 +385,10 @@ export const renderObjTicket = (tickets, room, date, id) => {
       ];
     }
     res.map((item, index) => {
-      item.seatsName.map((fakeTicket, fakeIndex) => {
+      item.nameSeats.map((fakeTicket, fakeIndex) => {
         tickets.map((realTicket) => {
           if (fakeTicket.idSeat === realTicket.idSeat) {
-            res[index].seatsName[fakeIndex] = realTicket;
+            res[index].nameSeats[fakeIndex] = realTicket;
           }
         });
       });
