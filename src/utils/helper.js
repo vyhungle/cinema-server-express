@@ -360,7 +360,7 @@ export const renderObjTicket = (tickets, room, id) => {
         nameRow: alphabet[index],
         nameSeats: [
           {
-            idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
+            idSeat: `${md5(i + alphabet[index] + id)}`,
             seatName: `${alphabet[index]}${i - index * 10}`,
             price: checkWeekend(new Date())
               ? room.screen.weekendPrice
@@ -374,7 +374,7 @@ export const renderObjTicket = (tickets, room, id) => {
       res[index].nameSeats = [
         ...res[index].nameSeats,
         {
-          idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
+          idSeat: `${md5(i + alphabet[index] + id)}`,
           seatName: `${alphabet[index]}${i - index * 10}`,
           price: checkWeekend(new Date())
             ? room.screen.weekendPrice
