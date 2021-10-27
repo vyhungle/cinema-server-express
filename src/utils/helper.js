@@ -396,3 +396,17 @@ export const renderObjTicket = (tickets, room, date, id) => {
   }
   return res;
 };
+
+export const renderShowTime = (showTimes, movieId, cinemaId, screenId) => {
+  let res = showTimes;
+  if (movieId) {
+    res = res.filter((x) => x.showTime.movie._id == movieId);
+  }
+  if (cinemaId) {
+    res = res.filter((x) => x.showTime.cinema == cinemaId);
+  }
+  if (screenId) {
+    res = res.filter((x) => x.room.screen._id == screenId);
+  }
+  return res;
+};
