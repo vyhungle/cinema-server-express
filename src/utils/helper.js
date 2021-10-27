@@ -321,7 +321,7 @@ export const getCinemaLocation = (cinemas) => {
   return locations;
 };
 
-export const renderObjTicket = (tickets, room, date, id) => {
+export const renderObjTicket = (tickets, room, id) => {
   const res = [];
   const alphabet = [
     "A",
@@ -362,7 +362,7 @@ export const renderObjTicket = (tickets, room, date, id) => {
           {
             idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
             seatName: `${alphabet[index]}${i - index * 10}`,
-            price: checkWeekend(date)
+            price: checkWeekend(new Date())
               ? room.screen.weekendPrice
               : room.screen.weekdayPrice,
             status: 0,
@@ -376,7 +376,7 @@ export const renderObjTicket = (tickets, room, date, id) => {
         {
           idSeat: `${i}-${alphabet[index]}-${md5(i + alphabet[index])}`,
           seatName: `${alphabet[index]}${i - index * 10}`,
-          price: checkWeekend(date)
+          price: checkWeekend(new Date())
             ? room.screen.weekendPrice
             : room.screen.weekdayPrice,
           status: 0,

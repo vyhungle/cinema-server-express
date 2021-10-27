@@ -85,7 +85,6 @@ router.get("/get-list-ticker/:id", async (req, res) => {
         tickets: renderObjTicket(
           tickets,
           stDetail.room,
-          stDetail.date,
           stDetail._id
         ),
         showTimeDetail: stDetail,
