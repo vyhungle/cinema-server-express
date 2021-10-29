@@ -30,6 +30,7 @@ const userSchema = new Schema({
       lng: String,
     },
   },
+  point: Number,
   createdAt: {
     type: String,
     default: new Date().toISOString(),
