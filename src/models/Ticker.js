@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const tickerSchema = new Schema({
+const ticketSchema = new Schema({
   idSeat: String,
   seatName: String,
   price: Number,
@@ -10,4 +10,4 @@ const tickerSchema = new Schema({
     ref: "showtimedetails",
   },
 });
-module.exports = model("tickers", tickerSchema);
+module.exports = model("tickets", ticketSchema);

@@ -19,6 +19,7 @@ import showTimeRouter from "./routers/showTime";
 import tickerRouter from "./routers/ticker";
 import screenDetailRouter from "./routers/screenDetail";
 import movieDetailRouter from "./routers/movieDetail";
+import foodRouter from "./routers/food";
 
 require("dotenv").config();
 const app = express();
@@ -50,6 +51,7 @@ app.use("/api/showTime", showTimeRouter);
 app.use("/api/ticker", tickerRouter);
 app.use("/api/screenDetail", screenDetailRouter);
 app.use("/api/movieDetail", movieDetailRouter);
+app.use("/api/food", foodRouter);
 
 //Connect db
 ConnectionMongoDB();

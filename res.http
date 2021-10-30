@@ -527,10 +527,21 @@ Content-Type: application/json
 
 {
     "data":[
-        {"seatName":"A4", "price":12000, "idSeat":1, "status":1},
-        {"seatName":"A5", "price":12000, "idSeat":1, "status":1}
+        {"seatName":"A7", "price":90000, "idSeat":1, "status":1},
+        {"seatName":"A8", "price":90000, "idSeat":1, "status":1}
     ],
-    "showTimeDetailId":"616a505bf2e7e915d4d53cc5"
+    "showTimeDetailId":"616a505bf2e7e915d4d53cc5",
+    "userId":"613da2d8736aa826841481b3",
+    "payment":{
+        "username":"0123488889412",
+        "password":"123456",
+        "type":"1"
+    },
+    "combos":[
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2},
+        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1}
+
+    ]
 }
 
 ###
@@ -570,3 +581,18 @@ GET http://localhost:4000/api/cinema/get/locations
 
 ###
 GET http://localhost:4000/api/cinema/get/cinema-by?location=Tỉnh Bắc Kạn
+
+
+####
+POST http://localhost:4000/api/food/add
+Content-Type: application/json
+
+{
+    "name":"iCombo Family 2 Big",
+    "price":"162000",
+    "unit":"2 BẮP + 4 NƯỚC 32 Oz + 2 PHẦN SNACK",
+    "image":"https://www.galaxycine.vn/media/2021/4/7/f2_1617790556406.jpg"
+}
+
+###
+GET http://localhost:4000/api/food/get-all
