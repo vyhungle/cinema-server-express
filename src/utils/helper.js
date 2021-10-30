@@ -423,7 +423,7 @@ export const renderShowTime = (
 
 export const mergeCinemaShowtime = (showTime) => {
   let res = [];
-  showTime.forEach((item) => {
+  sortTimeSlot(showTime).forEach((item) => {
     if (!res.some((x) => x.cinema._id === item.room.cinema._id)) {
       res.push({
         cinema: item.room.cinema,
