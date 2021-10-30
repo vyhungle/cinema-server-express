@@ -16,6 +16,8 @@ router.get("/get-all-bill/:id", async (req, res) => {
     const bills = mergeFBill.concat(mergeMBill);
 
     return res.json({
+      success: true,
+      message: "Lấy hóa đơn theo user thành công",
       bills: bills.sort(
         (a, b) => new Date(a.bill.createdAt) - new Date(b.bill.createdAt)
       ),
