@@ -473,7 +473,7 @@ export const mergeCinemaShowtime = (showTime) => {
         ...res[index],
         screen2D: {
           ...res[index].screen2D,
-          resDetails:
+          showTimesDetails:
             item.room.screen._id == ID_SCREEN_2D
               ? [
                   ...res[index].screen2D.showTimesDetails,
