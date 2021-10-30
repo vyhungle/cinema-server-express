@@ -43,6 +43,7 @@ export const mergeMovieBill = async (values) => {
     if (!res.some((x) => x.bill._id === values[i]._id)) {
       res.push({
         bill: values[i],
+        type: 0,
         data: getItemMovieBill(await billDetail),
       });
     } else {
@@ -75,6 +76,7 @@ export const mergeFoodBill = async (values) => {
     if (!res.some((x) => x.bill._id === values[i]._id)) {
       res.push({
         bill: values[i],
+        type: 1,
         data: getItemFoodBill(await billDetail),
       });
     } else {
