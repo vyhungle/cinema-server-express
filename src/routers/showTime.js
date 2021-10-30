@@ -4,7 +4,9 @@ import moment from "moment";
 
 import ShowTime from "../models/ShowTime"; //fix log
 import ShowTimeDetail from "../models/ShowTimeDetail";
+import Cinema from "../models/Cinema";
 import {
+  mergeCinemaShowtime,
   mergeShowTime,
   renderShowTime,
   resShowTimeByDate,
@@ -159,6 +161,50 @@ router.get("/get-list-showtime-by-date", async (req, res) => {
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
       showTimes: resShowTimeByDate(showTimeFilter),
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Lỗi 400!",
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-list-showtime-full", async (req, res) => {
+  const { movieId, date, screenId, location } = req.query;
+  try {
+    const showTimeList = await ShowTimeDetail.find({
+      date: moment(new Date(date)).format("L"),
+    })
+      .populate({
+        path: "room",
+        populate: {
+          path: "screen",
+        },
+        populate: {
+          path: "cinema",
+        },
+      })
+      .populate("timeSlot")
+      .populate({
+        path: "showTime",
+        populate: {
+          path: "movie",
+        },
+      });
+    const showTimeFilter = renderShowTime(
+      showTimeList,
+      movieId,
+      undefined,
+      screenId,
+      location
+    );
+
+    return res.json({
+      success: true,
+      message: "Lấy danh sách lịch chiếu thành công",
+      showTimes: mergeCinemaShowtime(showTimeFilter),
     });
   } catch (error) {
     res.status(400).json({

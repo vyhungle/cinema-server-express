@@ -1,3 +1,4 @@
+import moment from "moment";
 import { ID_SCREEN_2D, ID_SCREEN_3D, ID_SCREEN_IMAX } from "./constaints";
 var md5 = require("md5");
 
@@ -397,8 +398,17 @@ export const renderObjTicket = (tickets, room, id) => {
   return res;
 };
 
-export const renderShowTime = (showTimes, movieId, cinemaId, screenId) => {
+export const renderShowTime = (
+  showTimes,
+  movieId,
+  cinemaId,
+  screenId,
+  location = undefined
+) => {
   let res = showTimes;
+  if (location) {
+    res = res.filter((x) => x.room.cinema.address.city === location);
+  }
   if (movieId) {
     res = res.filter((x) => x.showTime.movie._id == movieId);
   }
@@ -408,5 +418,103 @@ export const renderShowTime = (showTimes, movieId, cinemaId, screenId) => {
   if (screenId) {
     res = res.filter((x) => x.room.screen._id == screenId);
   }
+  return res;
+};
+
+export const mergeCinemaShowtime = (showTime) => {
+  let res = [];
+  showTime.forEach((item) => {
+    if (!res.some((x) => x.cinema._id === item.room.cinema._id)) {
+      res.push({
+        cinema: item.room.cinema,
+        screen2D: {
+          title: "2D",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_2D
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+        screen3D: {
+          title: "3D",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_3D
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+        screenIMAX: {
+          title: "IMAX",
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_IMAX
+              ? [
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : [],
+        },
+      });
+    } else {
+      const index = res.findIndex((x) => x.cinema._id === item.room.cinema._id);
+      res[index] = {
+        ...res[index],
+        screen2D: {
+          ...res[index].screen2D,
+          resDetails:
+            item.room.screen._id == ID_SCREEN_2D
+              ? [
+                  ...res[index].screen2D.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : res[index].screen2D.showTimesDetails,
+        },
+        screen3D: {
+          ...res[index].screen3D,
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_3D
+              ? [
+                  ...res[index].screen3D.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : res[index].screen3D.showTimesDetails,
+        },
+        screenIMAX: {
+          ...res[index].screenIMAX,
+          showTimesDetails:
+            item.room.screen._id == ID_SCREEN_IMAX
+              ? [
+                  ...res[index].screenIMAX.showTimesDetails,
+                  {
+                    _id: item._id,
+                    room: item.room,
+                    timeSlot: item.timeSlot,
+                  },
+                ]
+              : res[index].screenIMAX.showTimesDetails,
+        },
+      };
+    }
+  });
   return res;
 };
