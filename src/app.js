@@ -20,6 +20,7 @@ import tickerRouter from "./routers/ticker";
 import screenDetailRouter from "./routers/screenDetail";
 import movieDetailRouter from "./routers/movieDetail";
 import foodRouter from "./routers/food";
+import billRouter from "./routers/bill";
 
 require("dotenv").config();
 const app = express();
@@ -52,6 +53,7 @@ app.use("/api/ticker", tickerRouter);
 app.use("/api/screenDetail", screenDetailRouter);
 app.use("/api/movieDetail", movieDetailRouter);
 app.use("/api/food", foodRouter);
+app.use("/api/bill", billRouter);
 
 //Connect db
 ConnectionMongoDB();
