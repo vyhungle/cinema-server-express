@@ -170,24 +170,24 @@ router.post("/add", verifyToken, async (req, res) => {
       await foodBill.save();
     }
     //#endregion
-    
+
     //#region update điểm thưởng
     if (_userId != USER_DEFAULT) {
       const userPoint = await User.findById(_userId);
-      const point = Math.floor(
-        (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS
-      );
+      const point =
+        (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS;
       console.log(point);
       if (point > 1) {
-        userPoint.moneyPoint = 0;
-        userPoint.point = userPoint.point + point;
+        userPoint.moneyPoint =
+          userPoint.moneyPoint + (point - Math.floor(point)) * POINT_BONUS;
+        userPoint.point = userPoint.point + Math.floor(point);
       } else {
         userPoint.moneyPoint = userPoint.moneyPoint + totalFood + totalTicket;
       }
       await userPoint.save();
     }
     //#endregion
-    
+
     //#region render data showtime and response
     const tickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
     return res.json({
