@@ -1,6 +1,8 @@
 import Payment from "../models/Payment";
 import MovieBillDetail from "../models/MovieBillDetail";
 import FoodDetail from "../models/FoodDetail";
+import FoodBill from "../models/FoodBill";
+import MovieBill from "../models/MovieBill";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -86,6 +88,32 @@ export const mergeFoodBill = async (values) => {
         data: res[index].data.concat(getItemFoodBill(await billDetail)),
       };
     }
+  }
+
+  return res;
+};
+
+export const renderBill = async (idTicketBill, idFoodBill) => {
+  let res = {};
+  if (idTicketBill) {
+    const tkBill = await MovieBill.findById(idTicketBill);
+    const tkBillDetail = await MovieBillDetail.find({
+      movieBill: idTicketBill,
+    }).populate("ticket");
+    res.ticketBill = {
+      bill: tkBill,
+      data: getItemMovieBill(tkBillDetail),
+    };
+  }
+  if (idFoodBill) {
+    const foodBill = await FoodBill.findById(idFoodBill);
+    const foodBillDetail = await FoodDetail.find({
+      foodBill: idFoodBill,
+    }).populate("food");
+    res.foodBill = {
+      bill: foodBill,
+      data: getItemFoodBill(foodBillDetail),
+    };
   }
 
   return res;

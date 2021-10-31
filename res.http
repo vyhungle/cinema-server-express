@@ -531,7 +531,7 @@ Content-Type: application/json
 
 {
     "data":[
-        {"seatName":"J6", "price":90000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"J9", "price":90000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
     ],
     "showTimeDetailId":"617243a4b82e5800373a5afc",
     "userId":"613da2d8736aa826841481b3",

@@ -14,7 +14,7 @@ import {
   renderObjTicket,
   renderStringSeat,
 } from "../utils/helper";
-import { isPayment } from "../utils/service";
+import { isPayment, renderBill } from "../utils/service";
 import { POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
@@ -117,6 +117,7 @@ router.post("/add", async (req, res) => {
     //#endregion
 
     //#region  Tạo hóa đơn vé và vé
+    let idTicketBill = "";
     if (data && data.length > 0) {
       const bill = new MovieBill({
         user: userId,
@@ -148,13 +149,14 @@ router.post("/add", async (req, res) => {
         });
         await billDetail.save();
       });
-
       bill.total = total;
+      idTicketBill = bill._id;
       await bill.save();
     }
     //#endregion
 
     //#region  Tạo hóa đơn combo và combo detail
+    let idFoodBill = "";
     if (combos && combos.length > 0) {
       const foodBill = new FoodBill({
         user: userId,
@@ -177,6 +179,7 @@ router.post("/add", async (req, res) => {
         await foodDetail.save();
       }
       foodBill.total = totalFoodBill;
+      idFoodBill = foodBill._id;
       await foodBill.save();
     }
     //#endregion
@@ -189,6 +192,10 @@ router.post("/add", async (req, res) => {
       tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
       showTimeDetail: stDetail,
       combos: combosFood,
+      bill: await renderBill(
+        idTicketBill === "" ? undefined : idTicketBill,
+        idFoodBill === "" ? undefined : idFoodBill
+      ),
     });
     //#endregion
   } catch (error) {
