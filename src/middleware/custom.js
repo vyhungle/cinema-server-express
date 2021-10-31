@@ -18,7 +18,6 @@ const verifyToken = (req, res, next) => {
         message: "Key hết hạng",
       });
     }
-    console.log(decoded);
     if (decoded.typeUser === 0) {
       req.typeUser = decoded.typeUser;
       req.id = decoded.id;

@@ -52,6 +52,19 @@ router.post("/add", verifyToken, async (req, res) => {
     let totalFood = 0;
     let idTicketBill = "";
     let idFoodBill = "";
+
+    // tính total bill
+    if (data && data.length > 0) {
+      data.forEach((item) => {
+        totalTicket += item.price || priceBefore;
+      });
+    }
+    if (combos && combos.length > 0) {
+      for (let i = 0; i < combos.length; i++) {
+        const food = await Food.findById(combos[i]._id);
+        totalFood += food.price * combos[i].quantity;
+      }
+    }
     //#endregion
 
     //#region kiểm tra vé trùng
@@ -81,17 +94,6 @@ router.post("/add", verifyToken, async (req, res) => {
 
     //#region thanh toán online
     if (payment.type > 0) {
-      if (data && data.length > 0) {
-        data.forEach((item) => {
-          totalTicket += item.price || priceBefore;
-        });
-      }
-      if (combos && combos.length > 0) {
-        for (let i = 0; i < combos.length; i++) {
-          const food = await Food.findById(combos[i]._id);
-          totalFood += food.price * combos[i].quantity;
-        }
-      }
       const isP = await isPayment(
         payment.username,
         payment.password,
@@ -168,13 +170,14 @@ router.post("/add", verifyToken, async (req, res) => {
       await foodBill.save();
     }
     //#endregion
-
+    
     //#region update điểm thưởng
     if (_userId != USER_DEFAULT) {
       const userPoint = await User.findById(_userId);
       const point = Math.floor(
         (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS
       );
+      console.log(point);
       if (point > 1) {
         userPoint.moneyPoint = 0;
         userPoint.point = userPoint.point + point;
@@ -184,7 +187,7 @@ router.post("/add", verifyToken, async (req, res) => {
       await userPoint.save();
     }
     //#endregion
-
+    
     //#region render data showtime and response
     const tickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
     return res.json({
