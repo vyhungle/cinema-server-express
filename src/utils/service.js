@@ -94,7 +94,9 @@ export const mergeFoodBill = async (values) => {
 };
 
 export const renderBill = async (idTicketBill, idFoodBill) => {
-  let res = {};
+  let res = {
+    date: new Date().toISOString(),
+  };
   if (idTicketBill) {
     const tkBill = await MovieBill.findById(idTicketBill);
     const tkBillDetail = await MovieBillDetail.find({

@@ -41,10 +41,12 @@ router.post("/add", verifyToken, async (req, res) => {
     //#endregion
 
     //#region lấy data default
-    const stDetail = await ShowTimeDetail.findById(showTimeDetailId).populate({
-      path: "room",
-      populate: { path: "screen" },
-    });
+    const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
+      .populate({
+        path: "room",
+        populate: { path: "screen" },
+      })
+      .populate("timeSlot");
     const combosFood = await Food.find();
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
     //#endregion
@@ -69,8 +71,6 @@ router.post("/add", verifyToken, async (req, res) => {
             duplicateSeat
           )} Vui lòng chọn ghế khác.`,
           tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
-          showTimeDetail: stDetail,
-          combos: combosFood,
         });
       }
     }
@@ -191,8 +191,6 @@ router.post("/add", verifyToken, async (req, res) => {
       success: true,
       message: "Đặt vé thành công",
       tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
-      showTimeDetail: stDetail,
-      combos: combosFood,
       bills: await renderBill(
         idTicketBill === "" ? undefined : idTicketBill,
         idFoodBill === "" ? undefined : idFoodBill

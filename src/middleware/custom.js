@@ -12,7 +12,14 @@ const verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    if ((decoded.typeUser === 0)) {
+    if (Date.now() >= decoded.exp * 1000) {
+      return res.status(401).json({
+        success: false,
+        message: "Key hết hạng",
+      });
+    }
+    console.log(decoded);
+    if (decoded.typeUser === 0) {
       req.typeUser = decoded.typeUser;
       req.id = decoded.id;
     } else {
