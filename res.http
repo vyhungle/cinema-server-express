@@ -3,11 +3,11 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-    "email":"lnhv.26112000@gmail.com",
-    "phoneNumber":"0983782942",
-    "password":"vykt2000",
-    "confirmPassword":"vykt2000",
-    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "email":"cientdefault@gmail.com",
+    "phoneNumber":"0983782300",
+    "password":"123456",
+    "confirmPassword":"123456",
+    "fullName":"Khách hàng vãng lai",
     "address":{
         "city":"TP.HCM",
         "district":"Tân phú",
@@ -531,21 +531,16 @@ Content-Type: application/json
 
 {
     "data":[
-        {"seatName":"A4", "price":90000, "idSeat":1, "status":1},
-        {"seatName":"A5", "price":90000, "idSeat":1, "status":1}
+        {"seatName":"J7", "price":90000, "idSeat":"7f000394e2be9db7bc496d81fee9a079", "status":1}
     ],
+    "userId":"613e1a7475cc9e00375d5cf0",
     "showTimeDetailId":"617243a4b82e5800373a5afc",
-    "userId":"613da2d8736aa826841481b3",
     "payment":{
         "username":"0123488889412",
         "password":"123456",
         "type":"1"
-    },
-    "combos":[
-        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2},
-        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1}
+    }
 
-    ]
 }
 
 ###
@@ -604,4 +599,4 @@ GET http://localhost:4000/api/food/get-all
 
 
 ###
-GET http://localhost:4000/api/bill/get-all-bill/613da2d8736aa826841481b3
+GET http://localhost:4000/api/bill/get-all-bill/613e1a7475cc9e00375d5cf0

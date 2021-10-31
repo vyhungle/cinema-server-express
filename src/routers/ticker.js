@@ -15,18 +15,27 @@ import {
   renderStringSeat,
 } from "../utils/helper";
 import { isPayment } from "../utils/service";
+import { USER_DEFAULT } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
-  const { data, showTimeDetailId, userId, payment, combos } = req.body;
+  const {
+    data,
+    showTimeDetailId,
+    userId = USER_DEFAULT,
+    payment,
+    combos,
+  } = req.body;
   // seatNames, showTimeDetailId, price, idSeat, status
   try {
     //#region validate user
-    const user = await User.findById(userId);
-    if (!user) {
-      res.status(400).json({
-        success: false,
-        message: "Không tiềm thấy người dùng này trong hệ thống.",
-      });
+    if (userId != "client") {
+      const user = await User.findById(userId);
+      if (!user) {
+        res.status(400).json({
+          success: false,
+          message: "Không tiềm thấy người dùng này trong hệ thống.",
+        });
+      }
     }
     //#endregion
 
@@ -37,8 +46,6 @@ router.post("/add", async (req, res) => {
     });
     const combosFood = await Food.find();
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
-    console.log(oldTickets);
-
     //#endregion
 
     //#region kiểm tra vé trùng
@@ -73,9 +80,11 @@ router.post("/add", async (req, res) => {
       data.forEach((item) => {
         totalTicket += item.price || priceBefore;
       });
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        totalFood += food.price * combos[i].quantity;
+      if (combos && combos.length > 0) {
+        for (let i = 0; i < combos.length; i++) {
+          const food = await Food.findById(combos[i]._id);
+          totalFood += food.price * combos[i].quantity;
+        }
       }
       const isP = await isPayment(
         payment.username,
@@ -125,7 +134,7 @@ router.post("/add", async (req, res) => {
     //#endregion
 
     //#region  Tạo hóa đơn combo và combo detail
-    if (combos) {
+    if (combos && combos.length > 0) {
       const foodBill = new FoodBill({
         user: userId,
         total: 0,
@@ -158,7 +167,7 @@ router.post("/add", async (req, res) => {
       message: "Đặt vé thành công",
       tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
       showTimeDetail: stDetail,
-      combos:combosFood,
+      combos: combosFood,
     });
     //#endregion
   } catch (error) {
