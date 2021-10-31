@@ -30,11 +30,15 @@ router.post("/add", async (req, res) => {
     }
     //#endregion
 
-    //#region lấy chi tiết lịch chiếu
+    //#region lấy data default
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId).populate({
       path: "room",
       populate: { path: "screen" },
     });
+    const combosFood = await Food.find();
+    const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
+    console.log(oldTickets);
+
     //#endregion
 
     //#region kiểm tra vé trùng
@@ -55,6 +59,9 @@ router.post("/add", async (req, res) => {
         message: `Đã có người đặt vé cho ghế ${renderStringSeat(
           duplicateSeat
         )} Vui lòng chọn ghế khác.`,
+        tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
+        showTimeDetail: stDetail,
+        combos: combosFood,
       });
     }
     //#endregion
@@ -99,7 +106,7 @@ router.post("/add", async (req, res) => {
         idSeat: item.idSeat,
         seatName: item.seatName,
         price: item.price || priceBefore,
-        status: item.status,
+        status: 1,
         showTimeDetail: showTimeDetailId,
       });
       // tính lại total
@@ -144,10 +151,16 @@ router.post("/add", async (req, res) => {
     }
     //#endregion
 
+    //#region render data showtime and response
+    const tickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
     return res.json({
       success: true,
       message: "Đặt vé thành công",
+      tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
+      showTimeDetail: stDetail,
+      combos,
     });
+    //#endregion
   } catch (error) {
     res.status(400).json({
       success: false,

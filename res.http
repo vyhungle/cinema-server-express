@@ -531,10 +531,10 @@ Content-Type: application/json
 
 {
     "data":[
-        {"seatName":"A1", "price":90000, "idSeat":1, "status":1},
-        {"seatName":"A2", "price":90000, "idSeat":1, "status":1}
+        {"seatName":"A4", "price":90000, "idSeat":1, "status":1},
+        {"seatName":"A5", "price":90000, "idSeat":1, "status":1}
     ],
-    "showTimeDetailId":"616a505bf2e7e915d4d53cc5",
+    "showTimeDetailId":"617243a4b82e5800373a5afc",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
         "username":"0123488889412",
