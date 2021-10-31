@@ -178,9 +178,8 @@ router.post("/add", verifyToken, async (req, res) => {
         (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS;
       console.log(point);
       if (point > 1) {
-        userPoint.moneyPoint =
-          userPoint.moneyPoint + (point - Math.floor(point)) * POINT_BONUS;
         userPoint.point = userPoint.point + Math.floor(point);
+        userPoint.moneyPoint = (point - Math.floor(point)) * POINT_BONUS;
       } else {
         userPoint.moneyPoint = userPoint.moneyPoint + totalFood + totalTicket;
       }
