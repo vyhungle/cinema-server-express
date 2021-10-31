@@ -31,7 +31,7 @@ const verifyToken = (req, res, next) => {
   } catch (error) {
     return res.status(403).json({
       success: false,
-      message: "Token tào văn lao",
+      message: "Vui lòng đăng nhập để xử dụng chức năng này",
     });
   }
 };

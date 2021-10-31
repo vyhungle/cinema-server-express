@@ -11,12 +11,18 @@ const verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    if (Date.now() >= decoded.exp * 1000) {
+      return res.status(401).json({
+        success: false,
+        message: "Key hết hạng",
+      });
+    }
     req.userId = decoded.id;
     next();
   } catch (error) {
     return res.status(403).json({
       success: false,
-      message: "Token tào văn lao",
+      message: "Vui lòng đăng nhập để xử dụng chức năng này",
     });
   }
 };
