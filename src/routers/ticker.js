@@ -28,14 +28,12 @@ router.post("/add", async (req, res) => {
   // seatNames, showTimeDetailId, price, idSeat, status
   try {
     //#region validate user
-    if (userId != "client") {
-      const user = await User.findById(userId);
-      if (!user) {
-        res.status(400).json({
-          success: false,
-          message: "Không tiềm thấy người dùng này trong hệ thống.",
-        });
-      }
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        message: "Không tiềm thấy người dùng này trong hệ thống.",
+      });
     }
     //#endregion
 
