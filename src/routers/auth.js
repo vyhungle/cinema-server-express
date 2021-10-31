@@ -103,6 +103,8 @@ router.post("/register", async (req, res) => {
           dateOfBirth,
           address: { ...address, lat, lng },
         },
+        moneyPoint: 0,
+        point: 0,
         createdAt: new Date().toISOString(),
       });
       const value = await newUser.save();

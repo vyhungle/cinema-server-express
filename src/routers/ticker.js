@@ -15,7 +15,7 @@ import {
   renderStringSeat,
 } from "../utils/helper";
 import { isPayment } from "../utils/service";
-import { USER_DEFAULT } from "../utils/constaints";
+import { POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const {
@@ -97,6 +97,21 @@ router.post("/add", async (req, res) => {
       );
       if (!isP.success) {
         return res.json(isP);
+      }
+
+      // update điểm thưởng
+      if (userId != USER_DEFAULT) {
+        const userPoint = await User.findById(userId);
+        const point = Math.floor(
+          (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS
+        );
+        if (point > 1) {
+          userPoint.moneyPoint = 0;
+          userPoint.point = userPoint.point + point;
+        } else {
+          userPoint.moneyPoint = userPoint.moneyPoint + totalFood + totalTicket;
+        }
+        await userPoint.save();
       }
     }
     //#endregion

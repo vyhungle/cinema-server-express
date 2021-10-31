@@ -31,6 +31,7 @@ const userSchema = new Schema({
     },
   },
   point: Number,
+  moneyPoint: Number,
   createdAt: {
     type: String,
     default: new Date().toISOString(),
