@@ -49,27 +49,29 @@ router.post("/add", async (req, res) => {
     //#endregion
 
     //#region kiểm tra vé trùng
-    let duplicateSeat = [];
-    for (let i = 0; i < data.length; i++) {
-      const isTicker = await Ticker.findOne({
-        seatName: data[i].seatName,
-        showTimeDetail: showTimeDetailId,
-        idSeat: data[i].idSeat,
-      });
-      if (isTicker) {
-        duplicateSeat.push(data[i].seatName);
+    if (data && data.length > 0) {
+      let duplicateSeat = [];
+      for (let i = 0; i < data.length; i++) {
+        const isTicker = await Ticker.findOne({
+          seatName: data[i].seatName,
+          showTimeDetail: showTimeDetailId,
+          idSeat: data[i].idSeat,
+        });
+        if (isTicker) {
+          duplicateSeat.push(data[i].seatName);
+        }
       }
-    }
-    if (duplicateSeat.length !== 0) {
-      return res.json({
-        success: false,
-        message: `Đã có người đặt vé cho ghế ${renderStringSeat(
-          duplicateSeat
-        )} Vui lòng chọn ghế khác.`,
-        tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
-        showTimeDetail: stDetail,
-        combos: combosFood,
-      });
+      if (duplicateSeat.length !== 0) {
+        return res.json({
+          success: false,
+          message: `Đã có người đặt vé cho ghế ${renderStringSeat(
+            duplicateSeat
+          )} Vui lòng chọn ghế khác.`,
+          tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
+          showTimeDetail: stDetail,
+          combos: combosFood,
+        });
+      }
     }
     //#endregion
 
@@ -77,9 +79,11 @@ router.post("/add", async (req, res) => {
     if (payment.type > 0) {
       let totalTicket = 0;
       let totalFood = 0;
-      data.forEach((item) => {
-        totalTicket += item.price || priceBefore;
-      });
+      if (data && data.length > 0) {
+        data.forEach((item) => {
+          totalTicket += item.price || priceBefore;
+        });
+      }
       if (combos && combos.length > 0) {
         for (let i = 0; i < combos.length; i++) {
           const food = await Food.findById(combos[i]._id);
@@ -98,39 +102,41 @@ router.post("/add", async (req, res) => {
     //#endregion
 
     //#region  Tạo hóa đơn vé và vé
-    const bill = new MovieBill({
-      user: userId,
-      total: 0,
-      createdAt: new Date().toISOString(),
-      paymentType: payment.type,
-    });
-
-    // tạo vé
-    let total = 0;
-    data.forEach(async (item) => {
-      const priceBefore = checkWeekend(stDetail.date)
-        ? stDetail.room.screen.weekendPrice
-        : stDetail.room.screen.weekdayPrice;
-      const newTicker = new Ticker({
-        idSeat: item.idSeat,
-        seatName: item.seatName,
-        price: item.price || priceBefore,
-        status: 1,
-        showTimeDetail: showTimeDetailId,
+    if (data && data.length > 0) {
+      const bill = new MovieBill({
+        user: userId,
+        total: 0,
+        createdAt: new Date().toISOString(),
+        paymentType: payment.type,
       });
-      // tính lại total
-      total += parseInt(newTicker.price);
-      await newTicker.save();
-      // Tạo chi tiết hóa đơn
-      const billDetail = new MovieBillDetail({
-        movieBill: bill._id,
-        ticket: newTicker._id,
-      });
-      await billDetail.save();
-    });
 
-    bill.total = total;
-    await bill.save();
+      // tạo vé
+      let total = 0;
+      data.forEach(async (item) => {
+        const priceBefore = checkWeekend(stDetail.date)
+          ? stDetail.room.screen.weekendPrice
+          : stDetail.room.screen.weekdayPrice;
+        const newTicker = new Ticker({
+          idSeat: item.idSeat,
+          seatName: item.seatName,
+          price: item.price || priceBefore,
+          status: 1,
+          showTimeDetail: showTimeDetailId,
+        });
+        // tính lại total
+        total += parseInt(newTicker.price);
+        await newTicker.save();
+        // Tạo chi tiết hóa đơn
+        const billDetail = new MovieBillDetail({
+          movieBill: bill._id,
+          ticket: newTicker._id,
+        });
+        await billDetail.save();
+      });
+
+      bill.total = total;
+      await bill.save();
+    }
     //#endregion
 
     //#region  Tạo hóa đơn combo và combo detail
