@@ -210,7 +210,13 @@ router.get("/get-list-ticker/:id", async (req, res) => {
   try {
     const tickets = await Ticker.find({ showTimeDetail: req.params.id });
     const stDetail = await ShowTimeDetail.findById(req.params.id)
-      .populate({ path: "room", populate: { path: "screen" } })
+      .populate({
+        path: "room",
+        populate: { path: "screen" },
+        populate: {
+          path: "cinema",
+        },
+      })
       .populate({
         path: "showTime",
         populate: { path: "movie" },
