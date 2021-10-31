@@ -192,7 +192,7 @@ router.post("/add", async (req, res) => {
       tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
       showTimeDetail: stDetail,
       combos: combosFood,
-      bill: await renderBill(
+      bills: await renderBill(
         idTicketBill === "" ? undefined : idTicketBill,
         idFoodBill === "" ? undefined : idFoodBill
       ),
