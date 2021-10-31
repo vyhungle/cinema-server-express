@@ -158,7 +158,7 @@ router.post("/add", async (req, res) => {
       message: "Đặt vé thành công",
       tickets: renderObjTicket(tickets, stDetail.room, stDetail._id),
       showTimeDetail: stDetail,
-      combos,
+      combos:combosFood,
     });
     //#endregion
   } catch (error) {
