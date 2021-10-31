@@ -512,7 +512,7 @@ GET http://localhost:4000/api/showTime/get-list-showtime-by-date?date=10/26/2021
 GET http://localhost:4000/api/showTime/get-showTime?date=10/26/2021&movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6&screenId=61644b0edf1b9d2700e43b25
 
 ###
-GET http://localhost:4000/api/showTime/get-list-showtime-full?date=10/26/2021&movieId=6169a42f038631344897c7c6&screenId=61644b0edf1b9d2700e43b25&location=Tỉnh Bắc Kạn
+GET http://localhost:4000/api/showTime/get-list-showtime-full?date=10/26/2021&movieId=6169a42f038631344897c7c6&screenId=61644b0edf1b9d2700e43b25&location=Tỉnh%20Bắc%20Kạn
 
 
 ####
@@ -528,13 +528,14 @@ Content-Type: application/json
 ####
 POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM1NjY2NzY3LCJleHAiOjE2MzY4NzYzNjd9.c6KOsfOR-xna7_dhccbiJhBKRnqx-PQwsmneRzmrF9Y
+
 
 {
     "data":[
-        {"seatName":"J9", "price":90000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"J10", "price":90000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
     ],
     "showTimeDetailId":"617243a4b82e5800373a5afc",
-    "userId":"613da2d8736aa826841481b3",
     "payment":{
         "username":"0123488889412",
         "password":"123456",

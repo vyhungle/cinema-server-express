@@ -11,6 +11,7 @@ import { getGeoLocation } from "../api/geolocation";
 function generateToken(user) {
   return jwt.sign(
     {
+      typeUser: 0,
       id: user.id,
       email: user.email,
       phoneNumber: user.phoneNumber,

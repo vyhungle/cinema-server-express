@@ -14,6 +14,7 @@ import verifyToken from "../middleware/staff";
 function generateToken(staff) {
   return jwt.sign(
     {
+      typeUser: 1,
       id: staff.id,
       email: staff.email,
       phoneNumber: staff.phoneNumber,

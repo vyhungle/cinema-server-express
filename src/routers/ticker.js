@@ -8,6 +8,7 @@ import Food from "../models/Food";
 import FoodBill from "../models/FoodBill";
 import FoodDetail from "../models/FoodDetail";
 import User from "../models/User";
+import verifyToken from "../middleware/custom";
 
 import {
   checkWeekend,
@@ -17,7 +18,7 @@ import {
 import { isPayment, renderBill } from "../utils/service";
 import { POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
 
-router.post("/add", async (req, res) => {
+router.post("/add", verifyToken, async (req, res) => {
   const {
     data,
     showTimeDetailId,
@@ -25,16 +26,18 @@ router.post("/add", async (req, res) => {
     payment,
     combos,
   } = req.body;
-  // seatNames, showTimeDetailId, price, idSeat, status
+  const { typeUser, id, type } = req;
   try {
     //#region validate user
-    const user = await User.findById(userId);
+    const _userId = typeUser === 0 ? id : userId;
+    const user = await User.findById(_userId);
     if (!user) {
       res.status(400).json({
         success: false,
         message: "Không tiềm thấy người dùng này trong hệ thống.",
       });
     }
+
     //#endregion
 
     //#region lấy data default
@@ -98,8 +101,8 @@ router.post("/add", async (req, res) => {
       }
 
       // update điểm thưởng
-      if (userId != USER_DEFAULT) {
-        const userPoint = await User.findById(userId);
+      if (_userId != USER_DEFAULT) {
+        const userPoint = await User.findById(_userId);
         const point = Math.floor(
           (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS
         );
@@ -118,7 +121,7 @@ router.post("/add", async (req, res) => {
     let idTicketBill = "";
     if (data && data.length > 0) {
       const bill = new MovieBill({
-        user: userId,
+        user: _userId,
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
@@ -157,7 +160,7 @@ router.post("/add", async (req, res) => {
     let idFoodBill = "";
     if (combos && combos.length > 0) {
       const foodBill = new FoodBill({
-        user: userId,
+        user: _userId,
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
