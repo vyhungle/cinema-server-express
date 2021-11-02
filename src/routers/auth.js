@@ -7,6 +7,7 @@ import { ValidateLoginInput, ValidateRegisterInput } from "../utils/validators";
 import User from "../models/User";
 import verifyToken from "../middleware/auth";
 import { getGeoLocation } from "../api/geolocation";
+import { mailOption, transporter } from "../config/nodeMailer";
 
 function generateToken(user) {
   return jwt.sign(
@@ -224,6 +225,16 @@ router.get("/get-user-by-phone", async (req, res) => {
       errors: error.message,
     });
   }
+});
+
+router.get("/test/send-email", async (req, res) => {
+  try {
+    transporter.sendMail(mailOption, function (error, info) {
+      res.json({
+        message: error || info,
+      });
+    });
+  } catch (error) {}
 });
 
 module.exports = router;

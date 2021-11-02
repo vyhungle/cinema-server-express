@@ -42,7 +42,8 @@ Content-Type: application/json
 {
     "phoneNumber":"0993783942"
 }
-
+### get my user
+GET http://localhost:4000/api/auth/test/send-email
 
 ###
 POST http://localhost:4000/api/cast/add
