@@ -3,6 +3,7 @@ import { getGeoLocation } from "../api/geolocation";
 const router = express.Router();
 
 import Cinema from "../models/Cinema";
+import { errorCatch } from "../utils/constaints";
 import { checkIsEmptyAddress, getCinemaLocation } from "../utils/helper";
 import { ValidateCinema } from "../utils/validators";
 
@@ -41,7 +42,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -89,7 +90,7 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -131,7 +132,7 @@ router.put("/update/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -157,7 +158,7 @@ router.delete("/delete/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -176,7 +177,7 @@ router.get("/get/locations", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -196,7 +197,7 @@ router.get("/get/cinema-by", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

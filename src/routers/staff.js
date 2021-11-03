@@ -10,6 +10,7 @@ import {
 } from "../utils/validators";
 import Staff from "../models/Staff";
 import verifyToken from "../middleware/staff";
+import { errorCatch } from "../utils/constaints";
 
 function generateToken(staff) {
   return jwt.sign(
@@ -48,7 +49,7 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -97,7 +98,7 @@ router.get("/me", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -184,7 +185,7 @@ router.post("/register", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -242,7 +243,7 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -337,7 +338,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -370,7 +371,7 @@ router.delete("/delete/:id", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -412,7 +413,7 @@ router.put("/change-password", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

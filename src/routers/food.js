@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 
 import Food from "../models/Food";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   try {
@@ -21,7 +22,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -38,7 +39,7 @@ router.get("/get-all", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

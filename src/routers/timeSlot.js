@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import TimeSlot from "../models/TimeSlot";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const { time } = req.body;
@@ -19,7 +20,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -38,11 +39,10 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
 });
-
 
 module.exports = router;

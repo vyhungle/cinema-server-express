@@ -16,7 +16,7 @@ import {
   renderStringSeat,
 } from "../utils/helper";
 import { isPayment, renderBill } from "../utils/service";
-import { POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
+import { errorCatch, POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
 
 router.post("/add", verifyToken, async (req, res) => {
   const {
@@ -202,7 +202,7 @@ router.post("/add", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -242,7 +242,7 @@ router.get("/get-list-ticker/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -260,7 +260,7 @@ router.get("/get/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

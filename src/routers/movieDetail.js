@@ -3,6 +3,7 @@ const router = express.Router();
 import moment from "moment";
 
 import MovieDetail from "../models/MovieDetail";
+import { errorCatch } from "../utils/constaints";
 import { ValidateMovieDetail } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -53,7 +54,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -129,7 +130,7 @@ router.put("/update/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -159,7 +160,7 @@ router.get("/get-movie-in-cinema/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

@@ -12,6 +12,7 @@ import {
   resShowTimeByDate,
 } from "../utils/helper";
 import { ValidateShowTime } from "../utils/validators";
+import { errorCatch } from "../utils/constaints";
 const getDate = (parentDate, childDate) => {
   return childDate === "" || childDate === undefined || childDate === null
     ? parentDate
@@ -80,7 +81,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -125,7 +126,7 @@ router.post("/get-list-showtime", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -165,7 +166,7 @@ router.get("/get-list-showtime-by-date", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -209,7 +210,7 @@ router.get("/get-list-showtime-full", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

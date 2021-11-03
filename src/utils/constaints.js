@@ -1,4 +1,3 @@
-
 /**
  * @param {string} ID_SCREEN_2D - Mã hàng hình 2d
  */
@@ -19,3 +18,6 @@ export const USER_DEFAULT = "617e12e6cfd4543b9c9dbc20";
  * @param {string} POINT_BONUS - tích điểm: 10k = 1 điểm.
  */
 export const POINT_BONUS = 10000;
+
+/**@constant errorCatch - lỗi khi vào catch */
+export const errorCatch = "Đã có lỗi xảy ra vui lòng thử lại sau.";

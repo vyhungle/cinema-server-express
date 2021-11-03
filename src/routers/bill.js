@@ -6,6 +6,7 @@ import FoodBill from "../models/FoodBill";
 import FoodDetail from "../models/FoodDetail";
 import MovieBillDetail from "../models/MovieBillDetail";
 import { mergeFoodBill, mergeMovieBill } from "../utils/service";
+import { errorCatch } from "../utils/constaints";
 
 router.get("/get-all-bill/:id", async (req, res) => {
   try {
@@ -25,7 +26,7 @@ router.get("/get-all-bill/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

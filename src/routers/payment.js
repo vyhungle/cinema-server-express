@@ -4,6 +4,7 @@ import Payment from "../models/Payment";
 import PaymentBill from "../models/PaymentBill";
 
 import MovieBill from "../models/MovieBill";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add-order", async (req, res) => {
   const { username, password, billId } = req.body;
@@ -40,7 +41,7 @@ router.post("/add-order", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 
 import ScreenDetail from "../models/ScreenDetail";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const { screenId, movieId } = req.body;
@@ -32,7 +33,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -86,7 +87,7 @@ router.put("/update/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -109,7 +110,7 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -140,11 +141,10 @@ router.get("/get-movie/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
-
 });
 
 module.exports = router;

@@ -8,6 +8,7 @@ import User from "../models/User";
 import verifyToken from "../middleware/auth";
 import { getGeoLocation } from "../api/geolocation";
 import { mailOption, transporter } from "../config/nodeMailer";
+import { errorCatch } from "../utils/constaints";
 
 function generateToken(user) {
   return jwt.sign(
@@ -48,7 +49,7 @@ router.get("/me", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -130,7 +131,7 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -193,7 +194,7 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -221,7 +222,7 @@ router.get("/get-user-by-phone", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

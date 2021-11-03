@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import Director from "../models/Director";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const {
@@ -38,7 +39,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -62,7 +63,7 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -86,7 +87,7 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

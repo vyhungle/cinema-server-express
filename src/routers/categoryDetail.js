@@ -3,6 +3,7 @@ const router = express.Router();
 import { addPremiere } from "../api/serverAPI";
 
 import CategoryDetail from "../models/CategoryDetail";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const { categoryId, movieId } = req.body;
@@ -32,7 +33,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }

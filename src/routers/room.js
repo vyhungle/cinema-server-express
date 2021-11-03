@@ -8,6 +8,7 @@ import ScreenDetail from "../models/ScreenDetail";
 import TimeSlot from "../models/TimeSlot";
 import { ValidateRoom } from "../utils/validators";
 import { addTimeSlotInRoom } from "../utils/helper";
+import { errorCatch } from "../utils/constaints";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -50,7 +51,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -98,7 +99,7 @@ router.put("/update/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -120,7 +121,7 @@ router.delete("/delete/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -143,7 +144,7 @@ router.get("/all", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -169,7 +170,7 @@ router.get("/get-room-by-screen/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
@@ -195,7 +196,7 @@ router.get("/get-by-movie/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Lỗi 400!",
+      message: errorCatch,
       errors: error.message,
     });
   }
