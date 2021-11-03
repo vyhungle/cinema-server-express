@@ -1,8 +1,14 @@
+import cc from "coupon-code";
+
 import Payment from "../models/Payment";
 import MovieBillDetail from "../models/MovieBillDetail";
 import FoodDetail from "../models/FoodDetail";
 import FoodBill from "../models/FoodBill";
 import MovieBill from "../models/MovieBill";
+import Coupon from "../models/Coupon";
+import Gift from "../models/Gift";
+import GiftDetail from "../models/GiftDetail";
+import User from "../models/User";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -119,4 +125,55 @@ export const renderBill = async (idTicketBill, idFoodBill) => {
   }
 
   return res;
+};
+
+export const createCoupon = async (userId, giftId) => {
+  const user = await User.findById(userId);
+  const gift = await Gift.findById(giftId);
+  // đính điểm cho data
+  let point = gift.point;
+  if (user.point < point) {
+    return {
+      success: false,
+      message:
+        "Bạn không đủ điểm để đổi coupon này, vui lòng chọn quà khác hoặc tính điểm thêm.",
+    };
+  }
+  if (!gift) {
+    return {
+      success: false,
+      message: "Không tìm thấy quà tặng này, vui lòng lại sau.",
+    };
+  }
+  // add coupon
+  const dateNow = new Date().toISOString();
+  const coupon = new Coupon({
+    code: cc.generate(),
+    createAt: dateNow,
+    pointTotal: point,
+    dateExpiry: new Date(dateNow).setDate(new Date(dateNow).getDate() + 7),
+    user: user._id,
+    gift: gift._id,
+    status: 0,
+  });
+  await coupon.save();
+
+  // trừ điểm
+  user.point -= point;
+  user.save();
+  return {
+    success: true,
+    message: "Đổi coupon thành công.",
+    values: {
+      coupon: await Coupon.findById(coupon._id).populate("gift"),
+    },
+  };
+};
+
+export const getCoupon = async (code, userId) => {
+  const coupon = await Coupon.findOne({ code, user: userId }).populate("gift");
+  return {
+    success: coupon ? true : false,
+    coupon,
+  };
 };
