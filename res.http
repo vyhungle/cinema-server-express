@@ -607,3 +607,21 @@ GET http://localhost:4000/api/food/get-all
 
 ###
 GET http://localhost:4000/api/bill/get-all-bill/613da2d8736aa826841481b3
+
+
+
+
+####
+POST http://localhost:4000/api/coupon/gift/add
+Content-Type: application/json
+
+{
+    "name":"Vé xem phim IMAX",
+    "point": 450,
+    "image":"https://www.galaxycine.vn/media/2021/4/7/combo1_1617790472299.jpg",
+    "type":0
+}
+
+
+###
+GET http://localhost:4000/api/coupon/gift/get-all?screenId=61644b08df1b9d2700e43b23

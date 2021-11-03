@@ -518,3 +518,18 @@ export const mergeCinemaShowtime = (showTime) => {
   });
   return res;
 };
+
+export const filterGiftByScreen = (gifts, screenId) => {
+  if (screenId) {
+    const res = [];
+    gifts.forEach((item) => {
+      if (item.type === 1) {
+        res.push(item);
+      } else if (item.screenId === screenId) {
+        res.push(item);
+      }
+    });
+    return res;
+  }
+  return gifts;
+};
