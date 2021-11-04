@@ -9,6 +9,11 @@ import Coupon from "../models/Coupon";
 import Gift from "../models/Gift";
 import GiftDetail from "../models/GiftDetail";
 import User from "../models/User";
+import Cinema from "../models/Cinema";
+import Movie from "../models/Movie";
+import ShowTime from "../models/ShowTime";
+import ShowTimeDetail from "../models/ShowTimeDetail";
+import Ticker from "../models/Ticker";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -178,5 +183,86 @@ export const getCoupon = async (code, userId) => {
   return {
     success: coupon ? true : false,
     coupon,
+  };
+};
+
+export const revenueStatistics = async () => {
+  const list = [];
+
+  // Pạp phim
+  const cinema = await Cinema.find();
+  for (let i = 0; i < cinema.length; i++) {
+    list.push({
+      cinema: cinema[i],
+      showTimes: [],
+    });
+    // Lịch chiếu
+    const showTimes = await ShowTime.find({ cinema: cinema[i]._id });
+
+    for (let j = 0; j < showTimes.length; j++) {
+      list[i].showTimes.push({
+        showTime: showTimes[j],
+        showDetails: [],
+      });
+      // Chi tiết lịch chiếu
+      const showDetails = await ShowTimeDetail.find({
+        showTime: showTimes[j]._id,
+      });
+      for (let k = 0; k < showDetails.length; k++) {
+        list[i].showTimes[j].showDetails.push({
+          showDetail: showDetails[k],
+          ticket: await Ticker.find({ showTimeDetail: showDetails[k]._id }),
+        });
+      }
+    }
+  }
+
+  return list;
+};
+
+export const revenueStatisticsMovie = async (cinemaId) => {
+  const showTimes = await ShowTime.find({ cinema: cinemaId });
+  let list = [];
+
+  for (let i = 0; i < showTimes.length; i++) {
+    const is = list.some(
+      (x) => x.movie._id.toString() == showTimes[i].movie.toString()
+    );
+    if (!is) {
+      const data = await getCountAndPriceTicket(showTimes[i].movie);
+      list.push({
+        movie: await Movie.findById(showTimes[i].movie),
+        ...data,
+      });
+    }
+  }
+
+  return list;
+};
+
+export const getCountAndPriceTicket = async (movieId) => {
+  let countTicket = 0;
+  let priceTicket = 0;
+
+  const showTimes = await ShowTime.find({ movie: movieId });
+
+  for (let i = 0; i < showTimes.length; i++) {
+    const showDetails = await ShowTimeDetail.find({
+      showTime: showTimes[i]._id,
+    });
+    for (let j = 0; j < showDetails.length; j++) {
+      const tickets = await Ticker.find({ showTimeDetail: showDetails[j]._id });
+      if (tickets) {
+        countTicket += tickets.length;
+        tickets.forEach((item) => {
+          priceTicket += item.price;
+        });
+      }
+    }
+  }
+
+  return {
+    countTicket,
+    priceTicket,
   };
 };

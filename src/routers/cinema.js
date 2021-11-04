@@ -5,6 +5,7 @@ const router = express.Router();
 import Cinema from "../models/Cinema";
 import { errorCatch } from "../utils/constaints";
 import { checkIsEmptyAddress, getCinemaLocation } from "../utils/helper";
+import { revenueStatistics, revenueStatisticsMovie } from "../utils/service";
 import { ValidateCinema } from "../utils/validators";
 
 router.post("/add", async (req, res) => {
@@ -193,6 +194,22 @@ router.get("/get/cinema-by", async (req, res) => {
       values: {
         cinemas: cinemas.filter((x) => x.address.city === location),
       },
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/thong-ke-rap", async (req, res) => {
+  const { cinemaId } = req.query;
+  try {
+    return res.json({
+      success: true,
+      message: await revenueStatisticsMovie(cinemaId),
     });
   } catch (error) {
     res.status(400).json({
