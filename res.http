@@ -546,8 +546,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
         "type":"0"
     },
     "combos":[
-        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2},
-        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1}
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2 },
+        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1 }
 
     ],
     "gifts":[

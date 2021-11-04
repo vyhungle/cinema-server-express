@@ -53,6 +53,8 @@ router.post("/add", verifyToken, async (req, res) => {
     let giftPoint = 0;
     let giftList = [];
     let priceTicket = 0;
+    let discount = 0;
+    let countGiftDiscount = 0;
 
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
@@ -103,20 +105,27 @@ router.post("/add", verifyToken, async (req, res) => {
     }
     //#endregion
 
-    //#region kiểm tra point gift
+    //#region kiểm tra gift point và số lượng phiếu giảm giá
     for (let i = 0; i < gifts.length; i++) {
       const gift = await Gift.findById(gifts[i]._id);
       if (gift) {
+        // type = 0 loại vé
         if (gift.type === 0) {
           numberTicket = gifts[i].quantity;
+          giftPoint += gift.point * gifts[0].quantity;
         }
-        giftPoint += gift.point * gifts[0].quantity;
         // type = 1, bắp nước thì push vào mảng
-        if (gift.type === 1) {
+        else if (gift.type === 1) {
           giftList.push({
             ...gift._doc,
             quantity: gifts[i].quantity,
           });
+          giftPoint += gift.point * gifts[0].quantity;
+        }
+        // type = 2 phiếu giảm giá
+        else if (gift.type === 2) {
+          discount = gift.discount;
+          countGiftDiscount += 1;
         }
       }
     }
@@ -124,6 +133,14 @@ router.post("/add", verifyToken, async (req, res) => {
       return res.json({
         success: false,
         message: "Bạn không có đủ điểm để đổi quà.",
+        tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
+      });
+    }
+    if (countGiftDiscount > 1) {
+      return res.json({
+        success: false,
+        message:
+          "Bạn không được phép dùng nhiều hơn 1 phiếu giảm giá cho đơn hàng này.",
         tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
       });
     }
@@ -177,7 +194,8 @@ router.post("/add", verifyToken, async (req, res) => {
         });
         await billDetail.save();
       });
-      bill.total = total;
+      // tính lại total bill
+      bill.total = total - total * discount;
       idTicketBill = bill._id;
       await bill.save();
     }
@@ -221,7 +239,7 @@ router.post("/add", verifyToken, async (req, res) => {
           await foodDetailGift.save();
         }
       }
-      foodBill.total = totalFoodBill;
+      foodBill.total = totalFoodBill - totalFoodBill * discount;
       idFoodBill = foodBill._id;
       await foodBill.save();
     }
