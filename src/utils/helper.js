@@ -533,3 +533,7 @@ export const filterGiftByScreen = (gifts, screenId) => {
   }
   return gifts;
 };
+
+export const sortBill = (bills) => {
+  return bills.sort((a, b) => b.createdAt - a.createdAt);
+};
