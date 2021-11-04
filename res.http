@@ -534,8 +534,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"E7", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
-        {"seatName":"E8", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"F1", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
+        {"seatName":"F0", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
 
     ],
     "showTimeDetailId":"617243a4b82e5800373a5afc",
@@ -551,10 +551,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
     ],
     "gifts":[
-         {"_id":"6182951ca96d972d441fb347","quantity":1},
-         {"_id":"618293aab3b05642dc7bf89f","quantity":3}
+         {"_id":"6182951ca96d972d441fb347","quantity":1, "coupon":false},
+         {"_id":"618293aab3b05642dc7bf89f","quantity":1, "coupon":false},
+         {"_id":"6183edacbaa93a3e84a7d419","quantity":1, "coupon":false}
+
     ],
-    "coupons":[""] // array code
+    "coupons":[] 
     
 }
 
@@ -624,10 +626,11 @@ POST http://localhost:4000/api/coupon/gift/add
 Content-Type: application/json
 
 {
-    "name":"Vé xem phim IMAX",
-    "point": 450,
+    "name":"Phiếu Giảm giá 50%",
+    "point": 2000,
     "image":"https://www.galaxycine.vn/media/2021/4/7/combo1_1617790472299.jpg",
-    "type":0
+    "type":2,
+    "discount":0.5
 }
 
 

@@ -13,13 +13,24 @@ import { createCoupon, getCoupon } from "../utils/service";
 
 //#region Gift
 router.post("/gift/add", async (req, res) => {
-  const { name, image, point, type = 0 } = req.body;
+  const {
+    name,
+    image,
+    point,
+    type = 0,
+    screenId,
+    foodId,
+    discount,
+  } = req.body;
   try {
     const gift = new Gift({
       name,
       image,
       point,
       type,
+      screenId, // field cho vé
+      foodId, // field cho bắp nước
+      discount, // field cho phiếu giảm giá
     });
     await gift.save();
     return res.json({

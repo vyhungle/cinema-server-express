@@ -8,7 +8,6 @@ const giftSchema = new Schema({
   screenId: String,
   foodId: String,
   discount: Number,
-  unitDiscount: String,
 });
 
 module.exports = model("gifts", giftSchema);

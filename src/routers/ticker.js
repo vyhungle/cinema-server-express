@@ -112,7 +112,6 @@ router.post("/add", verifyToken, async (req, res) => {
         // type = 0 loại vé
         if (gift.type === 0) {
           numberTicket = gifts[i].quantity;
-          giftPoint += gift.point * gifts[0].quantity;
         }
         // type = 1, bắp nước thì push vào mảng
         else if (gift.type === 1) {
@@ -120,13 +119,14 @@ router.post("/add", verifyToken, async (req, res) => {
             ...gift._doc,
             quantity: gifts[i].quantity,
           });
-          giftPoint += gift.point * gifts[0].quantity;
         }
         // type = 2 phiếu giảm giá
         else if (gift.type === 2) {
           discount = gift.discount;
           countGiftDiscount += 1;
         }
+
+        giftPoint += gifts[0].coupon ? 0 : gift.point * gifts[0].quantity;
       }
     }
     if (user.point < giftPoint) {
@@ -252,8 +252,8 @@ router.post("/add", verifyToken, async (req, res) => {
         const coupon = await Coupon.findOne({ code: coupons[i] });
         if (coupon) {
           coupon.status = 1;
+          await coupon.save();
         }
-        await coupon.save();
       }
     }
     //#endregion
