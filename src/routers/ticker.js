@@ -9,6 +9,7 @@ import FoodBill from "../models/FoodBill";
 import FoodDetail from "../models/FoodDetail";
 import User from "../models/User";
 import Gift from "../models/Gift";
+import Coupon from "../models/Coupon";
 import verifyToken from "../middleware/custom";
 
 import {
@@ -27,6 +28,7 @@ router.post("/add", verifyToken, async (req, res) => {
     payment,
     combos,
     gifts,
+    coupons,
   } = req.body;
   const { typeUser, id, type } = req;
   try {
@@ -42,7 +44,7 @@ router.post("/add", verifyToken, async (req, res) => {
 
     //#endregion
 
-    //#region lấy data default
+    //#region data default
     let totalTicket = 0;
     let totalFood = 0;
     let idTicketBill = "";
@@ -224,6 +226,18 @@ router.post("/add", verifyToken, async (req, res) => {
       await foodBill.save();
     }
 
+    //#endregion
+
+    //#region Disable coupon
+    if (coupons && coupons.length > 0) {
+      for (let i = 0; i < coupons.length; i++) {
+        const coupon = await Coupon.findOne({ code: coupons[i] });
+        if (coupon) {
+          coupon.status = 1;
+        }
+        await coupon.save();
+      }
+    }
     //#endregion
 
     //#region update điểm thưởng

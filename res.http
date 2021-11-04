@@ -553,7 +553,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
     "gifts":[
          {"_id":"6182951ca96d972d441fb347","quantity":1},
          {"_id":"618293aab3b05642dc7bf89f","quantity":3}
-    ]
+    ],
+    "coupons":[""] // array code
+    
 }
 
 ###
