@@ -534,7 +534,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"A10", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"E7", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
+        {"seatName":"E8", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+
     ],
     "showTimeDetailId":"617243a4b82e5800373a5afc",
     "userId":"613da2d8736aa826841481b3",
@@ -547,6 +549,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":2},
         {"_id":"617cf561fb0f0b175c1d80ca","quantity":1}
 
+    ],
+    "gifts":[
+         {"_id":"6182951ca96d972d441fb347","quantity":1},
+         {"_id":"618293aab3b05642dc7bf89f","quantity":3}
     ]
 }
 

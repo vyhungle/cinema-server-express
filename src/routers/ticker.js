@@ -8,6 +8,7 @@ import Food from "../models/Food";
 import FoodBill from "../models/FoodBill";
 import FoodDetail from "../models/FoodDetail";
 import User from "../models/User";
+import Gift from "../models/Gift";
 import verifyToken from "../middleware/custom";
 
 import {
@@ -25,6 +26,7 @@ router.post("/add", verifyToken, async (req, res) => {
     userId = USER_DEFAULT,
     payment,
     combos,
+    gifts,
   } = req.body;
   const { typeUser, id, type } = req;
   try {
@@ -41,6 +43,15 @@ router.post("/add", verifyToken, async (req, res) => {
     //#endregion
 
     //#region lấy data default
+    let totalTicket = 0;
+    let totalFood = 0;
+    let idTicketBill = "";
+    let idFoodBill = "";
+    let numberTicket = 0;
+    let giftPoint = 0;
+    let giftList = [];
+    let priceTicket = 0;
+
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
         path: "room",
@@ -48,17 +59,15 @@ router.post("/add", verifyToken, async (req, res) => {
       })
       .populate("timeSlot");
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
-    let totalTicket = 0;
-    let totalFood = 0;
-    let idTicketBill = "";
-    let idFoodBill = "";
 
     // tính total bill
     if (data && data.length > 0) {
       data.forEach((item) => {
         totalTicket += item.price || priceBefore;
+        priceTicket = item.price || priceBefore;
       });
     }
+    totalTicket -= numberTicket * priceTicket;
     if (combos && combos.length > 0) {
       for (let i = 0; i < combos.length; i++) {
         const food = await Food.findById(combos[i]._id);
@@ -89,6 +98,32 @@ router.post("/add", verifyToken, async (req, res) => {
           tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
         });
       }
+    }
+    //#endregion
+
+    //#region kiểm tra point gift
+    for (let i = 0; i < gifts.length; i++) {
+      const gift = await Gift.findById(gifts[i]._id);
+      if (gift) {
+        if (gift.type === 0) {
+          numberTicket = gifts[i].quantity;
+        }
+        giftPoint += gift.point * gifts[0].quantity;
+        // type = 1, bắp nước thì push vào mảng
+        if (gift.type === 1) {
+          giftList.push({
+            ...gift._doc,
+            quantity: gifts[i].quantity,
+          });
+        }
+      }
+    }
+    if (user.point < giftPoint) {
+      return res.json({
+        success: false,
+        message: "Bạn không có đủ điểm để đổi quà.",
+        tickets: renderObjTicket(oldTickets, stDetail.room, stDetail._id),
+      });
     }
     //#endregion
 
@@ -123,12 +158,15 @@ router.post("/add", verifyToken, async (req, res) => {
         const newTicker = new Ticker({
           idSeat: item.idSeat,
           seatName: item.seatName,
-          price: item.price || priceBefore,
+          price: numberTicket > 0 ? 0 : item.price || priceBefore,
           status: 1,
           showTimeDetail: showTimeDetailId,
         });
+
         // tính lại total
-        total += parseInt(newTicker.price);
+        total += numberTicket > 0 ? 0 : parseInt(newTicker.price);
+        // trừ vé free
+        numberTicket -= 1;
         await newTicker.save();
         // Tạo chi tiết hóa đơn
         const billDetail = new MovieBillDetail({
@@ -144,7 +182,7 @@ router.post("/add", verifyToken, async (req, res) => {
     //#endregion
 
     //#region  Tạo hóa đơn combo và combo detail
-    if (combos && combos.length > 0) {
+    if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
       const foodBill = new FoodBill({
         user: _userId,
         total: 0,
@@ -154,21 +192,38 @@ router.post("/add", verifyToken, async (req, res) => {
 
       // tạo combo detail
       let totalFoodBill = 0;
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        const foodDetail = new FoodDetail({
-          food: combos[i]._id,
-          foodBill: foodBill._id,
-          quantity: combos[i].quantity,
-          price: food.price,
-        });
-        totalFoodBill += food.price * combos[i].quantity;
-        await foodDetail.save();
+      if (combos && combos.length > 0) {
+        for (let i = 0; i < combos.length; i++) {
+          const food = await Food.findById(combos[i]._id);
+          const foodDetail = new FoodDetail({
+            food: combos[i]._id,
+            foodBill: foodBill._id,
+            quantity: combos[i].quantity,
+            price: food.price,
+          });
+          totalFoodBill += food.price * combos[i].quantity;
+          await foodDetail.save();
+        }
+      }
+
+      if (gifts && giftList.length > 0) {
+        for (let i = 0; i < giftList.length; i++) {
+          const _gift = await Gift.findById(giftList[i]._id);
+          const foodGift = await Food.findById(_gift.foodId);
+          const foodDetailGift = new FoodDetail({
+            food: foodGift._id,
+            foodBill: foodBill._id,
+            quantity: giftList[i].quantity,
+            price: 0,
+          });
+          await foodDetailGift.save();
+        }
       }
       foodBill.total = totalFoodBill;
       idFoodBill = foodBill._id;
       await foodBill.save();
     }
+
     //#endregion
 
     //#region update điểm thưởng

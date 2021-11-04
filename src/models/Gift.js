@@ -6,6 +6,7 @@ const giftSchema = new Schema({
   image: String,
   type: Number,
   screenId: String,
+  foodId: String,
 });
 
 module.exports = model("gifts", giftSchema);

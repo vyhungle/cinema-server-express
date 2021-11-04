@@ -69,7 +69,10 @@ export const mergeMovieBill = async (values) => {
 const getItemFoodBill = (values) => {
   let res = [];
   values.forEach((item) => {
-    res = [...res, item.food];
+    res = [
+      ...res,
+      { ...item.food._doc, price: item.price, quantity: item.quantity },
+    ];
   });
   return res;
 };
