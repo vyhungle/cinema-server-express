@@ -15,6 +15,7 @@ import ShowTime from "../models/ShowTime";
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
 import { filterTimeSTD } from "./helper";
+import { Year } from "./data";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -302,4 +303,34 @@ export const mergeSTD = (showDetails) => {
   });
 
   return res;
+};
+
+export const revenueYear = async (cinemaId) => {
+  const showTimes = await ShowTime.find({ cinema: cinemaId });
+  const yearNow = new Date().getFullYear();
+
+  let showTimeDetails = [];
+  for (let i = 0; i < showTimes.length; i++) {
+    const std = await ShowTimeDetail.find({ showTime: showTimes[i] });
+    showTimeDetails = showTimeDetails.concat(std);
+  }
+  const filterSTD = filterTimeSTD(
+    showTimeDetails,
+    `1/1/${yearNow}`,
+    `12/31/${yearNow}`
+  );
+  return mergeSDTByQuarter(filterSTD);
+};
+
+export const mergeSDTByQuarter = (showDetails) => {
+  const yearData = Year;
+  showDetails.forEach((item) => {
+    const month = new Date(item.date).getMonth();
+    const index = yearData.findIndex((x) => x.months.some((x) => x == month));
+    if (index !== -1) {
+      yearData[index].countTicket += item?.countTicket || 0;
+      yearData[index].totalPrice += item?.totalPrice || 0;
+    }
+  });
+  return yearData;
 };

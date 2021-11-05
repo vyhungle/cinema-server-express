@@ -9,6 +9,7 @@ import {
   revenueStatistics,
   revenueStatisticsByDate,
   revenueStatisticsMovie,
+  revenueYear,
 } from "../utils/service";
 import { ValidateCinema } from "../utils/validators";
 
@@ -231,6 +232,24 @@ router.get("/get/thong-ke-theo-ngay", async (req, res) => {
   const { cinemaId, dateStart, dateEnd } = req.query;
   try {
     const data = await revenueStatisticsByDate(cinemaId, dateStart, dateEnd);
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/thong-ke-theo-quy", async (req, res) => {
+  const { cinemaId } = req.query;
+  try {
+    const data = await revenueYear(cinemaId);
     return res.json({
       success: true,
       message: "",
