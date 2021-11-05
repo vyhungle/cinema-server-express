@@ -13,15 +13,7 @@ import { createCoupon, getCoupon } from "../utils/service";
 
 //#region Gift
 router.post("/gift/add", async (req, res) => {
-  const {
-    name,
-    image,
-    point,
-    type = 0,
-    screenId,
-    foodId,
-    discount,
-  } = req.body;
+  const { name, image, point, type = 0, screenId, foodId, discount } = req.body;
   try {
     const gift = new Gift({
       name,
@@ -86,6 +78,17 @@ router.get("/get-gift", verifyToken, async (req, res) => {
   const _id = typeUser === 0 ? id : userId;
   try {
     const couponRes = await getCoupon(code, _id);
+    if (couponRes.coupon.status === 1) {
+      return res.json({
+        success: false,
+        message: "Mã coupon đã được sử dụng, vui lòng nhập mã khác.",
+      });
+    } else if (couponRes.coupon.dateExpiry < Date.now()) {
+      return res.json({
+        success: false,
+        message: "Mã coupon đã hết hạng sử dụng, vui lòng nhập mã khác.",
+      });
+    }
     return res.json({
       success: couponRes.success,
       message: couponRes.success
