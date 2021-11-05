@@ -273,7 +273,7 @@ router.post("/add", verifyToken, async (req, res) => {
       await userPoint.save();
     }
     //#endregion
-    stDetail.countTicket += 1;
+    stDetail.countTicket += data ? data.length : 0;
     stDetail.totalPriceTicket += totalFood + totalTicket;
     await stDetail.save();
     //#region render data showtime and response

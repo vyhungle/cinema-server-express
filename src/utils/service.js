@@ -247,7 +247,7 @@ export const revenueStatisticsMovie = async (cinemaId, dateStart, dateEnd) => {
 
 export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
   let countTicket = 0;
-  let priceTicket = 0;
+  let totalPriceTicket = 0;
 
   const showTimes = await ShowTime.find({ movie: movieId });
 
@@ -257,18 +257,12 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
     });
     const filterSTD = filterTimeSTD(showDetails, dateStart, dateEnd);
     for (let j = 0; j < filterSTD.length; j++) {
-      const tickets = await Ticker.find({ showTimeDetail: filterSTD[j]._id });
-      if (tickets) {
-        countTicket += tickets.length;
-        tickets.forEach((item) => {
-          priceTicket += item.price;
-        });
-      }
+      countTicket += filterSTD[j]?.countTicket || 0;
+      totalPriceTicket += filterSTD[j]?.totalPriceTicket || 0;
     }
   }
-
   return {
     countTicket,
-    priceTicket,
+    totalPriceTicket,
   };
 };

@@ -200,7 +200,7 @@ GET http://localhost:4000/api/cinema/all
 
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-rap?cinemaId=614c03db576b5d00376801a6&dateStart=11/1/2021&dateEnd=11/5/2021
+GET http://localhost:4000/api/cinema/get/thong-ke-rap?cinemaId=614c03db576b5d00376801a6&dateStart=10/18/2021&dateEnd=11/5/2021
 
 ###
 GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
@@ -537,11 +537,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"F2", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
-        {"seatName":"F3", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"A3", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
+        {"seatName":"A4", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
 
     ],
-    "showTimeDetailId":"617243a4b82e5800373a5afc",
+    "showTimeDetailId":"616bdd572a098f00378a8806",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
         "username":"0123488889412",
@@ -551,15 +551,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
     "combos":[
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":2 },
         {"_id":"617cf561fb0f0b175c1d80ca","quantity":1 }
-
     ],
     "gifts":[
          {"_id":"6182951ca96d972d441fb347","quantity":1, "coupon":false},
-         {"_id":"618293aab3b05642dc7bf89f","quantity":1, "coupon":false},
-         {"_id":"6183edacbaa93a3e84a7d419","quantity":1, "coupon":true}
-
+         {"_id":"618293aab3b05642dc7bf89f","quantity":1, "coupon":false}
     ],
-    "coupons":["B7MA-LR1Q-XAR2"] 
+    "coupons":[] 
     
 }
 
