@@ -23,10 +23,11 @@ import foodRouter from "./routers/food";
 import billRouter from "./routers/bill";
 import couponRouter from "./routers/coupon";
 
-
 require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
+const serverTimeout = app.listen();
+serverTimeout.setTimeout(500000);
 
 app.use(express.json());
 app.use(
@@ -57,7 +58,6 @@ app.use("/api/movieDetail", movieDetailRouter);
 app.use("/api/food", foodRouter);
 app.use("/api/bill", billRouter);
 app.use("/api/coupon", couponRouter);
-
 
 //Connect db
 ConnectionMongoDB();

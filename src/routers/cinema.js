@@ -209,7 +209,8 @@ router.get("/get/thong-ke-rap", async (req, res) => {
   try {
     return res.json({
       success: true,
-      message: await revenueStatisticsMovie(cinemaId),
+      message: "",
+      values: await revenueStatisticsMovie(cinemaId),
     });
   } catch (error) {
     res.status(400).json({
