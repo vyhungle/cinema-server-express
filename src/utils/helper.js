@@ -535,7 +535,8 @@ export const filterGiftByScreen = (gifts, screenId) => {
 };
 
 export const sortBill = (bills) => {
-  return bills.sort((a, b) => b.createdAt - a.createdAt);
+  console.log(new Date(bills[0].createdAt));
+  return bills.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 };
 
 export const filterTimeSTD = (std, dateStart, dateEnd) => {
