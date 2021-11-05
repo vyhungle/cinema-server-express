@@ -15,7 +15,6 @@ import ShowTime from "../models/ShowTime";
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
 import { filterTimeSTD } from "./helper";
-import { Year } from "./data";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -323,9 +322,34 @@ export const revenueYear = async (cinemaId) => {
 };
 
 export const mergeSDTByQuarter = (showDetails) => {
-  const yearData = Year;
+  const yearData = [
+    {
+      quarter: 1,
+      months: [1, 2, 3],
+      countTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 2,
+      months: [4, 5, 6],
+      countTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 3,
+      months: [7, 8, 9],
+      countTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 4,
+      months: [10, 11, 12],
+      countTicket: 0,
+      totalPrice: 0,
+    },
+  ];
   showDetails.forEach((item) => {
-    const month = new Date(item.date).getMonth();
+    const month = new Date(item.date).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
       yearData[index].countTicket += item?.countTicket || 0;
