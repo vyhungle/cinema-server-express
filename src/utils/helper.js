@@ -537,3 +537,21 @@ export const filterGiftByScreen = (gifts, screenId) => {
 export const sortBill = (bills) => {
   return bills.sort((a, b) => b.createdAt - a.createdAt);
 };
+
+export const filterTimeSTD = (std, dateStart, dateEnd) => {
+  let res = [];
+  if (dateStart && dateEnd && new Date(dateStart) < new Date(dateEnd)) {
+    res = std.filter(
+      (x) =>
+        new Date(x.date) >= new Date(dateStart) &&
+        new Date(x.date) <= new Date(dateEnd)
+    );
+  } else if (
+    (dateStart && dateEnd === undefined) ||
+    new Date(dateStart) >= new Date(dateEnd)
+  ) {
+    res = std.filter((x) => x.date == moment(dateStart).format("L"));
+  } else res = std;
+
+  return Object.values(res);
+};

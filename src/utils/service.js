@@ -14,6 +14,7 @@ import Movie from "../models/Movie";
 import ShowTime from "../models/ShowTime";
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
+import { filterTimeSTD } from "./helper";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -220,7 +221,7 @@ export const revenueStatistics = async () => {
   return list;
 };
 
-export const revenueStatisticsMovie = async (cinemaId) => {
+export const revenueStatisticsMovie = async (cinemaId, dateStart, dateEnd) => {
   const showTimes = await ShowTime.find({ cinema: cinemaId });
   let list = [];
 
@@ -229,7 +230,11 @@ export const revenueStatisticsMovie = async (cinemaId) => {
       (x) => x.movie._id.toString() == showTimes[i].movie.toString()
     );
     if (!is) {
-      const data = await getCountAndPriceTicket(showTimes[i].movie);
+      const data = await getCountAndPriceTicket(
+        showTimes[i].movie,
+        dateStart,
+        dateEnd
+      );
       list.push({
         movie: await Movie.findById(showTimes[i].movie),
         ...data,
@@ -240,7 +245,7 @@ export const revenueStatisticsMovie = async (cinemaId) => {
   return list;
 };
 
-export const getCountAndPriceTicket = async (movieId) => {
+export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
   let countTicket = 0;
   let priceTicket = 0;
 
@@ -250,8 +255,9 @@ export const getCountAndPriceTicket = async (movieId) => {
     const showDetails = await ShowTimeDetail.find({
       showTime: showTimes[i]._id,
     });
-    for (let j = 0; j < showDetails.length; j++) {
-      const tickets = await Ticker.find({ showTimeDetail: showDetails[j]._id });
+    const filterSTD = filterTimeSTD(showDetails, dateStart, dateEnd);
+    for (let j = 0; j < filterSTD.length; j++) {
+      const tickets = await Ticker.find({ showTimeDetail: filterSTD[j]._id });
       if (tickets) {
         countTicket += tickets.length;
         tickets.forEach((item) => {

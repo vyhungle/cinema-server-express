@@ -200,7 +200,7 @@ GET http://localhost:4000/api/cinema/all
 
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-rap?cinemaId=614c03db576b5d00376801a6
+GET http://localhost:4000/api/cinema/get/thong-ke-rap?cinemaId=614c03db576b5d00376801a6&dateStart=9/24/2021&dateEnd=11/25/2021
 
 ###
 GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e

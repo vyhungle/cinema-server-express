@@ -205,9 +205,10 @@ router.get("/get/cinema-by", async (req, res) => {
 });
 
 router.get("/get/thong-ke-rap", async (req, res) => {
-  const { cinemaId } = req.query;
+  const { cinemaId, dateStart, dateEnd } = req.query;
+  console.log(cinemaId,dateStart,dateEnd)
   try {
-    const data = await revenueStatisticsMovie(cinemaId);
+    const data = await revenueStatisticsMovie(cinemaId, dateStart, dateEnd);
     return res.json({
       success: true,
       message: "",
