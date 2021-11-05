@@ -247,7 +247,7 @@ export const revenueStatisticsMovie = async (cinemaId, dateStart, dateEnd) => {
 
 export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
   let countTicket = 0;
-  let totalPriceTicket = 0;
+  let totalPrice = 0;
 
   const showTimes = await ShowTime.find({ movie: movieId });
 
@@ -258,11 +258,48 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
     const filterSTD = filterTimeSTD(showDetails, dateStart, dateEnd);
     for (let j = 0; j < filterSTD.length; j++) {
       countTicket += filterSTD[j]?.countTicket || 0;
-      totalPriceTicket += filterSTD[j]?.totalPriceTicket || 0;
+      totalPrice += filterSTD[j]?.totalPrice || 0;
     }
   }
   return {
     countTicket,
-    totalPriceTicket,
+    totalPrice,
   };
+};
+
+export const revenueStatisticsByDate = async (cinemaId, dateStart, dateEnd) => {
+  const showTimes = await ShowTime.find({ cinema: cinemaId });
+  let showTimeDetails = [];
+
+  // get show time detail
+  for (let i = 0; i < showTimes.length; i++) {
+    const std = await ShowTimeDetail.find({ showTime: showTimes[i]._id });
+    showTimeDetails = showTimeDetails.concat(std);
+  }
+  const filterSTD = filterTimeSTD(showTimeDetails, dateStart, dateEnd);
+
+  return mergeSTD(filterSTD);
+};
+
+export const mergeSTD = (showDetails) => {
+  const res = [];
+  showDetails.forEach((item, index) => {
+    const is = res.some((x) => x.date == item.date);
+    if (!is) {
+      res.push({
+        date: item.date,
+        countTicket: item?.countTicket || 0,
+        totalPrice: item?.totalPrice || 0,
+      });
+    } else {
+      const index = res.findIndex((x) => x.date == item.date);
+      res[index] = {
+        ...res[index],
+        countTicket: res[index].countTicket + item.countTicket,
+        totalPrice: res[index].totalPrice + item.totalPrice,
+      };
+    }
+  });
+
+  return res;
 };

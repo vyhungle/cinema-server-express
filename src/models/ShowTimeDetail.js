@@ -18,7 +18,7 @@ const showTimeDetailSchema = new Schema({
     type: Number,
     default: 0,
   },
-  totalPriceTicket: {
+  totalPrice: {
     type: Number,
     default: 0,
   },
