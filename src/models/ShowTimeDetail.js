@@ -14,6 +14,14 @@ const showTimeDetailSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "timeslots",
   },
+  countTicket: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceTicket: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = model("showtimedetails", showTimeDetailSchema);
