@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import http from "http";
+import timeout from "connect-timeout";
 
 import { ConnectionMongoDB } from "./config/mongodb";
 import authRouter from "./routers/auth";
@@ -26,8 +27,6 @@ import couponRouter from "./routers/coupon";
 require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
-const serverTimeout = app.listen();
-serverTimeout.setTimeout(500000);
 
 app.use(express.json());
 app.use(
@@ -37,6 +36,7 @@ app.use(
   })
 );
 app.set("json spaces", 2);
+app.use(timeout("50s"));
 
 //Router
 app.use("/api/auth", authRouter);

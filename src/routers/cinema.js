@@ -207,10 +207,11 @@ router.get("/get/cinema-by", async (req, res) => {
 router.get("/get/thong-ke-rap", async (req, res) => {
   const { cinemaId } = req.query;
   try {
+    const data = await revenueStatisticsMovie(cinemaId);
     return res.json({
       success: true,
       message: "",
-      values: await revenueStatisticsMovie(cinemaId),
+      data,
     });
   } catch (error) {
     res.status(400).json({
