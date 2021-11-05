@@ -46,7 +46,8 @@ router.get("/get-all-bill/", verifyTokenUser, async (req, res) => {
       success: true,
       message: "Lấy hóa đơn theo user thành công",
       values: {
-        pageNumber: Math.ceil(countSize / limit),
+        page,
+        pageSize: Math.ceil(countSize / limit),
         hasMore: countSize > limit * parseInt(page, 10),
         bills: bills.sort(
           (a, b) => new Date(b.bill.createdAt) - new Date(a.bill.createdAt)
