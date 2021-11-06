@@ -52,7 +52,13 @@ export const mergeMovieBill = async (values) => {
   for (let i = 0; i < values.length; i++) {
     const billDetail = await MovieBillDetail.find({
       movieBill: values[i]._id,
-    }).populate("ticket");
+    }).populate({
+      path: "ticket",
+      populate: {
+        path: "showTimeDetail",
+        populate: { path: "showTime", populate: ["movie", "cinema"] },
+      },
+    });
 
     if (!res.some((x) => x.bill._id === values[i]._id)) {
       res.push({

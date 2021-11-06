@@ -624,7 +624,7 @@ GET http://localhost:4000/api/food/get-all
 
 
 ###
-GET http://localhost:4000/api/bill/get-all-bill?page=3&limit=20
+GET http://localhost:4000/api/bill/get-all-bill?page=3&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4NzM2YWE4MjY4NDE0ODFiMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzU2NjU2OTUsImV4cCI6MTYzNjg3NTI5NX0.3gxlDlhcZXiGc4Hk6IHI_YeibHTZ_slmRBLC7OO4tBE
 
 
