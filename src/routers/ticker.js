@@ -274,7 +274,7 @@ router.post("/add", verifyToken, async (req, res) => {
     }
     //#endregion
     stDetail.countTicket += data ? data.length : 0;
-    stDetail.totalPriceTicket += totalFood + totalTicket;
+    stDetail.totalPrice += totalFood + totalTicket;
     await stDetail.save();
     //#region render data showtime and response
     const tickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
