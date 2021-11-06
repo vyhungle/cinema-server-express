@@ -82,11 +82,17 @@ router.get("/get-gift", verifyToken, async (req, res) => {
       return res.json({
         success: false,
         message: "Mã coupon đã được sử dụng, vui lòng nhập mã khác.",
+        values: {
+          coupon: couponRes.coupon,
+        },
       });
     } else if (couponRes.coupon?.dateExpiry < Date.now()) {
       return res.json({
         success: false,
         message: "Mã coupon đã hết hạng sử dụng, vui lòng nhập mã khác.",
+        values: {
+          coupon: couponRes.coupon,
+        },
       });
     }
     return res.json({
