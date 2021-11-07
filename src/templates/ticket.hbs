@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.6rem;
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        color: #232323;
+      }
+      .header {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0 1.6rem;
+        background-color: #232323;
+      }
+      .header a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+        padding: 1.2rem;
+        font-size: 1.4rem;
+      }
+      .header a:hover {
+        color: #ff7171;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem 0;
+        margin-top: -7px;
+        background-color: #f8f9fb;
+      }
+      .main h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+      .main h2 {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .main h3 {
+        font-size: 1.7rem;
+        font-weight: 400;
+      }
+      .main p {
+        font-size: 1.6rem;
+        color: #969695;
+      }
+      .main-list {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: 2rem auto;
+      }
+      .main-item h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .main-item p {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #ff7171;
+      }
+      .main img {
+        width: 15rem;
+        height: 15rem;
+      }
+      .main span {
+        font-size: 1.5rem;
+        padding: 1rem 1.8rem;
+        color: #fff;
+        background-color: #ff7171;
+        font-weight: 500;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
+      .main h4 {
+        background-color: #232323;
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #fff;
+        font-weight: 600;
+        font-style: italic;
+        padding: 15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="">Trang Chủ</a>
+      <a href="">Lịch Chiếu</a>
+      <a href="">Ưu Đãi</a>
+    </header>
+    <img
+      src="https://firebasestorage.googleapis.com/v0/b/foodapp-5779e.appspot.com/o/images%2Funnamed.png?alt=media&token=5160b8eb-5f27-4b13-bcf0-98c6e14251c2"
+      alt=""
+    />
+    <main class="main">
+      <h1>Chúc mừng! Bạn đã đặt vé thành công!</h1>
+      <h2>Avengers: Hồi Kết</h2>
+      <h3>Avengers: Endgame</h3>
+      <p>Ve 2D Thanh Vien (4) (Ghế: I4, H3, G17, H4)</p>
+      <p>
+        <strong>RAP 4:</strong> TTVH Quận 12, Số 09 Quốc Lộ 22, P. Trung Mỹ Tây,
+        Quận 12
+      </p>
+      <div class="main-list">
+        <div class="main-item">
+          <h2>Ngày:</h2>
+          <p>Sat, 01/11/2021</p>
+        </div>
+        <div class="main-item">
+          <h2>Thời gian:</h2>
+          <p>17:00</p>
+        </div>
+        <div class="main-item">
+          <h2>Rạp:</h2>
+          <p>RAP 4</p>
+        </div>
+      </div>
+      <img
+        src="https://chart.googleapis.com/chart?cht=qr&choe=UTF-8&chld=L%7C2&chl=WLC4N8R&chs=150x150"
+        alt=""
+      />
+      <span>Mã Vé: 39800</span>
+      <h4>
+        * Quý khách quét QR code vào rạp nhanh hơn. Giao dịch đã hoàn thành sẽ
+        không hoàn huỷ trong mọi trường hợp.
+      </h4>
+    </main>
+  </body>
+</html>
