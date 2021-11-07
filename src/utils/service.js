@@ -16,7 +16,7 @@ import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
 import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
-import { filterTimeSTD } from "./helper";
+import { filterTimeSTD, parseTime } from "./helper";
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });
@@ -309,18 +309,20 @@ export const revenueStatisticsByDate = async (cinemaId, dateStart, dateEnd) => {
     });
     showTimeDetails = showTimeDetails.concat(std);
   }
-  console.log(showTimeDetails);
   const filterSTD = filterTimeSTD(showTimeDetails, dateStart, dateEnd);
   const res = mergeSTD(filterSTD);
 
   const rooms = await Room.find({ cinema: cinemaId });
   const timeSlots = await TimeSlot.find();
+  const sortTimeSL = timeSlots.sort(
+    (a, b) => parseTime(a.time) - parseTime(b.time)
+  );
   const movie = await Movie.find();
 
   for (let i = 0; i < res.length; i++) {
-    res[i].rooms = await mergeSTDRoom(filterSTD, rooms);
+    res[i].rooms = await mergeSTDRoom(filterSTD, rooms, sortTimeSL);
     res[i].movies = await mergeSTDMovie(filterSTD, movie);
-    res[i].timeSlots = await mergeSTDTimeSlot(filterSTD, timeSlots);
+    res[i].timeSlots = await mergeSTDTimeSlot(filterSTD, sortTimeSL);
   }
   return res;
 };
@@ -370,7 +372,7 @@ export const mergeSTD = (showDetails) => {
   return res;
 };
 
-const mergeSTDRoom = (showTimeDetails, rooms) => {
+const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
   let res = [];
   for (let i = 0; i < rooms.length; i++) {
     const std = showTimeDetails.filter(
@@ -379,17 +381,27 @@ const mergeSTDRoom = (showTimeDetails, rooms) => {
     res.push({
       room: rooms[i],
       ...mergeSTDDefault(std),
+      timeSlots: mergeSTDTimeSlot(showTimeDetails, timeSlot, rooms[i]._id),
     });
   }
   return res;
 };
 
-const mergeSTDTimeSlot = (showTimeDetails, timeSlots) => {
+const mergeSTDTimeSlot = (showTimeDetails, timeSlots, roomId) => {
   let res = [];
   for (let i = 0; i < timeSlots.length; i++) {
-    const std = showTimeDetails.filter(
-      (x) => x.timeSlot.toString() == timeSlots[i]._id.toString()
-    );
+    let std = [];
+    if (roomId) {
+      std = showTimeDetails.filter(
+        (x) =>
+          x.timeSlot.toString() == timeSlots[i]._id.toString() &&
+          x.room.toString() == roomId.toString()
+      );
+    } else {
+      std = showTimeDetails.filter(
+        (x) => x.timeSlot.toString() == timeSlots[i]._id.toString()
+      );
+    }
     res.push({
       timeSlot: timeSlots[i],
       ...mergeSTDDefault(std),

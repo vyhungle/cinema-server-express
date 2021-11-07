@@ -105,7 +105,7 @@ export const getDaysInMonth = (year, month) => {
   return res;
 };
 
-const parseTime = (time) => {
+export const parseTime = (time) => {
   const flag = time.split(":");
   return parseFloat(flag[0], 10) + parseFloat(flag[1] / 60, 10);
 };
