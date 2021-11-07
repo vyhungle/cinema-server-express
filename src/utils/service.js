@@ -14,6 +14,8 @@ import Movie from "../models/Movie";
 import ShowTime from "../models/ShowTime";
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
+import Room from "../models/Room";
+import TimeSlot from "../models/TimeSlot";
 import { filterTimeSTD } from "./helper";
 
 export const isPayment = async (username, password, total) => {
@@ -302,11 +304,25 @@ export const revenueStatisticsByDate = async (cinemaId, dateStart, dateEnd) => {
   // get show time detail
   for (let i = 0; i < showTimes.length; i++) {
     const std = await ShowTimeDetail.find({ showTime: showTimes[i]._id });
+    std.forEach((item) => {
+      item.movieId = showTimes[i].movie;
+    });
     showTimeDetails = showTimeDetails.concat(std);
   }
+  console.log(showTimeDetails);
   const filterSTD = filterTimeSTD(showTimeDetails, dateStart, dateEnd);
+  const res = mergeSTD(filterSTD);
 
-  return mergeSTD(filterSTD);
+  const rooms = await Room.find({ cinema: cinemaId });
+  const timeSlots = await TimeSlot.find();
+  const movie = await Movie.find();
+
+  for (let i = 0; i < res.length; i++) {
+    res[i].rooms = await mergeSTDRoom(filterSTD, rooms);
+    res[i].movies = await mergeSTDMovie(filterSTD, movie);
+    res[i].timeSlots = await mergeSTDTimeSlot(filterSTD, timeSlots);
+  }
+  return res;
 };
 
 export const mergeSTD = (showDetails) => {
@@ -351,8 +367,86 @@ export const mergeSTD = (showDetails) => {
       };
     }
   });
-
   return res;
+};
+
+const mergeSTDRoom = (showTimeDetails, rooms) => {
+  let res = [];
+  for (let i = 0; i < rooms.length; i++) {
+    const std = showTimeDetails.filter(
+      (x) => x.room.toString() == rooms[i]._id.toString()
+    );
+    res.push({
+      room: rooms[i],
+      ...mergeSTDDefault(std),
+    });
+  }
+  return res;
+};
+
+const mergeSTDTimeSlot = (showTimeDetails, timeSlots) => {
+  let res = [];
+  for (let i = 0; i < timeSlots.length; i++) {
+    const std = showTimeDetails.filter(
+      (x) => x.timeSlot.toString() == timeSlots[i]._id.toString()
+    );
+    res.push({
+      timeSlot: timeSlots[i],
+      ...mergeSTDDefault(std),
+    });
+  }
+  return res;
+};
+
+const mergeSTDMovie = (showTimeDetails, movies) => {
+  let res = [];
+  for (let i = 0; i < movies.length; i++) {
+    const std = showTimeDetails.filter(
+      (x) => x.movieId.toString() == movies[i]._id.toString()
+    );
+    res.push({
+      movie: movies[i],
+      ...mergeSTDDefault(std),
+    });
+  }
+  return res;
+};
+
+const mergeSTDDefault = (showTimeDetails) => {
+  let countTicket = 0;
+  let countTicketCoupon = 0;
+  let countTicketPoint = 0;
+  let totalPriceFood = 0;
+  let totalPriceFoodCoupon = 0;
+  let totalPriceFoodPoint = 0;
+  let totalPriceTicket = 0;
+  let totalPriceTicketCoupon = 0;
+  let totalPriceTicketPoint = 0;
+  for (let j = 0; j < showTimeDetails.length; j++) {
+    countTicket += showTimeDetails[j]?.countTicket || 0;
+    countTicketCoupon += showTimeDetails[j]?.countTicketCoupon || 0;
+    countTicketPoint += showTimeDetails[j]?.countTicketPoint || 0;
+
+    totalPriceFood += showTimeDetails[j]?.totalPriceFood || 0;
+    totalPriceFoodCoupon += showTimeDetails[j]?.totalPriceFoodCoupon || 0;
+    totalPriceFoodPoint += showTimeDetails[j]?.totalPriceFoodPoint || 0;
+
+    totalPriceTicket += showTimeDetails[j]?.totalPriceTicket || 0;
+    totalPriceTicketCoupon += showTimeDetails[j]?.totalPriceTicketCoupon || 0;
+    totalPriceTicketPoint += showTimeDetails[j]?.totalPriceTicketPoint || 0;
+  }
+
+  return {
+    countTicket,
+    countTicketCoupon,
+    countTicketPoint,
+    totalPriceFood,
+    totalPriceFoodCoupon,
+    totalPriceFoodPoint,
+    totalPriceTicket,
+    totalPriceTicketCoupon,
+    totalPriceTicketPoint,
+  };
 };
 
 export const revenueYear = async (cinemaId) => {

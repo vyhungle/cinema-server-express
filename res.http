@@ -209,7 +209,7 @@ GET http://localhost:4000/api/cinema/all
 GET http://localhost:4000/api/cinema/get/thong-ke-rap?cinemaId=614c03db576b5d00376801a6&dateStart=10/18/2021&dateEnd=11/5/2021
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-theo-ngay?cinemaId=614c03db576b5d00376801a6&dateStart=10/18/2021&dateEnd=11/5/2021
+GET http://localhost:4000/api/cinema/get/thong-ke-theo-ngay?cinemaId=614c03db576b5d00376801a6&dateStart=10/18/2021
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-theo-quy?cinemaId=614c03db576b5d00376801a6

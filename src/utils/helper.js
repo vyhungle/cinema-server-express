@@ -551,7 +551,7 @@ export const filterTimeSTD = (std, dateStart, dateEnd) => {
     (dateStart && dateEnd === undefined) ||
     new Date(dateStart) >= new Date(dateEnd)
   ) {
-    res = std.filter((x) => x.date == moment(dateStart).format("L"));
+    res = std.filter((x) => x.date == dateStart);
   } else res = std;
 
   return Object.values(res);
