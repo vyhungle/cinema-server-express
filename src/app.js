@@ -4,6 +4,7 @@ import http from "http";
 import timeout from "connect-timeout";
 
 import { ConnectionMongoDB } from "./config/mongodb";
+import testRouter from "./routers/test";
 import authRouter from "./routers/auth";
 import castRouter from "./routers/cast";
 import directorRouter from "./routers/director";
@@ -39,6 +40,7 @@ app.set("json spaces", 2);
 app.use(timeout("50s"));
 
 //Router
+app.use("/api/test", testRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/cast", castRouter);
 app.use("/api/director", directorRouter);
