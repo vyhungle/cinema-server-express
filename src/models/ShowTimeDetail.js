@@ -14,11 +14,44 @@ const showTimeDetailSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "timeslots",
   },
+
+  // Field để thống kê
+  // TK số lượng vé
   countTicket: {
     type: Number,
     default: 0,
   },
-  totalPrice: {
+  countTicketPoint: {
+    type: Number,
+    default: 0,
+  },
+  countTicketCoupon: {
+    type: Number,
+    default: 0,
+  },
+  // TK tiền bán vé
+  totalPriceTicket: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceTicketPoint: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceTicketCoupon: {
+    type: Number,
+    default: 0,
+  },
+  // TK tiền bán bắp nước
+  totalPriceFood: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceFoodPoint: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceFoodCoupon: {
     type: Number,
     default: 0,
   },

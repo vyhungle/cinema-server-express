@@ -45,8 +45,6 @@ router.post("/add", verifyToken, async (req, res) => {
     //#endregion
 
     //#region data default
-    let totalTicket = 0;
-    let totalFood = 0;
     let idTicketBill = "";
     let idFoodBill = "";
     let numberTicket = 0;
@@ -56,6 +54,18 @@ router.post("/add", verifyToken, async (req, res) => {
     let discount = 0;
     let countGiftDiscount = 0;
 
+    let totalTicket = 0;
+    let totalFood = 0;
+
+    let countTicketPoint = 0;
+    let countTicketCoupon = 0;
+
+    let totalPriceTicketPoint = 0;
+    let totalPriceTicketCoupon = 0;
+
+    let totalPriceFoodPoint = 0;
+    let totalPriceFoodCoupon = 0;
+
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
         path: "room",
@@ -64,21 +74,9 @@ router.post("/add", verifyToken, async (req, res) => {
       .populate("timeSlot");
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
 
-    // tính total bill
-    if (data && data.length > 0) {
-      data.forEach((item) => {
-        totalTicket += item.price || priceBefore;
-        priceTicket = item.price || priceBefore;
-      });
-    }
-    totalTicket -= numberTicket * priceTicket;
-    if (combos && combos.length > 0) {
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        totalFood += food.price * combos[i].quantity;
-      }
-    }
-    //#endregion
+    const priceBefore = checkWeekend(stDetail.date)
+      ? stDetail.room.screen.weekendPrice
+      : stDetail.room.screen.weekdayPrice;
 
     //#region kiểm tra vé trùng
     if (data && data.length > 0) {
@@ -111,7 +109,19 @@ router.post("/add", verifyToken, async (req, res) => {
       if (gift) {
         // type = 0 loại vé
         if (gift.type === 0) {
-          numberTicket = gifts[i].quantity;
+          numberTicket += gifts[i].quantity;
+          // nếu vé coupon
+          if (gift.coupon) {
+            // tính tổng số lượng và tổng tiền vé coupon
+            countTicketCoupon += gifts[i].quantity;
+            totalPriceTicketCoupon +=
+              data && data.length > 0 ? data[0].price : priceBefore;
+          } else {
+            // tính tổng số lượng và tổng tiền vé đổi điểm
+            countTicketPoint += gifts[i].quantity;
+            totalPriceTicketPoint +=
+              data && data.length > 0 ? data[0].price : priceBefore;
+          }
         }
         // type = 1, bắp nước thì push vào mảng
         else if (gift.type === 1) {
@@ -146,6 +156,24 @@ router.post("/add", verifyToken, async (req, res) => {
     }
     //#endregion
 
+    //#region tính total bill
+    if (data && data.length > 0) {
+      data.forEach((item) => {
+        totalTicket += item.price || priceBefore;
+        priceTicket = item.price || priceBefore;
+      });
+    }
+    // trừ vé đổi điểm và coupon
+    totalTicket -= numberTicket * priceTicket;
+
+    if (combos && combos.length > 0) {
+      for (let i = 0; i < combos.length; i++) {
+        const food = await Food.findById(combos[i]._id);
+        totalFood += food.price * combos[i].quantity;
+      }
+    }
+    //#endregion
+
     //#region thanh toán online
     if (payment.type > 0) {
       const isP = await isPayment(
@@ -169,11 +197,7 @@ router.post("/add", verifyToken, async (req, res) => {
       });
 
       // tạo vé
-      let total = 0;
       data.forEach(async (item) => {
-        const priceBefore = checkWeekend(stDetail.date)
-          ? stDetail.room.screen.weekendPrice
-          : stDetail.room.screen.weekdayPrice;
         const newTicker = new Ticker({
           idSeat: item.idSeat,
           seatName: item.seatName,
@@ -181,9 +205,6 @@ router.post("/add", verifyToken, async (req, res) => {
           status: 1,
           showTimeDetail: showTimeDetailId,
         });
-
-        // tính lại total
-        total += numberTicket > 0 ? 0 : parseInt(newTicker.price);
         // trừ vé free
         numberTicket -= 1;
         await newTicker.save();
@@ -195,7 +216,7 @@ router.post("/add", verifyToken, async (req, res) => {
         await billDetail.save();
       });
       // tính lại total bill
-      bill.total = total - total * discount;
+      bill.total = totalTicket - totalTicket * discount;
       idTicketBill = bill._id;
       await bill.save();
     }
@@ -211,7 +232,6 @@ router.post("/add", verifyToken, async (req, res) => {
       });
 
       // tạo combo detail
-      let totalFoodBill = 0;
       if (combos && combos.length > 0) {
         for (let i = 0; i < combos.length; i++) {
           const food = await Food.findById(combos[i]._id);
@@ -221,7 +241,6 @@ router.post("/add", verifyToken, async (req, res) => {
             quantity: combos[i].quantity,
             price: food.price,
           });
-          totalFoodBill += food.price * combos[i].quantity;
           await foodDetail.save();
         }
       }
@@ -237,9 +256,16 @@ router.post("/add", verifyToken, async (req, res) => {
             price: 0,
           });
           await foodDetailGift.save();
+
+          // Tính tiền bắp nước đổi điểm và dùng coupon
+          if (giftList[i].coupon) {
+            totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
+          } else {
+            totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
+          }
         }
       }
-      foodBill.total = totalFoodBill - totalFoodBill * discount;
+      foodBill.total = totalFood - totalFood * discount;
       idFoodBill = foodBill._id;
       await foodBill.save();
     }
@@ -273,10 +299,25 @@ router.post("/add", verifyToken, async (req, res) => {
       await userPoint.save();
     }
     //#endregion
-    stDetail.countTicket += data ? data.length : 0;
-    stDetail.totalPrice += totalFood + totalTicket;
-    await stDetail.save();
+
+    //#region Thống kê lại
+    stDetail.countTicket += data ? data.length : 0; // tổng số vé bán được
+    stDetail.countTicketPoint = countTicketPoint; // tổng vé dùng điểm đổi
+    stDetail.countTicketCoupon = countTicketCoupon; // tổng vé dùng coupon đổi
+
+    stDetail.totalPriceTicket += totalTicket - totalTicket * discount; // tổng tiền bán vé
+    stDetail.totalPriceTicketPoint = totalPriceTicketPoint; // tổng tiền đổi vé
+    stDetail.totalPriceTicketCoupon =
+      totalPriceTicketCoupon + totalTicket * discount; // tổng tiền đổi vé đổi coupon và phiếu giảm giá
+
+    stDetail.totalPriceFood += totalFood - totalFood * discount; // tổng tiền bán bắp nước
+    stDetail.totalPriceFoodPoint = totalPriceFoodPoint; // tổng tiền đổi bắp nước bằng điểm
+    stDetail.totalPriceFoodCoupon = totalPriceFoodCoupon + totalFood * discount; // tổng tiền đổi bắp nước bằng coupon và phiếu giảm giá
+
+    //#endregion
+
     //#region render data showtime and response
+    await stDetail.save();
     const tickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
     return res.json({
       success: true,
