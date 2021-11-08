@@ -61,6 +61,7 @@ export const mergeMovieBill = async (values) => {
         populate: [
           { path: "showTime", populate: ["movie", "cinema"] },
           { path: "timeSlot" },
+          { path: "room" },
         ],
       },
     });
