@@ -58,7 +58,10 @@ export const mergeMovieBill = async (values) => {
       path: "ticket",
       populate: {
         path: "showTimeDetail",
-        populate: { path: "showTime", populate: ["movie", "cinema"] },
+        populate: [
+          { path: "showTime", populate: ["movie", "cinema"] },
+          { path: "timeSlot" },
+        ],
       },
     });
 
@@ -345,6 +348,7 @@ export const mergeSTD = (showDetails) => {
         totalPriceTicket: item?.totalPriceTicket || 0,
         totalPriceTicketCoupon: item?.totalPriceTicketCoupon || 0,
         totalPriceTicketPoint: item?.totalPriceTicketPoint || 0,
+        totalPrice: item?.totalPriceFood || 0 + item?.totalPriceTicket || 0,
       });
     } else {
       const index = res.findIndex((x) => x.date == item.date);
@@ -366,6 +370,11 @@ export const mergeSTD = (showDetails) => {
           res[index].totalPriceTicketCoupon + item.totalPriceTicketCoupon,
         totalPriceTicketPoint:
           res[index].totalPriceTicketPoint + item.totalPriceTicketPoint,
+        totalPrice:
+          res[index].totalPriceTicket +
+          item.totalPriceTicket +
+          res[index].totalPriceFood +
+          item.totalPriceFood,
       };
     }
   });
