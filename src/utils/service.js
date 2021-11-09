@@ -17,6 +17,12 @@ import Ticker from "../models/Ticker";
 import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
 import { filterTimeSTD, parseTime } from "./helper";
+import { mailOption, transporter } from "../config/nodeMailer";
+
+export const sendEmail = (email, id) => {
+  const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${id}`;
+  transporter.sendMail(mailOption(email, link), function (error, info) {});
+};
 
 export const isPayment = async (username, password, total) => {
   const payment = await Payment.findOne({ username, password });

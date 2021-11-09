@@ -10,6 +10,7 @@ import { getGeoLocation } from "../api/geolocation";
 import { mailOption, transporter } from "../config/nodeMailer";
 import { errorCatch } from "../utils/constaints";
 import md5 from "md5";
+import { sendEmail } from "../utils/service";
 
 function generateToken(user) {
   return jwt.sign(
@@ -113,15 +114,11 @@ router.post("/register", async (req, res) => {
       });
       const value = await newUser.save();
       const token = generateToken(value);
-      // send email
-      const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${newUser._id}`;
-      transporter.sendMail(
-        mailOption(newUser.email, link),
-        function (error, info) {}
-      );
+      sendEmail(newUser.email, newUser._id);
       res.json({
         success: true,
-        message: "Đăng ký tài khoản",
+        message:
+          "Đăng ký tài khoản, mời bạn kiểm tra email để kích hoạt tài khoản.",
         values: {
           token: token,
           user: {
@@ -164,6 +161,14 @@ router.post("/login", async (req, res) => {
       });
     } else {
       const user = checkEmail ? checkEmail : checkPhone;
+      if (!user.accept) {
+        sendEmail(user.email, user._id);
+        return res.json({
+          success: false,
+          message:
+            "Tài khoản của bạn chưa được kích hoạt, vui lòng kiểm tra email để kích hoạt tài khoản này.",
+        });
+      }
       delete user.password;
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
