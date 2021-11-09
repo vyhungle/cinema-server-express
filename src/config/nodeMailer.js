@@ -24,11 +24,11 @@ transporter.use(
 export const mailOption = (email, link) => {
   return {
     form: process.env.EMAIL_USER,
-    to: "lnhv.26112000@gmail.com",
+    to: email,
     subject: "Xác minh địa chỉ email của bạn",
     template: "verifyLogin",
     context: {
-      link: "youtobe.com",
+      link: link,
     }, // send extra values to template
   };
 };
