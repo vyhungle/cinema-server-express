@@ -114,7 +114,7 @@ router.post("/register", async (req, res) => {
       const value = await newUser.save();
       const token = generateToken(value);
       // send email
-      const link = `https://server-api-cinema.herokuapp.com/api/accept-token/${newUser._id}`;
+      const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${newUser._id}`;
       transporter.sendMail(
         mailOption(newUser.email, link),
         function (error, info) {}
