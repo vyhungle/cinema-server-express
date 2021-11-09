@@ -551,7 +551,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"B3", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
+        {"seatName":"B6", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0},
+        {"seatName":"B7", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
+
 
     ],
     "showTimeDetailId":"616bdd572a098f00378a8804",

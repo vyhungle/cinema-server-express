@@ -367,6 +367,7 @@ export const renderObjTicket = (tickets, room, id) => {
               ? room.screen.weekendPrice
               : room.screen.weekdayPrice,
             status: 0,
+            type: 0,
             showTimesDetails: id,
           },
         ],
@@ -381,6 +382,7 @@ export const renderObjTicket = (tickets, room, id) => {
             ? room.screen.weekendPrice
             : room.screen.weekdayPrice,
           status: 0,
+          type: 0,
           showTimesDetails: id,
         },
       ];

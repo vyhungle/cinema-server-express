@@ -267,6 +267,9 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
   let totalPriceTicket = 0;
   let totalPriceTicketCoupon = 0;
   let totalPriceTicketPoint = 0;
+  let countChildTicket = 0;
+  let countAdultTicket = 0;
+  let countStudentTicket = 0;
 
   const showTimes = await ShowTime.find({ movie: movieId });
   for (let i = 0; i < showTimes.length; i++) {
@@ -286,6 +289,9 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
       totalPriceTicket += filterSTD[j]?.totalPriceTicket || 0;
       totalPriceTicketCoupon += filterSTD[j]?.totalPriceTicketCoupon || 0;
       totalPriceTicketPoint += filterSTD[j]?.totalPriceTicketPoint || 0;
+      countAdultTicket += filterSTD[j]?.countAdultTicket || 0;
+      countChildTicket += filterSTD[j]?.countChildTicket || 0;
+      countStudentTicket += filterSTD[j]?.countStudentTicket || 0;
     }
   }
   return {
@@ -298,6 +304,10 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
     totalPriceTicket,
     totalPriceTicketCoupon,
     totalPriceTicketPoint,
+    totalPrice: totalPriceTicket + totalPriceFood,
+    countAdultTicket,
+    countChildTicket,
+    countStudentTicket,
   };
 };
 
@@ -350,6 +360,9 @@ export const mergeSTD = (showDetails) => {
         totalPriceTicketCoupon: item?.totalPriceTicketCoupon || 0,
         totalPriceTicketPoint: item?.totalPriceTicketPoint || 0,
         totalPrice: item?.totalPriceFood || 0 + item?.totalPriceTicket || 0,
+        countAdultTicket: item?.countAdultTicket || 0,
+        countChildTicket: item?.countChildTicket || 0,
+        countStudentTicket: item?.countStudentTicket || 0,
       });
     } else {
       const index = res.findIndex((x) => x.date == item.date);
@@ -376,6 +389,10 @@ export const mergeSTD = (showDetails) => {
           item.totalPriceTicket +
           res[index].totalPriceFood +
           item.totalPriceFood,
+        countAdultTicket: res[index].countAdultTicket + item.countAdultTicket,
+        countChildTicket: res[index].countChildTicket + item.countChildTicket,
+        countStudentTicket:
+          res[index].countStudentTicket + item.countStudentTicket,
       };
     }
   });
@@ -391,7 +408,7 @@ const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
     res.push({
       room: rooms[i],
       ...mergeSTDDefault(std),
-      timeSlots: mergeSTDTimeSlot(showTimeDetails, timeSlot, rooms[i]._id),
+      // timeSlots: mergeSTDTimeSlot(showTimeDetails, timeSlot, rooms[i]._id),
     });
   }
   return res;
@@ -444,6 +461,10 @@ const mergeSTDDefault = (showTimeDetails) => {
   let totalPriceTicket = 0;
   let totalPriceTicketCoupon = 0;
   let totalPriceTicketPoint = 0;
+  let countChildTicket = 0;
+  let countAdultTicket = 0;
+  let countStudentTicket = 0;
+
   for (let j = 0; j < showTimeDetails.length; j++) {
     countTicket += showTimeDetails[j]?.countTicket || 0;
     countTicketCoupon += showTimeDetails[j]?.countTicketCoupon || 0;
@@ -456,6 +477,9 @@ const mergeSTDDefault = (showTimeDetails) => {
     totalPriceTicket += showTimeDetails[j]?.totalPriceTicket || 0;
     totalPriceTicketCoupon += showTimeDetails[j]?.totalPriceTicketCoupon || 0;
     totalPriceTicketPoint += showTimeDetails[j]?.totalPriceTicketPoint || 0;
+    countAdultTicket += showTimeDetails[j]?.countAdultTicket || 0;
+    countChildTicket += showTimeDetails[j]?.countChildTicket || 0;
+    countStudentTicket += showTimeDetails[j]?.countStudentTicket || 0;
   }
 
   return {
@@ -468,6 +492,10 @@ const mergeSTDDefault = (showTimeDetails) => {
     totalPriceTicket,
     totalPriceTicketCoupon,
     totalPriceTicketPoint,
+    totalPrice: totalPriceFood + totalPriceTicket,
+    countAdultTicket,
+    countChildTicket,
+    countStudentTicket,
   };
 };
 
@@ -502,6 +530,10 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalPriceTicket: 0,
       totalPriceTicketCoupon: 0,
       totalPriceTicketPoint: 0,
+      totalPrice: 0,
+      countAdultTicket: 0,
+      countChildTicket: 0,
+      countStudentTicket: 0,
     },
     {
       quarter: 2,
@@ -515,6 +547,10 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalPriceTicket: 0,
       totalPriceTicketCoupon: 0,
       totalPriceTicketPoint: 0,
+      totalPrice: 0,
+      countAdultTicket: 0,
+      countChildTicket: 0,
+      countStudentTicket: 0,
     },
     {
       quarter: 3,
@@ -528,6 +564,10 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalPriceTicket: 0,
       totalPriceTicketCoupon: 0,
       totalPriceTicketPoint: 0,
+      totalPrice: 0,
+      countAdultTicket: 0,
+      countChildTicket: 0,
+      countStudentTicket: 0,
     },
     {
       quarter: 4,
@@ -541,6 +581,10 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalPriceTicket: 0,
       totalPriceTicketCoupon: 0,
       totalPriceTicketPoint: 0,
+      totalPrice: 0,
+      countAdultTicket: 0,
+      countChildTicket: 0,
+      countStudentTicket: 0,
     },
   ];
   showDetails.forEach((item) => {
@@ -559,6 +603,11 @@ export const mergeSDTByQuarter = (showDetails) => {
       yearData[index].totalPriceTicketCoupon +=
         item?.totalPriceTicketCoupon || 0;
       yearData[index].totalPriceTicketPoint += item?.totalPriceTicketPoint || 0;
+      yearData[index].totalPrice =
+        yearData[index].totalPriceFood + yearData[index].totalPriceTicket;
+      yearData[index].countAdultTicket += item?.countAdultTicket || 0;
+      yearData[index].countChildTicket += item?.countChildTicket || 0;
+      yearData[index].countStudentTicket += item?.countStudentTicket || 0;
     }
   });
   return yearData;

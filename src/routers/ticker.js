@@ -65,6 +65,7 @@ router.post("/add", verifyToken, async (req, res) => {
 
     let totalPriceFoodPoint = 0;
     let totalPriceFoodCoupon = 0;
+    let typeTicket = 0;
 
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
@@ -161,11 +162,11 @@ router.post("/add", verifyToken, async (req, res) => {
       data.forEach((item) => {
         totalTicket += item.price || priceBefore;
         priceTicket = item.price || priceBefore;
+        typeTicket = item?.type || 0;
       });
     }
     // trừ vé đổi điểm và coupon
     totalTicket -= numberTicket * priceTicket;
-
     if (combos && combos.length > 0) {
       for (let i = 0; i < combos.length; i++) {
         const food = await Food.findById(combos[i]._id);
@@ -204,6 +205,7 @@ router.post("/add", verifyToken, async (req, res) => {
           price: numberTicket > 0 ? 0 : item.price || priceBefore,
           status: 1,
           showTimeDetail: showTimeDetailId,
+          type: item?.type || 1,
         });
         // trừ vé free
         numberTicket -= 1;
@@ -313,6 +315,10 @@ router.post("/add", verifyToken, async (req, res) => {
     stDetail.totalPriceFood += totalFood - totalFood * discount; // tổng tiền bán bắp nước
     stDetail.totalPriceFoodPoint = totalPriceFoodPoint; // tổng tiền đổi bắp nước bằng điểm
     stDetail.totalPriceFoodCoupon = totalPriceFoodCoupon + totalFood * discount; // tổng tiền đổi bắp nước bằng coupon và phiếu giảm giá
+
+    stDetail.countAdultTicket += data && typeTicket === 0 ? data.length : 0;
+    stDetail.countChildTicket += data && typeTicket === 1 ? data.length : 0;
+    stDetail.countStudentTicket += data && typeTicket === 2 ? data.length : 0;
 
     //#endregion
 

@@ -55,6 +55,18 @@ const showTimeDetailSchema = new Schema({
     type: Number,
     default: 0,
   },
+  countChildTicket: {
+    type: Number,
+    default: 0,
+  },
+  countAdultTicket: {
+    type: Number,
+    default: 0,
+  },
+  countStudentTicket: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = model("showtimedetails", showTimeDetailSchema);
