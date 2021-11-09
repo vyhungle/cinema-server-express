@@ -32,6 +32,10 @@ const userSchema = new Schema({
   },
   point: Number,
   moneyPoint: Number,
+  accept: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: String,
     default: new Date().toISOString(),

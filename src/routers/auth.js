@@ -9,6 +9,7 @@ import verifyToken from "../middleware/auth";
 import { getGeoLocation } from "../api/geolocation";
 import { mailOption, transporter } from "../config/nodeMailer";
 import { errorCatch } from "../utils/constaints";
+import md5 from "md5";
 
 function generateToken(user) {
   return jwt.sign(
@@ -112,6 +113,12 @@ router.post("/register", async (req, res) => {
       });
       const value = await newUser.save();
       const token = generateToken(value);
+      // send email
+      const link = `https://server-api-cinema.herokuapp.com/api/accept-token/${newUser._id}`;
+      transporter.sendMail(
+        mailOption(newUser.email, link),
+        function (error, info) {}
+      );
       res.json({
         success: true,
         message: "Đăng ký tài khoản",
@@ -236,6 +243,14 @@ router.get("/test/send-email", async (req, res) => {
       });
     });
   } catch (error) {}
+});
+
+router.get("/accept-token/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    (user.accept = true), await user.save();
+    return res.redirect("https://github.com/Cinema-77");
+  }
 });
 
 module.exports = router;

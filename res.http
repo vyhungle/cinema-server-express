@@ -41,6 +41,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 ### get my user
 GET http://localhost:4000/api/auth/get-user-by-phone?phoneNumber=0774156258
 
+### get 
+GET http://localhost:4000/api/auth/accept-token/613e17d875cc9e00375d5ce5
+
 ### send otp
 POST http://localhost:4000/api/otp/send
 Content-Type: application/json

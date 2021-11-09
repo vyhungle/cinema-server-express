@@ -21,12 +21,14 @@ transporter.use(
   })
 );
 
-export const mailOption = {
-  form: process.env.EMAIL_USER,
-  to: "lnhv.26112000@gmail.com",
-  subject: "Xác minh địa chỉ email của bạn",
-  template: "verifyLogin",
-  context: {
-    link: "youtobe.com",
-  }, // send extra values to template
+export const mailOption = (email, link) => {
+  return {
+    form: process.env.EMAIL_USER,
+    to: "lnhv.26112000@gmail.com",
+    subject: "Xác minh địa chỉ email của bạn",
+    template: "verifyLogin",
+    context: {
+      link: "youtobe.com",
+    }, // send extra values to template
+  };
 };
