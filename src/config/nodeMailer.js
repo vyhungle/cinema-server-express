@@ -48,3 +48,15 @@ export const mailOptionPayment = (email, payment, name, user, date, price) => {
     },
   };
 };
+
+export const mailOptionOtp = (email, payment, name,otp) => {
+  return {
+    form: process.env.EMAIL_USER,
+    to: email,
+    subject: "Mã xác thực",
+    template: "otp",
+    context: {
+      email, payment, name,otp
+    },
+  };
+};

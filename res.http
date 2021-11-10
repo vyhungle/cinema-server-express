@@ -681,3 +681,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 ###
 GET http://localhost:4000/api/payment/payment-list
+
+###
+POST http://localhost:4000/api/payment/login
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM2NTU2Mjk4LCJleHAiOjE2Mzc3NjU4OTh9.a0rQkSaDQG7D6-VP9CFYiMNovuX9gk5fuakSluKJy9U
+Content-Type: application/json
+
+{
+   
+    "username":"0123488889412",
+    "password":"123456"
+}

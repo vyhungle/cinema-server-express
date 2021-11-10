@@ -4,10 +4,10 @@ import Payment from "../models/Payment";
 import PaymentBill from "../models/PaymentBill";
 import User from "../models/User";
 
-
 import MovieBill from "../models/MovieBill";
 import { errorCatch } from "../utils/constaints";
 import verifyToken from "../middleware/auth";
+import { mailOptionOtp, transporter } from "../config/nodeMailer";
 
 router.post("/add-order", async (req, res) => {
   const { username, password, billId } = req.body;
@@ -65,11 +65,32 @@ router.post("/login", verifyToken, async (req, res) => {
   const { username, password } = req.body;
   try {
     const payment = await Payment.findOne({ username, password });
-    if(payment){
-      const user=await User.findById(req.userId);
-      
+    if (payment) {
+      const user = await User.findById(req.userId);
+      const email = user.email;
+      const paymentName = "Ví điện tử momo";
+      const name = user?.profile?.fullName;
+      const otp = Math.floor(100000 + Math.random() * 900000);
+      transporter.sendMail(
+        mailOptionOtp(email, paymentName, name, otp),
+        function (error, info) {
+          res.json({
+            message: error || info,
+          });
+        }
+      );
+
+      return res.json({
+        success: true,
+        message: "Gửi otp thành công",
+      });
     }
-    res.status(400).json({
+    return res.json({
+      success: false,
+      message: "Thông tin tài khoảng, hoặc mật khẩu không chính sác",
+    });
+  } catch (error) {
+    return res.status(400).json({
       success: false,
       message: errorCatch,
       errors: error.message,
