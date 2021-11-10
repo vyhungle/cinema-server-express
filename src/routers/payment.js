@@ -3,6 +3,7 @@ const router = express.Router();
 import Payment from "../models/Payment";
 import PaymentBill from "../models/PaymentBill";
 import User from "../models/User";
+import OtpPayment from "../models/OtpPayment";
 
 import MovieBill from "../models/MovieBill";
 import { errorCatch } from "../utils/constaints";
@@ -71,6 +72,13 @@ router.post("/login", verifyToken, async (req, res) => {
       const paymentName = "Ví điện tử momo";
       const name = user?.profile?.fullName;
       const otp = Math.floor(100000 + Math.random() * 900000);
+      const dateNow = new Date().toISOString();
+      const newOtp = new OtpPayment({
+        user: username,
+        dateEX: new Date(dateNow).setDate(new Date(dateNow).getMinutes() + 3),
+        otp,
+      });
+      await newOtp.save();
       transporter.sendMail(
         mailOptionOtp(email, paymentName, name, otp),
         function (error, info) {
