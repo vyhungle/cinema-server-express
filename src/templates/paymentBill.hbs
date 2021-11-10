@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a:link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn {
+            background: #131415;
+            color: #fff;
+            font-size: 14px;
+            border: 0;
+            border-radius: 4 px;
+            display: inline-block;
+            line-height: 24px;
+            margin: 8 px 0;
+            min-height: 20 px;
+            outline: 0;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            justify-content: center;
+            align-items: center;
+            display: flexbox
+        }
+    </style>
+
+</head>
+
+<body style="color: black;">
+    <p class="title">Chào {{name}}.</p>
+    <p>Tài khoản <b>{{payment}}</b> {{user}} của bạn vừa thanh toán thành công hóa đơn của <b>Cinema 77</b> vào lúc
+        [{{date}}].
+        Số tiền: <b>{{price}}đ</b>.</p>
+    <p>Cám ơn bạn đã sử dụng dịch vụ của {{payment}}</p>
+    <p>Lưu ý: Biên lai chuyển tiền này không thay cho các cam kết của NHTMCP Ngoại Thương Việt Nam về các nghĩa vụ của
+        khách hàng được xác nhận với bên thứ ba.</p>
+</body>
+
+</html>

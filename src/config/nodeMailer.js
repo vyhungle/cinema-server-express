@@ -32,3 +32,19 @@ export const mailOption = (email, link) => {
     }, // send extra values to template
   };
 };
+
+export const mailOptionPayment = (email, payment, name, user, date, price) => {
+  return {
+    form: process.env.EMAIL_USER,
+    to: email,
+    subject: "Thanh toán dịch vụ thành công",
+    template: "paymentBill",
+    context: {
+      payment,
+      name,
+      user,
+      date,
+      price,
+    },
+  };
+};

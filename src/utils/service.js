@@ -24,12 +24,15 @@ export const sendEmail = (email, id) => {
   transporter.sendMail(mailOption(email, link), function (error, info) {});
 };
 
-export const isPayment = async (username, password, total) => {
+export const isPayment = async (username, password, total, cinemaUser) => {
   const payment = await Payment.findOne({ username, password });
-  if (payment) {
+  const cinemaPayment = await Payment.findOne({ username: cinemaUser });
+  if (payment && cinemaPayment) {
     if (total && payment.money >= total) {
       payment.money -= total;
+      cinemaPayment.money += total;
       await payment.save();
+      await cinemaPayment.save();
       return {
         message: "Thanh toán thành công.",
         success: true,

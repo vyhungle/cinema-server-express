@@ -2,9 +2,12 @@ import express from "express";
 const router = express.Router();
 import Payment from "../models/Payment";
 import PaymentBill from "../models/PaymentBill";
+import User from "../models/User";
+
 
 import MovieBill from "../models/MovieBill";
 import { errorCatch } from "../utils/constaints";
+import verifyToken from "../middleware/auth";
 
 router.post("/add-order", async (req, res) => {
   const { username, password, billId } = req.body;
@@ -39,6 +42,33 @@ router.post("/add-order", async (req, res) => {
       message: "Thanh toán thất bại",
     });
   } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/payment-list", async (req, res) => {
+  return res.json({
+    success: true,
+    message: "Lấy danh sách ngân hàng thành công",
+    payments: [
+      { type: 1, name: "Ví điện tử momo" },
+      { type: 2, name: "Zalo payment" },
+    ],
+  });
+});
+
+router.post("/login", verifyToken, async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const payment = await Payment.findOne({ username, password });
+    if(payment){
+      const user=await User.findById(req.userId);
+      
+    }
     res.status(400).json({
       success: false,
       message: errorCatch,

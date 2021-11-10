@@ -554,17 +554,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"B6", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0},
-        {"seatName":"B7", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
+        {"seatName":"C6", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
 
 
     ],
     "showTimeDetailId":"616bdd572a098f00378a8804",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
-        "username":"0123488889412",
-        "password":"123456",
-        "type":"0"
+       "info":{
+            "username":"0123488889412",
+            "password":"123456",
+            "type":"1"
+       },
+        "type":"1"
     },
     "combos":[
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
@@ -657,7 +659,7 @@ GET http://localhost:4000/api/coupon/gift/get-all?screenId=61644b08df1b9d2700e43
 
 
 ###
-GET http://localhost:4000/api/coupon/me
+GET http://localhost:4000/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM2NTQ5MjgxLCJleHAiOjE2Mzc3NTg4ODF9.1Ze7IXHEdo0kbq74z9bgDgGJ7KbrmXmzFNzudTb2wCo
 
 ###
@@ -674,3 +676,8 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/coupon/get-gift?code=W92H-9JU7-6GR8&userId=613da2d8736aa826841481b3 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4Mjk0MSIsInR5cGUiOiIwIiwiaWF0IjoxNjM2MTE4MjY0LCJleHAiOjE2MzczMjc4NjR9.uiBdMwZ6g4bFKYiKWGWUmYWzt7Y29KBcslBQfHr3Q9k
+
+
+
+###
+GET http://localhost:4000/api/payment/payment-list

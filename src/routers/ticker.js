@@ -10,6 +10,7 @@ import FoodDetail from "../models/FoodDetail";
 import User from "../models/User";
 import Gift from "../models/Gift";
 import Coupon from "../models/Coupon";
+import Payment from "../models/Payment";
 import verifyToken from "../middleware/custom";
 
 import {
@@ -19,6 +20,8 @@ import {
 } from "../utils/helper";
 import { isPayment, renderBill } from "../utils/service";
 import { errorCatch, POINT_BONUS, USER_DEFAULT } from "../utils/constaints";
+import { mailOptionPayment, transporter } from "../config/nodeMailer";
+import moment from "moment";
 
 router.post("/add", verifyToken, async (req, res) => {
   const {
@@ -70,7 +73,7 @@ router.post("/add", verifyToken, async (req, res) => {
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
         path: "room",
-        populate: { path: "screen" },
+        populate: [{ path: "screen" }, { path: "cinema" }],
       })
       .populate("timeSlot");
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
@@ -79,6 +82,10 @@ router.post("/add", verifyToken, async (req, res) => {
       ? stDetail.room.screen.weekendPrice
       : stDetail.room.screen.weekdayPrice;
 
+    const cinema = stDetail?.room?.cinema;
+    // return res.json(cinema);
+
+    //#endregion
     //#region kiểm tra vé trùng
     if (data && data.length > 0) {
       let duplicateSeat = [];
@@ -176,16 +183,29 @@ router.post("/add", verifyToken, async (req, res) => {
     //#endregion
 
     //#region thanh toán online
+
     if (payment.type > 0) {
+      if (!cinema.payments.some((x) => x.type == payment.info.type)) {
+        res.json({
+          success: false,
+          message:
+            "Rạp chưa hỗ trợ hình thức thanh toán này, vui lòng thử lại sau",
+        });
+      }
+      const index = cinema.payments.findIndex(
+        (x) => x.type == payment.info.type
+      );
       const isP = await isPayment(
-        payment.username,
-        payment.password,
-        totalFood + totalTicket
+        payment.info.username,
+        payment.info.password,
+        totalFood + totalTicket,
+        cinema.payments[index].user
       );
       if (!isP.success) {
         return res.json(isP);
       }
     }
+
     //#endregion
 
     //#region  Tạo hóa đơn vé và vé
@@ -320,6 +340,24 @@ router.post("/add", verifyToken, async (req, res) => {
     stDetail.countChildTicket += data && typeTicket === 1 ? data.length : 0;
     stDetail.countStudentTicket += data && typeTicket === 2 ? data.length : 0;
 
+    //#endregion
+
+    //#region Xử lý email
+    const email = user.email;
+    const paymentName = "Ví điện tử momo";
+    const name = user?.profile?.fullName;
+    const tk = payment && payment?.username;
+    const date = moment().format("DD-MM-YYYY h:mm:ss");
+    const price =
+      totalTicket - totalTicket * discount + totalFood - totalFood * discount;
+    transporter.sendMail(
+      mailOptionPayment(email, paymentName, name, tk, date, price),
+      function (error, info) {
+        res.json({
+          message: error || info,
+        });
+      }
+    );
     //#endregion
 
     //#region render data showtime and response

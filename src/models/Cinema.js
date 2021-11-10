@@ -14,6 +14,7 @@ const cinemaSchema = new Schema({
     type: String,
     default: new Date().toISOString(),
   },
+  payments: [],
 });
 
 module.exports = model("cinemas", cinemaSchema);
