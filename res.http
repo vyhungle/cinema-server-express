@@ -655,7 +655,12 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/coupon/gift/get-all?screenId=61644b08df1b9d2700e43b23
 
-####
+
+###
+GET http://localhost:4000/api/coupon/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM2NTQ5MjgxLCJleHAiOjE2Mzc3NTg4ODF9.1Ze7IXHEdo0kbq74z9bgDgGJ7KbrmXmzFNzudTb2wCo
+
+###
 POST http://localhost:4000/api/coupon/create-coupon
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4Mjk0MSIsInR5cGUiOiIwIiwiaWF0IjoxNjM2MTE4MjY0LCJleHAiOjE2MzczMjc4NjR9.uiBdMwZ6g4bFKYiKWGWUmYWzt7Y29KBcslBQfHr3Q9k
 Content-Type: application/json

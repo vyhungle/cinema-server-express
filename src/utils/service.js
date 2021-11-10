@@ -197,12 +197,26 @@ export const createCoupon = async (userId, giftId) => {
   };
 };
 
-export const getCoupon = async (code, userId) => {
-  const coupon = await Coupon.findOne({ code, user: userId }).populate("gift");
-  return {
-    success: coupon ? true : false,
-    coupon,
-  };
+export const getCoupon = async (userId, code) => {
+  if (code) {
+    const coupon = await Coupon.findOne({ code, user: userId }).populate(
+      "gift"
+    );
+    return {
+      success: coupon ? true : false,
+      coupon,
+    };
+  } else {
+    const coupons = await Coupon.find({ user: userId }).populate([
+      {
+        path: "gift",
+      },
+      {
+        path: "user",
+      },
+    ]);
+    return coupons;
+  }
 };
 
 export const revenueStatistics = async () => {

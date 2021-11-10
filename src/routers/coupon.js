@@ -3,6 +3,8 @@ const router = express.Router();
 import Gift from "../models/Gift";
 import User from "../models/User";
 import verifyToken from "../middleware/custom";
+import verifyTokenAuth from "../middleware/auth";
+
 import {
   errorCatch,
   responseModal,
@@ -77,7 +79,7 @@ router.get("/get-gift", verifyToken, async (req, res) => {
   const { typeUser, id, type } = req;
   const _id = typeUser === 0 ? id : userId;
   try {
-    const couponRes = await getCoupon(code, _id);
+    const couponRes = await getCoupon(_id, code);
 
     if (couponRes.coupon?.status === 1) {
       return res.json({
@@ -107,6 +109,24 @@ router.get("/get-gift", verifyToken, async (req, res) => {
         coupon: couponRes.coupon,
       },
     });
+  } catch (error) {
+    return res.json(
+      responseModalError(false, errorCatch, { errors: error.message })
+    );
+  }
+});
+
+router.get("/me", verifyTokenAuth, async (req, res) => {
+  const { userId } = req;
+  const coupons =await getCoupon(userId);
+  if (coupons) {
+    return res.json({
+      success: true,
+      message: "lấy danh sách mã coupon thành công",
+      coupons,
+    });
+  }
+  try {
   } catch (error) {
     return res.json(
       responseModalError(false, errorCatch, { errors: error.message })
