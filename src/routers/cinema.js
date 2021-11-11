@@ -209,8 +209,8 @@ router.get("/get/cinema-by", async (req, res) => {
   }
 });
 
-router.get("/get/thong-ke-rap", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.query;
+router.post("/get/thong-ke-rap", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
   console.log(cinemaId, dateStart, dateEnd);
   try {
     const data = await revenueStatisticsMovie(cinemaId, dateStart, dateEnd);
@@ -228,8 +228,8 @@ router.get("/get/thong-ke-rap", async (req, res) => {
   }
 });
 
-router.get("/get/thong-ke-theo-ngay", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.query;
+router.post("/get/thong-ke-theo-ngay", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
   try {
     const data = await revenueStatisticsByDate(cinemaId, dateStart, dateEnd);
     return res.json({
@@ -246,8 +246,8 @@ router.get("/get/thong-ke-theo-ngay", async (req, res) => {
   }
 });
 
-router.get("/get/thong-ke-theo-quy", async (req, res) => {
-  const { cinemaId } = req.query;
+router.post("/get/thong-ke-theo-quy", async (req, res) => {
+  const { cinemaId } = req.body;
   try {
     const data = await revenueYear(cinemaId);
     return res.json({
