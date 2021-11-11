@@ -24,8 +24,8 @@ export const sendEmail = (email, id) => {
   transporter.sendMail(mailOption(email, link), function (error, info) {});
 };
 
-export const isPayment = async (username, password, total, cinemaUser) => {
-  const payment = await Payment.findOne({ username, password });
+export const isPayment = async (username, total, cinemaUser) => {
+  const payment = await Payment.findOne({ username });
   const cinemaPayment = await Payment.findOne({ username: cinemaUser });
   if (payment && cinemaPayment) {
     if (total && payment.money >= total) {

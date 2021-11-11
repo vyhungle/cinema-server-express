@@ -575,7 +575,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 
 {
     "data":[
-        {"seatName":"C6", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
+        {"seatName":"D1", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
 
 
     ],
@@ -584,8 +584,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
     "payment":{
        "info":{
             "username":"0123488889412",
-            "password":"123456",
-            "type":"1"
+            "type":"1",
+            "otp":"682683"
        },
         "type":"1"
     },

@@ -11,6 +11,7 @@ import User from "../models/User";
 import Gift from "../models/Gift";
 import Coupon from "../models/Coupon";
 import Payment from "../models/Payment";
+import OtpPayment from "../models/OtpPayment";
 import verifyToken from "../middleware/custom";
 
 import {
@@ -86,6 +87,29 @@ router.post("/add", verifyToken, async (req, res) => {
     // return res.json(cinema);
 
     //#endregion
+
+    //#region xử lý otp
+    if (payment.type > 0) {
+      const otp = await OtpPayment.findOne({
+        otp: payment.info.otp,
+        user: payment.info.username,
+      });
+      if (otp && (Date.now() > otp.dateEX || !otp.status)) {
+        return res.json({
+          success: false,
+          message: "Mã xác thực đã hết hạng.",
+        });
+      } else if (!otp) {
+        return res.json({
+          success: false,
+          message: "Mã xác thực không đúng.",
+        });
+      }
+      otp.status = false;
+      await otp.save();
+    }
+    //#endregion
+
     //#region kiểm tra vé trùng
     if (data && data.length > 0) {
       let duplicateSeat = [];
@@ -197,7 +221,6 @@ router.post("/add", verifyToken, async (req, res) => {
       );
       const isP = await isPayment(
         payment.info.username,
-        payment.info.password,
         totalFood + totalTicket,
         cinema.payments[index].user
       );
