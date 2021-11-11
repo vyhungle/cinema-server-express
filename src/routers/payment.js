@@ -3,11 +3,12 @@ const router = express.Router();
 import Payment from "../models/Payment";
 import PaymentBill from "../models/PaymentBill";
 import User from "../models/User";
+import Staff from "../models/Staff";
 import OtpPayment from "../models/OtpPayment";
 
 import MovieBill from "../models/MovieBill";
 import { errorCatch } from "../utils/constaints";
-import verifyToken from "../middleware/auth";
+import verifyToken from "../middleware/custom";
 import { mailOptionOtp, transporter } from "../config/nodeMailer";
 
 router.post("/add-order", async (req, res) => {
@@ -67,7 +68,13 @@ router.post("/login", verifyToken, async (req, res) => {
   try {
     const payment = await Payment.findOne({ username, password });
     if (payment) {
-      const user = await User.findById(req.userId);
+      let user = {};
+      if (req.type === 0) {
+        user = await User.findById(req.userId);
+      } else {
+        user = await Staff.findById(req.staffId);
+      }
+
       const email = user.email;
       const paymentName = "Ví điện tử momo";
       const name = user?.profile?.fullName;

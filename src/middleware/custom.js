@@ -24,6 +24,7 @@ const verifyToken = (req, res, next) => {
     } else {
       req.typeUser = decoded.typeUser;
       req.id = USER_DEFAULT;
+      req.staffId = decoded.id;
       req.type = decoded.type;
     }
     next();

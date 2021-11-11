@@ -305,7 +305,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"admin@gmail.com",    
+    "username":"lnhv.26112000@gmail.com",    
     "password":"123456"
 }
 
@@ -707,11 +707,22 @@ GET http://localhost:4000/api/payment/payment-list
 
 ###
 POST http://localhost:4000/api/payment/login
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM2NTU2Mjk4LCJleHAiOjE2Mzc3NjU4OTh9.a0rQkSaDQG7D6-VP9CFYiMNovuX9gk5fuakSluKJy9U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzY2NDM3NTgsImV4cCI6MTYzNzg1MzM1OH0.TcWjiLZvQivj5Frk6Qj_1KjeGpOAYwg-dtDGRskAgAA
 Content-Type: application/json
 
 {
    
-    "username":"0123488889412",
+    "username":"0123488889400",
     "password":"123456"
+}
+####
+POST http://localhost:4000/api/cinema/add-payment
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzY2NDM3NTgsImV4cCI6MTYzNzg1MzM1OH0.TcWjiLZvQivj5Frk6Qj_1KjeGpOAYwg-dtDGRskAgAA
+Content-Type: application/json
+
+{
+    "cinemaId":"614c03db576b5d00376801a6",
+    "user":"0123488889400",
+    "otp":"401780",
+    "paymentType":"1"
 }
