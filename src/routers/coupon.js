@@ -1,6 +1,7 @@
 import express, { json } from "express";
 const router = express.Router();
 import Gift from "../models/Gift";
+import Coupon from "../models/Coupon";
 import User from "../models/User";
 import verifyToken from "../middleware/custom";
 import verifyTokenAuth from "../middleware/auth";
@@ -118,12 +119,24 @@ router.get("/get-gift", verifyToken, async (req, res) => {
 
 router.get("/me", verifyTokenAuth, async (req, res) => {
   const { userId } = req;
-  const coupons =await getCoupon(userId);
+  const { page = 1, limit = 10 } = req.query;
+  let countSize = 0;
+  await Coupon.countDocuments({ user: req.userId }, function (err, count) {
+    countSize += count;
+  });
+
+  const coupons = await getCoupon(userId, undefined, page, limit);
+
   if (coupons) {
     return res.json({
       success: true,
       message: "lấy danh sách mã coupon thành công",
-      coupons,
+      values: {
+        page: page,
+        pageSize: Math.ceil(countSize / limit),
+        hasMore: countSize > limit * parseInt(page, 10),
+        coupons,
+      },
     });
   }
   try {

@@ -200,7 +200,7 @@ export const createCoupon = async (userId, giftId) => {
   };
 };
 
-export const getCoupon = async (userId, code) => {
+export const getCoupon = async (userId, code, page, limit) => {
   if (code) {
     const coupon = await Coupon.findOne({ code, user: userId }).populate(
       "gift"
@@ -210,14 +210,19 @@ export const getCoupon = async (userId, code) => {
       coupon,
     };
   } else {
-    const coupons = await Coupon.find({ user: userId }).populate([
-      {
-        path: "gift",
-      },
-      {
-        path: "user",
-      },
-    ]);
+    const coupons = await Coupon.find({ user: userId })
+      .populate([
+        {
+          path: "gift",
+        },
+        {
+          path: "user",
+        },
+      ])
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit, 10))
+      .skip((parseInt(page, 10) - 1) * parseInt(limit, 10))
+      .exec();
     return coupons;
   }
 };
