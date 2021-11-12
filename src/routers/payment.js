@@ -76,7 +76,7 @@ router.post("/login", verifyToken, async (req, res) => {
         user = await Staff.findById(req.staffId);
       }
       const email = user.email;
-      const paymentName = paymentsData.find((x) => x.type == payment.type);
+      const paymentName = paymentsData.find((x) => x.type == payment.type).name;
       const name = user?.profile?.fullName;
       const otp = Math.floor(100000 + Math.random() * 900000);
       const dateNow = new Date().toISOString();
