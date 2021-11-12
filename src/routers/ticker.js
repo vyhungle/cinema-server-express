@@ -359,8 +359,8 @@ router.post("/add", verifyToken, async (req, res) => {
     stDetail.totalPriceFoodPoint = totalPriceFoodPoint; // tổng tiền đổi bắp nước bằng điểm
     stDetail.totalPriceFoodCoupon = totalPriceFoodCoupon + totalFood * discount; // tổng tiền đổi bắp nước bằng coupon và phiếu giảm giá
 
-    stDetail.countAdultTicket += data && typeTicket === 0 ? data.length : 0;
-    stDetail.countChildTicket += data && typeTicket === 1 ? data.length : 0;
+    stDetail.countChildTicket += data && typeTicket === 0 ? data.length : 0;
+    stDetail.countAdultTicket += data && typeTicket === 1 ? data.length : 0;
     stDetail.countStudentTicket += data && typeTicket === 2 ? data.length : 0;
 
     //#endregion
