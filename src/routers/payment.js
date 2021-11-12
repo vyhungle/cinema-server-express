@@ -10,6 +10,7 @@ import MovieBill from "../models/MovieBill";
 import { errorCatch } from "../utils/constaints";
 import verifyToken from "../middleware/custom";
 import { mailOptionOtp, transporter } from "../config/nodeMailer";
+import { paymentsData } from "../utils/data";
 
 router.post("/add-order", async (req, res) => {
   const { username, password, billId } = req.body;
@@ -74,9 +75,8 @@ router.post("/login", verifyToken, async (req, res) => {
       } else {
         user = await Staff.findById(req.staffId);
       }
-
       const email = user.email;
-      const paymentName = "Ví điện tử momo";
+      const paymentName = paymentsData.find((x) => x.type == payment.type);
       const name = user?.profile?.fullName;
       const otp = Math.floor(100000 + Math.random() * 900000);
       const dateNow = new Date().toISOString();
