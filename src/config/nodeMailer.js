@@ -64,7 +64,7 @@ export const mailOptionOtp = (email, payment, name, otp) => {
   };
 };
 
-export const mailOptionInvite = (email, cinema, address) => {
+export const mailOptionInvite = (email, cinema, address, link) => {
   return {
     form: process.env.EMAIL_USER,
     to: email,
