@@ -70,8 +70,8 @@ router.post("/login", verifyToken, async (req, res) => {
     const payment = await Payment.findOne({ username, password });
     if (payment) {
       let user = {};
-      if (req.type === 0) {
-        user = await User.findById(req.userId);
+      if (req.typeUser === 0) {
+        user = await User.findById(req.id);
       } else {
         user = await Staff.findById(req.staffId);
       }
