@@ -2,6 +2,11 @@ import moment from "moment";
 import { ID_SCREEN_2D, ID_SCREEN_3D, ID_SCREEN_IMAX } from "./constaints";
 var md5 = require("md5");
 
+export const createDateEX = (day) => {
+  const dateNow = new Date().toISOString();
+  return new Date(dateNow).setDate(new Date(dateNow).getDate() + day);
+};
+
 export const checkIsEmptyAddress = (oldAddress, address) => {
   if (
     oldAddress.city.trim() === address.city.trim() &&

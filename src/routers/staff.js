@@ -10,7 +10,11 @@ import {
 } from "../utils/validators";
 import Staff from "../models/Staff";
 import verifyToken from "../middleware/staff";
-import { errorCatch } from "../utils/constaints";
+import Invite from "../models/Invite";
+import { errorCatch, errorPermission } from "../utils/constaints";
+import { mailOptionInvite, transporter } from "../config/nodeMailer";
+import md5 from "md5";
+import { createDateEX } from "../utils/helper";
 
 function generateToken(staff) {
   return jwt.sign(
@@ -27,6 +31,75 @@ function generateToken(staff) {
 }
 
 // lấy danh sách nhân viên
+
+router.get("/access-token/:token", async (req, res) => {
+  const invite = await Invite.findOne({ token: req.params.token });
+  if (invite) {
+    if (!invite.status) {
+      return res.redirect("https://token-da-duoc-kich-hoat-roi/");
+    } else if (Date.now() > invite.dateEx) {
+      return res.redirect("https://token-het-han/");
+    } else {
+      invite.status = false;
+      await invite.save();
+      return res.redirect("https://thanh-cong-chuyen-form");
+    }
+  }
+  return res.redirect("https://token-khong-hop-le/");
+});
+
+router.post("/send/invite", verifyToken, async (req, res) => {
+  const { staffId, type } = req;
+  const { email } = req.body;
+  try {
+    if (type <= 1) {
+      const user = await Staff.findById(staffId).populate("cinema");
+      const address = `${user.cinema.address.street}, ${user.cinema.address.ward}, ${user.cinema.address.district}, ${user.cinema.address.city}.`;
+      const token = md5(email + Date.now());
+      const invite = new Invite({
+        email,
+        token,
+        dateEx: createDateEX(10),
+      });
+      await invite.save();
+      transporter.sendMail(
+        mailOptionInvite(
+          email,
+          user.cinema.name,
+          address,
+          `https://server-api-cinema.herokuapp.com/api/staff/access-token/${token}`
+        ),
+        function (error, info) {
+          if (info) {
+            return res.json({
+              success: true,
+              message: "Gửi thư mời thành công",
+            });
+          } else {
+            return res.json({
+              success: false,
+              message: "Gửi thư mời thất bại",
+              error,
+            });
+          }
+        }
+      );
+      return res.json({
+        success: true,
+      });
+    }
+    return res.json({
+      success: false,
+      message: errorPermission,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
 
 router.get("/all", async (req, res) => {
   try {

@@ -340,6 +340,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1M
 GET http://localhost:4000/api/staff/get/6149de3533eba936405b08a3
 
 ###
+POST http://localhost:4000/api/staff/send/invite
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzY4MTYyODksImV4cCI6MTYzODAyNTg4OX0.rK6n3BuwDIiwchbmAejBz24_nRnIByopi85SNC3P5CY
+Content-Type: application/json
+
+
+{
+    "email":"lnhv.26112000@gmail.com"
+}
+
+
+###
 PUT http://localhost:4000/api/staff/change-password
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGM3Y2Q3OWZmYTE0MmM4YzNiZTU5ZiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2MzI0MDI3MjEsImV4cCI6MTYzMzYxMjMyMX0.3k2Sn_rYt8i5f1b2aNX3t5e1O9B6V_wudhhjRqJS3ls

@@ -49,14 +49,32 @@ export const mailOptionPayment = (email, payment, name, user, date, price) => {
   };
 };
 
-export const mailOptionOtp = (email, payment, name,otp) => {
+export const mailOptionOtp = (email, payment, name, otp) => {
   return {
     form: process.env.EMAIL_USER,
     to: email,
     subject: "Mã xác thực",
     template: "otp",
     context: {
-      email, payment, name,otp
+      email,
+      payment,
+      name,
+      otp,
+    },
+  };
+};
+
+export const mailOptionInvite = (email, cinema, address) => {
+  return {
+    form: process.env.EMAIL_USER,
+    to: email,
+    subject: "Thư mời làm xác nhận việc",
+    template: "inviteJob",
+    context: {
+      email,
+      cinema,
+      address,
+      link,
     },
   };
 };

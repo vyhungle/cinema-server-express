@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a:link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn {
+            background: #131415;
+            color: #fff;
+            font-size: 14px;
+            border: 0;
+            border-radius: 4 px;
+            display: inline-block;
+            line-height: 24px;
+            margin: 8 px 0;
+            min-height: 20 px;
+            outline: 0;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: black;
+        }
+
+        p {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            justify-content: center;
+            align-items: center;
+            display: flexbox
+        }
+    </style>
+
+</head>
+
+<body>
+    <p class="title">Thư mời xác nhận việc tại Cinema 77</p>
+    <p>Chào {{email}}</p>
+    <p>Chúng tôi vui mừng thông báo tới bạn đã trúng tuyển vào chi nhánh <b>{{cinema}}</b> tại {{address}} trong đợt phỏng vấn vừa qua của công ty chúng tôi.</p>
+    <p>Để bắt đầu, hãy nhấp vào liên kết sau</p>
+    <a class="btn" href="{{link}}" style="color: white;">Xác nhận địa chỉ email</a>
+    <p><b>LƯU Ý: </b>Liên kết trên sẽ hết hạn sau 10 ngày.</p>
+    <p>Trân trọng</p>
+    <p>Rạp phim cinema 77</p>
+</body>
+
+</html>
