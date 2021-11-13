@@ -88,11 +88,7 @@ router.post("/login", verifyToken, async (req, res) => {
       await newOtp.save();
       transporter.sendMail(
         mailOptionOtp(email, paymentName, name, otp),
-        function (error, info) {
-          res.json({
-            message: error || info,
-          });
-        }
+        function (error, info) {}
       );
 
       return res.json({

@@ -383,11 +383,7 @@ router.post("/add", verifyToken, async (req, res) => {
       totalTicket - totalTicket * discount + totalFood - totalFood * discount;
     transporter.sendMail(
       mailOptionPayment(email, paymentName, name, tk, date, price),
-      function (error, info) {
-        res.json({
-          message: error || info,
-        });
-      }
+      function (error, info) {}
     );
     //#endregion
 
