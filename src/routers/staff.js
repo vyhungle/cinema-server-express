@@ -40,8 +40,8 @@ router.get("/access-token/:token", async (req, res) => {
     } else if (Date.now() > invite.dateEx) {
       return res.redirect("https://token-het-han/");
     } else {
-      invite.status = false;
-      await invite.save();
+      // invite.status = false;
+      // await invite.save();
       return res.redirect("https://thanh-cong-chuyen-form");
     }
   }
