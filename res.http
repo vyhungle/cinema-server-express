@@ -526,13 +526,12 @@ POST http://localhost:4000/api/showTime/add
 Content-Type: application/json
 
 {
-    "dateStart":"10/24/2021",
-    "dateEnd":"10/26/2021",
+    "dateStart":"",
+    "dateEnd":"",
     "movieId":"6169a42f038631344897c7c6", 
     "cinemaId":"614c03db576b5d00376801a6", 
     "showTimes":[
-         {"roomId":"6169a3a5038631344897c7b7","times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"], "dateStart":"10/24/2021" },
-         {"roomId":"6169a3b2038631344897c7bc","times":["6157d524b029ee0037ccbd26","6154593a543dc74d680458ca","6154594e543dc74d680458ce"],"dateStart":"10/24/2021"}
+         {"roomId":"6169a3a5038631344897c7b7","times":["6154593a543dc74d680458ca","6154594e543dc74d680458ce"],"dateStart":"11/30/2021" }
     ]
     
 }
@@ -570,27 +569,33 @@ Content-Type: application/json
 ####
 POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImlhdCI6MTYzNjU2MzI5MSwiZXhwIjoxNjM3NzcyODkxfQ.q0k54-93q2vOk584JYDwFjIwtYw8YMlH8qnyGGDF7W8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4NzM2YWE4MjY4NDE0ODFiMyIsImVtYWlsIjoibG5odi4yNjExMjAwMEBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODI5NDIiLCJpYXQiOjE2MzU2NjU2OTUsImV4cCI6MTYzNjg3NTI5NX0.3gxlDlhcZXiGc4Hk6IHI_YeibHTZ_slmRBLC7OO4tBE
 
 
 {
-    "combos": [],
-    "data": [
-        {
-    "idSeat": "ab270e4217d001d92b42b188fb2e0ddb",
-    "seatName": "A4",
-    "price": 100000,
-    "status": 0,
-    "type": 0,
-    "showTimesDetails": "618e8f1381140b0037dd3440"
-}
+    "data":[
+        {"seatName":"D2", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
+
+
     ],
-    "payment": {
-        "type": "0"
+    "showTimeDetailId":"616bdd572a098f00378a8804",
+    "userId":"613da2d8736aa826841481b3",
+    "payment":{
+       "info":{
+            "username":"0123488889412",
+            "type":"1",
+            "otp":"682683"
+       },
+        "type":"0"
     },
-    "showTimeDetailId": "618e8f1381140b0037dd3440",
-    "gifts": [],
-    "coupons": []
+    "combos":[
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
+    ],
+    "gifts":[
+         {"_id":"6183edacbaa93a3e84a7d419","quantity":1, "coupon":true}
+    ],
+    "coupons":["HCCX-8V61-DJ39"] 
+    
 }
 
 ###

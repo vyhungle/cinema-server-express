@@ -291,15 +291,59 @@ export const ValidateShowTime = (
 ) => {
   let errors = {};
 
-  const _dateStart = new Date(dateStart);
-  const _dateEnd = new Date(dateEnd);
+  const checkDate = () => {
+    const _dateStart = new Date(dateStart);
+    const _dateEnd = new Date(dateEnd);
+    let res = {
+      type: 0,
+      message: "",
+    };
+    if (isEmpty(dateStart) && isEmpty(dateEnd)) {
+      body.map((item) => {
+        if (
+          isEmpty(item?.dateStart) ||
+          (!isEmpty(item?.dateEnd) && isEmpty(item?.dateStart))
+        ) {
+          res = {
+            type: 1,
+            message: "Vui lòng chọn ngày bắt đầu",
+          };
+        } else if (new Date(item?.dateStart) < Date.now()) {
+          res = {
+            type: 2,
+            message: "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại",
+          };
+        } else if (new Date(item?.dateStart) > new Date(item?.dateEnd)) {
+          res = {
+            type: 3,
+            message: "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.",
+          };
+        }
+      });
+    } else {
+      if (isEmpty(dateStart)) {
+        res = {
+          type: 1,
+          message: "Vui lòng chọn ngày bắt đầu",
+        };
+      } else if (_dateStart < Date.now()) {
+        res = {
+          type: 2,
+          message: "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại",
+        };
+      } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
+        res = {
+          type: 3,
+          message: "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.",
+        };
+      }
+    }
 
-  if (isEmpty(dateStart)) {
-    errors.dateStart = "Vui lòng chọn ngày bắt đầu";
-  } else if (_dateStart < Date.now()) {
-    errors.dateStart = "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại";
-  } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
-    errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
+    return res;
+  };
+
+  if (checkDate().type !== 0) {
+    errors.dateStart = checkDate().message;
   }
 
   if (isEmpty(movieId)) {
@@ -326,12 +370,12 @@ export const ValidateMovieDetail = (movieId, cinemaId, dateStart, dateEnd) => {
   const _dateStart = new Date(dateStart);
   const _dateEnd = new Date(dateEnd);
 
-  if(isEmpty(movieId)){
-    errors.movieId="Vui lòng chọn phim."
+  if (isEmpty(movieId)) {
+    errors.movieId = "Vui lòng chọn phim.";
   }
 
-  if(isEmpty(cinemaId)){
-    errors.cinemaId="Vui lòng chọn rạp."
+  if (isEmpty(cinemaId)) {
+    errors.cinemaId = "Vui lòng chọn rạp.";
   }
 
   if (isEmpty(dateStart)) {
@@ -342,11 +386,11 @@ export const ValidateMovieDetail = (movieId, cinemaId, dateStart, dateEnd) => {
     errors.dateStart = "Vui lòng chọn ngày bắt đầu bé hơn ngày kết thúc.";
   }
 
-  if (isEmpty(dateEnd)){
-    errors.dateEnd="Vui lòng chọn ngày kết thúc"
+  if (isEmpty(dateEnd)) {
+    errors.dateEnd = "Vui lòng chọn ngày kết thúc";
   }
-    return {
-      errors,
-      valid: Object.keys(errors).length < 1,
-    };
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
 };
