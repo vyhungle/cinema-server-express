@@ -103,28 +103,6 @@ router.post("/add", verifyToken, async (req, res) => {
 
     //#endregion
 
-    //#region xử lý otp
-    if (payment.type > 0) {
-      const otp = await OtpPayment.findOne({
-        otp: payment.info.otp,
-        user: payment.info.username,
-      });
-      if (otp && (Date.now() > otp.dateEX || !otp.status)) {
-        return res.json({
-          success: false,
-          message: "Mã xác thực đã hết hạng.",
-        });
-      } else if (!otp) {
-        return res.json({
-          success: false,
-          message: "Mã xác thực không đúng.",
-        });
-      }
-      otp.status = false;
-      await otp.save();
-    }
-    //#endregion
-
     //#region kiểm tra vé trùng
     if (data && data.length > 0) {
       let duplicateSeat = [];
@@ -134,7 +112,14 @@ router.post("/add", verifyToken, async (req, res) => {
           showTimeDetail: showTimeDetailId,
           idSeat: data[i].idSeat,
         });
-        if (isTicker) {
+        if (
+          isTicker &&
+          (isTicker.dateEx > Date.now() || isTicker.dateEx === 0)
+        ) {
+          console.log(
+            moment(Date.now()).format("DD MM YYYY, h:mm:ss a"),
+            moment(isTicker.dateEx).format("DD MM YYYY, h:mm:ss a")
+          );
           duplicateSeat.push(data[i].seatName);
         }
       }
@@ -257,14 +242,26 @@ router.post("/add", verifyToken, async (req, res) => {
 
       // tạo vé
       data.forEach(async (item) => {
-        const newTicker = new Ticker({
+        let newTicker = {};
+        const seat = await Ticker.findOne({
           idSeat: item.idSeat,
           seatName: item.seatName,
-          price: numberTicket > 0 ? 0 : item.price || priceBefore,
-          status: 1,
-          showTimeDetail: showTimeDetailId,
-          type: item?.type || 1,
         });
+        if (seat) {
+          newTicker = seat;
+          seat.wail = false;
+          seat.dateEX = 0;
+          await seat.save();
+        } else {
+          newTicker = new Ticker({
+            idSeat: item.idSeat,
+            seatName: item.seatName,
+            price: numberTicket > 0 ? 0 : item.price || priceBefore,
+            status: 1,
+            showTimeDetail: showTimeDetailId,
+            type: item?.type || 1,
+          });
+        }
         // trừ vé free
         numberTicket -= 1;
         await newTicker.save();
@@ -468,7 +465,10 @@ router.post("/create-payment", verifyToken, async (req, res) => {
           showTimeDetail: showTimeDetailId,
           idSeat: data[i].idSeat,
         });
-        if (isTicker) {
+        if (
+          isTicker &&
+          (isTicker.dateEx > Date.now() || isTicker.dateEx === 0)
+        ) {
           duplicateSeat.push(data[i].seatName);
         }
       }

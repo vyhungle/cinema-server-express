@@ -8,17 +8,20 @@ export const generateToken = (data) => {
 };
 
 export const createDateEX = (day, hour, minute) => {
+  console.log(day, hour, minute);
   if (day) {
     const dateNow = new Date().toISOString();
     return new Date(dateNow).setDate(new Date(dateNow).getDate() + day);
   } else if (hour) {
     const dateNow = new Date().toISOString();
-    return new Date(dateNow).setDate(new Date(dateNow).getHours() + hour);
+    return new Date(dateNow).setHours(new Date(dateNow).getHours() + hour);
   } else if (minute) {
     const dateNow = new Date().toISOString();
-    return new Date(dateNow).setDate(new Date(dateNow).getMinutes() + minute);
+    return new Date(dateNow).setMinutes(
+      new Date(dateNow).getMinutes() + minute
+    );
   }
-  return new Date(dateNow).setDate(new Date(dateNow));
+  return new Date.now();
 };
 
 export const checkIsEmptyAddress = (oldAddress, address) => {
