@@ -26,6 +26,15 @@ import billRouter from "./routers/bill";
 import couponRouter from "./routers/coupon";
 import paymentRouter from "./routers/payment";
 
+//CORS middleware
+var allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "example.com");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+
+  next();
+};
+
 require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
@@ -37,6 +46,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(allowCrossDomain);
 app.set("json spaces", 2);
 app.use(timeout("50s"));
 
