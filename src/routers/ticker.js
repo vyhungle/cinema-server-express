@@ -822,27 +822,6 @@ router.get("/success-payment", async (req, res) => {
 
       //#endregion
 
-      //#region Xử lý email
-      let paymentData = {
-        type: 0,
-        name: "Thanh toán tại rạp",
-      };
-      if (payment && payment.type > 0) {
-        paymentData = paymentsData.find((x) => x.type == payment?.info?.type);
-      }
-      const email = user.email;
-      const paymentName = paymentData.name;
-      const name = user?.profile?.fullName;
-      const tk = payment && payment?.username;
-      const date = moment().format("DD-MM-YYYY h:mm:ss");
-      const price =
-        totalTicket - totalTicket * discount + totalFood - totalFood * discount;
-      transporter.sendMail(
-        mailOptionPayment(email, paymentName, name, tk, date, price),
-        function (error, info) {}
-      );
-      //#endregion
-
       //#region render data showtime and response
       await stDetail.save();
       return res.redirect(paymentSuccessLink);
