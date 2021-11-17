@@ -646,13 +646,34 @@ export const mergeSDTByQuarter = (showDetails) => {
 
 export const momoSend = async (data) => {
   const tokenOrder = generateToken(data);
+  let info = "";
+  data.data.forEach((item, index) => {
+    if (index === 0) {
+      info += `Ghế ${item.seatName},`;
+    } else if (index === data.data.length - 1) {
+      info += `${item.seatName}. `;
+    } else {
+      info += `${item.seatName}, `;
+    }
+  });
+  for (let i = 0; i < data.combos.length; i++) {
+    const food = await Food.findById(data.combos[i]._id);
+    if (i === 0) {
+      info += `${food.name},`;
+    } else if (i === data.combos.length - 1) {
+      info += `${food.name}. `;
+    } else {
+      info += `${food.name}, `;
+    }
+  }
+
   console.log(tokenOrder);
   var partnerCode = "MOMOB8LF20211028";
   var accessKey = "b8xE4uNzTm61kBbw";
   var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
   var requestId = partnerCode + new Date().getTime();
   var orderId = requestId;
-  var orderInfo = "kso shshs";
+  var orderInfo = info;
   var redirectUrl = `http://localhost:4000/api/ticker/success-payment?token=${tokenOrder}`;
   var ipnUrl = "https://callback.url/notify";
   var amount = data.total;
