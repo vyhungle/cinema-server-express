@@ -19,5 +19,13 @@ const ticketSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "showtimedetails",
   },
+  dateEx: {
+    type: Number,
+    default: 0,
+  },
+  wail: {
+    type: Boolean,
+    default: false,
+  },
 });
 module.exports = model("tickets", ticketSchema);

@@ -1,10 +1,24 @@
 import moment from "moment";
+import jwt from "jsonwebtoken";
 import { ID_SCREEN_2D, ID_SCREEN_3D, ID_SCREEN_IMAX } from "./constaints";
 var md5 = require("md5");
 
-export const createDateEX = (day) => {
-  const dateNow = new Date().toISOString();
-  return new Date(dateNow).setDate(new Date(dateNow).getDate() + day);
+export const generateToken = (data) => {
+  return jwt.sign(data, process.env.SECRET_KEY, { expiresIn: 30 * 60 });
+};
+
+export const createDateEX = (day, hour, minute) => {
+  if (day) {
+    const dateNow = new Date().toISOString();
+    return new Date(dateNow).setDate(new Date(dateNow).getDate() + day);
+  } else if (hour) {
+    const dateNow = new Date().toISOString();
+    return new Date(dateNow).setDate(new Date(dateNow).getHours() + hour);
+  } else if (minute) {
+    const dateNow = new Date().toISOString();
+    return new Date(dateNow).setDate(new Date(dateNow).getMinutes() + minute);
+  }
+  return new Date(dateNow).setDate(new Date(dateNow));
 };
 
 export const checkIsEmptyAddress = (oldAddress, address) => {
@@ -395,8 +409,13 @@ export const renderObjTicket = (tickets, room, id) => {
     res.map((item, index) => {
       item.nameSeats.map((fakeTicket, fakeIndex) => {
         tickets.map((realTicket) => {
-          if (fakeTicket.idSeat === realTicket.idSeat) {
-            res[index].nameSeats[fakeIndex] = realTicket;
+          if (
+            fakeTicket.idSeat === realTicket.idSeat &&
+            (realTicket.dateEx > Date.now() || realTicket.dateEx === 0)
+          ) {
+            if (realTicket.status === 1) {
+              res[index].nameSeats[fakeIndex] = realTicket;
+            }
           }
         });
       });

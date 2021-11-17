@@ -1,4 +1,5 @@
 import cc from "coupon-code";
+import crypto from "crypto";
 
 import Payment from "../models/Payment";
 import MovieBillDetail from "../models/MovieBillDetail";
@@ -14,10 +15,12 @@ import Movie from "../models/Movie";
 import ShowTime from "../models/ShowTime";
 import ShowTimeDetail from "../models/ShowTimeDetail";
 import Ticker from "../models/Ticker";
+import Food from "../models/Food";
 import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
-import { filterTimeSTD, parseTime } from "./helper";
+import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
+import axios from "axios";
 
 export const sendEmail = (email, id) => {
   const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${id}`;
@@ -639,4 +642,154 @@ export const mergeSDTByQuarter = (showDetails) => {
     }
   });
   return yearData;
+};
+
+export const momoSend = async (data) => {
+  const tokenOrder = generateToken(data);
+  console.log(tokenOrder);
+  var partnerCode = "MOMOB8LF20211028";
+  var accessKey = "b8xE4uNzTm61kBbw";
+  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
+  var requestId = partnerCode + new Date().getTime();
+  var orderId = requestId;
+  var orderInfo = "kso shshs";
+  var redirectUrl = `http://localhost:4000/api/ticker/success-payment?token=${tokenOrder}`;
+  var ipnUrl = "https://callback.url/notify";
+  var amount = data.total;
+  var requestType = "captureWallet";
+  var extraData = ""; //pass empty value if your merchant does not have stores
+  var rawSignature =
+    "accessKey=" +
+    accessKey +
+    "&amount=" +
+    amount +
+    "&extraData=" +
+    extraData +
+    "&ipnUrl=" +
+    ipnUrl +
+    "&orderId=" +
+    orderId +
+    "&orderInfo=" +
+    orderInfo +
+    "&partnerCode=" +
+    partnerCode +
+    "&redirectUrl=" +
+    redirectUrl +
+    "&requestId=" +
+    requestId +
+    "&requestType=" +
+    requestType;
+  //puts raw signature
+  //signature
+  var signature = crypto
+    .createHmac("sha256", secretkey)
+    .update(rawSignature)
+    .digest("hex");
+
+  const requestBody = {
+    partnerCode: partnerCode,
+    accessKey: accessKey,
+    requestId: requestId,
+    amount: amount,
+    orderId: orderId,
+    orderInfo: orderInfo,
+    redirectUrl: redirectUrl,
+    ipnUrl: ipnUrl,
+    extraData: extraData,
+    requestType: requestType,
+    signature: signature,
+    lang: "vi",
+  };
+
+  const response = await axios.post(
+    "https://test-payment.momo.vn/v2/gateway/api/create",
+    requestBody
+  );
+  console.log(response.data);
+
+  return response.data;
+};
+
+export const checkMomoSuccess = async (orderId, requestId) => {
+  var partnerCode = "MOMOB8LF20211028";
+  var accessKey = "b8xE4uNzTm61kBbw";
+  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
+  var rawSignature =
+    "accessKey=" +
+    accessKey +
+    "&orderId=" +
+    orderId +
+    "&partnerCode=" +
+    partnerCode +
+    "&requestId=" +
+    requestId;
+
+  //puts raw signature
+  //signature
+  const crypto = require("crypto");
+  var signature = crypto
+    .createHmac("sha256", secretkey)
+    .update(rawSignature)
+    .digest("hex");
+
+  const requestBody = {
+    partnerCode: partnerCode,
+    requestId: requestId,
+    orderId: orderId,
+    signature: signature,
+    lang: "vi",
+  };
+  console.log(requestBody);
+  const response = await axios.post(
+    "https://test-payment.momo.vn/v2/gateway/api/query",
+    requestBody
+  );
+  console.log(response.data);
+  if (response.data.resultCode == 0) {
+    return true;
+  }
+  return false;
+};
+
+export const getTotalPayment = async (gifts, data, combos) => {
+  let numberTicket = 0;
+  let priceTicket = 0;
+  let discount = 0;
+  let totalTicket = 0;
+  let totalFood = 0;
+
+  //#region kiểm tra gift point và số lượng phiếu giảm giá
+  for (let i = 0; i < gifts.length; i++) {
+    const gift = await Gift.findById(gifts[i]._id);
+    if (gift) {
+      // type = 0 loại vé
+      if (gift.type === 0) {
+        numberTicket += gifts[i].quantity;
+      }
+      // type = 2 phiếu giảm giá
+      else if (gift.type === 2) {
+        discount = gift.discount;
+      }
+    }
+  }
+  //#endregion
+
+  //#region tính total bill
+  if (data && data.length > 0) {
+    data.forEach((item) => {
+      totalTicket += item.price || priceBefore;
+      priceTicket = item.price || priceBefore;
+    });
+  }
+  // trừ vé đổi điểm và coupon
+  totalTicket -= numberTicket * priceTicket;
+  if (combos && combos.length > 0) {
+    for (let i = 0; i < combos.length; i++) {
+      const food = await Food.findById(combos[i]._id);
+      totalFood += food.price * combos[i].quantity;
+    }
+  }
+  //#endregion
+
+  return totalFood + totalTicket - (totalFood + totalTicket) * discount;
 };

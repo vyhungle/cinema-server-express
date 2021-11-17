@@ -1,6 +1,53 @@
 ### test
-
 GET http://localhost:4000/api/test/test
+
+###
+GET http://localhost:4000/api/test/order-payment?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJzZWF0TmFtZSI6IkQyIiwicHJpY2UiOjk1MDAwLCJpZFNlYXQiOiI4MDBjYTFiZWFiMTdhODlkZjE1Yzk4YTg2ZmIxZmUxNSIsInN0YXR1cyI6MSwidHlwZSI6MH1dLCJzaG93VGltZURldGFpbElkIjoiNjE4ZThmMTM4MTE0MGIwMDM3ZGQzNDNlIiwidXNlcklkIjoiNjEzZGEyZDg3MzZhYTgyNjg0MTQ4MWIzIiwicGF5bWVudCI6eyJpbmZvIjp7InVzZXJuYW1lIjoiMDEyMzQ4ODg4OTQxMiIsInR5cGUiOiIxIiwib3RwIjoiNjgyNjgzIn0sInR5cGUiOiIwIn0sImNvbWJvcyI6W3siX2lkIjoiNjE3Y2Y1NDBmYjBmMGIxNzVjMWQ4MGM4IiwicXVhbnRpdHkiOjF9XSwiZ2lmdHMiOlt7Il9pZCI6IjYxODNlZGFjYmFhOTNhM2U4NGE3ZDQxOSIsInF1YW50aXR5IjoxLCJjb3Vwb24iOnRydWV9XSwiY291cG9ucyI6WyJIQ0NYLThWNjEtREozOSJdLCJpYXQiOjE2MzY5ODM5NzEsImV4cCI6MTYzNjk4NTc3MX0.tx1Z23w8okKI2PmApyNDKJgE-WFAoI5qKZd_pBLiL7Q
+
+
+###
+GET http://localhost:4000/api/ticker/order-payment?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJzZWF0TmFtZSI6IkQyIiwicHJpY2UiOjk1MDAwLCJpZFNlYXQiOiI4MDBjYTFiZWFiMTdhODlkZjE1Yzk4YTg2ZmIxZmUxNSIsInN0YXR1cyI6MSwidHlwZSI6MH1dLCJzaG93VGltZURldGFpbElkIjoiNjE4ZThmMTM4MTE0MGIwMDM3ZGQzNDNlIiwidXNlcklkIjoiNjEzZGEyZDg3MzZhYTgyNjg0MTQ4MWIzIiwicGF5bWVudCI6eyJpbmZvIjp7InVzZXJuYW1lIjoiMDEyMzQ4ODg4OTQxMiIsInR5cGUiOiIxIiwib3RwIjoiNjgyNjgzIn0sInR5cGUiOiIwIn0sImNvbWJvcyI6W3siX2lkIjoiNjE3Y2Y1NDBmYjBmMGIxNzVjMWQ4MGM4IiwicXVhbnRpdHkiOjF9XSwiZ2lmdHMiOlt7Il9pZCI6IjYxODNlZGFjYmFhOTNhM2U4NGE3ZDQxOSIsInF1YW50aXR5IjoxLCJjb3Vwb24iOnRydWV9XSwiY291cG9ucyI6WyJIQ0NYLThWNjEtREozOSJdLCJpYXQiOjE2MzY5ODM5NzEsImV4cCI6MTYzNjk4NTc3MX0.tx1Z23w8okKI2PmApyNDKJgE-WFAoI5qKZd_pBLiL7Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM2OTgzMzU5LCJleHAiOjE2MzgxOTI5NTl9.imElYWrMKO7_Lz2AiAEF4YMbi2gI1-PK1JN9enPT3-4
+
+### test
+POST http://localhost:4000/api/test/check-status
+Content-Type: application/json
+
+{
+    "orderId":"MOMOB8LF202110281636986491492",
+    "requestId":"MOMOB8LF202110281636986491492"
+}
+
+### test
+POST http://localhost:4000/api/test/test-momo
+Content-Type: application/json
+
+
+{
+    "data":[
+        {"seatName":"D2", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
+
+
+    ],
+    "showTimeDetailId":"618e8f1381140b0037dd343e",
+    "userId":"613da2d8736aa826841481b3",
+    "payment":{
+       "info":{
+            "username":"0123488889412",
+            "type":"1",
+            "otp":"682683"
+       },
+        "type":"0"
+    },
+    "combos":[
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
+    ],
+    "gifts":[
+         {"_id":"6183edacbaa93a3e84a7d419","quantity":1, "coupon":true}
+    ],
+    "coupons":["HCCX-8V61-DJ39"] 
+    
+}
 
 
 
@@ -577,6 +624,7 @@ Content-Type: application/json
    "roomId":"61546d3254698823ccb8cbfd" 
 }
 
+
 ####
 POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
@@ -586,8 +634,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
 {
     "data":[
         {"seatName":"D2", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1,"type":0}
-
-
     ],
     "showTimeDetailId":"616bdd572a098f00378a8804",
     "userId":"613da2d8736aa826841481b3",
@@ -609,8 +655,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2RhMmQ4N
     
 }
 
+
+####
+POST http://localhost:4000/api/ticker/create-payment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM3MTUwOTY5LCJleHAiOjE2MzgzNjA1Njl9.prGwq1h5wwY6nxM8Peo10kS3ZDtwu-VNQZ0CX5ytK1E
+
+
+{
+    "data":[
+        {"seatName":"A1", "price":10000, "idSeat":"29aa92021b6f9299bb8b2510d9546332", "status":1,"type":0}
+    ],
+    "showTimeDetailId":"618e8f1381140b0037dd343c",
+    "userId":"613da2d8736aa826841481b3",
+    "payment":{
+       "info":{
+            "username":"0123488889412",
+            "type":"1",
+            "otp":"682683"
+       },
+        "type":"0"
+    },
+    "combos":[
+        
+    ],
+    "gifts":[
+    ],
+    "coupons":[] 
+    
+}
+
+
+####
+GET http://localhost:4000/api/ticker/success-payment?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJzZWF0TmFtZSI6IkQ3IiwicHJpY2UiOjk1MDAwLCJpZFNlYXQiOiI4MDBjYTFiZWFiMTdhODlkZjE1Yzk4YTg2ZmIxZmUxNSIsInN0YXR1cyI6MSwidHlwZSI6MH1dLCJzaG93VGltZURldGFpbElkIjoiNjE4ZThmMTM4MTE0MGIwMDM3ZGQzNDNjIiwidXNlcklkIjoiNjEzZGEyZDg3MzZhYTgyNjg0MTQ4MWIzIiwicGF5bWVudCI6eyJpbmZvIjp7InVzZXJuYW1lIjoiMDEyMzQ4ODg4OTQxMiIsInR5cGUiOiIxIiwib3RwIjoiNjgyNjgzIn0sInR5cGUiOiIwIn0sImNvbWJvcyI6W3siX2lkIjoiNjE3Y2Y1NDBmYjBmMGIxNzVjMWQ4MGM4IiwicXVhbnRpdHkiOjF9XSwiZ2lmdHMiOlt7Il9pZCI6IjYxODNlZGFjYmFhOTNhM2U4NGE3ZDQxOSIsInF1YW50aXR5IjoxLCJjb3Vwb24iOnRydWV9XSwiY291cG9ucyI6WyJIQ0NYLThWNjEtREozOSJdLCJpYXQiOjE2MzcxMzQ4OTYsImV4cCI6MTYzNzEzNjY5Nn0.z3-WJ-3yuxVhNNkLkQOZRbZOVfQWDKa1gx6AmElOd3I&orderId=MOMOB8LF202110281637134896446&requestId=MOMOB8LF202110281637134896446
+
+
 ###
-GET http://localhost:4000/api/ticker/get-list-ticker/616a505bf2e7e915d4d53cc5
+GET http://localhost:4000/api/ticker/get-list-ticker/618e8f1381140b0037dd343c
 
 
 

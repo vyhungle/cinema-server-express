@@ -43,3 +43,7 @@ export const responseModalError = (status, message, error) => {
     error,
   };
 };
+
+/** */
+export const paymentFailLink="https://thanh-toan-that-bai"
+export const paymentSuccessLink="https://thanh-toan-thanh-cong"
