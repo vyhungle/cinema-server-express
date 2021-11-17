@@ -669,7 +669,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
     ],
     "showTimeDetailId":"618e8f1381140b0037dd343c",
     "userId":"613da2d8736aa826841481b3",
-    "payment":{},
+    "payment":{
+        "type":"1"
+    },
     "combos":[
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
     ],

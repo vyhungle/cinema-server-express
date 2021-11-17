@@ -648,8 +648,10 @@ export const momoSend = async (data) => {
   const tokenOrder = generateToken(data);
   let info = "";
   data.data.forEach((item, index) => {
-    if (index === 0) {
-      info += `Ghế ${item.seatName},`;
+    if (data.data.length === 1) {
+      info += `Ghế ${item.seatName}. `;
+    } else if (index === 0) {
+      info += `Ghế ${item.seatName}, `;
     } else if (index === data.data.length - 1) {
       info += `${item.seatName}. `;
     } else {
@@ -658,8 +660,10 @@ export const momoSend = async (data) => {
   });
   for (let i = 0; i < data.combos.length; i++) {
     const food = await Food.findById(data.combos[i]._id);
-    if (i === 0) {
-      info += `${food.name},`;
+    if (data.combos.length === 1) {
+      info += `${food.name}. `;
+    } else if (i === 0) {
+      info += `${food.name}, `;
     } else if (i === data.combos.length - 1) {
       info += `${food.name}. `;
     } else {
