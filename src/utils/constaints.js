@@ -22,7 +22,6 @@ export const POINT_BONUS = 10000;
 /**@constant errorCatch - lỗi khi vào catch */
 export const errorCatch = "Đã có lỗi xảy ra vui lòng thử lại sau.";
 
-
 /**@constant errorCatch - lỗi quyền truy cập */
 export const errorPermission = "Bạn không có quyền truy cập chức năng này.";
 
@@ -45,5 +44,5 @@ export const responseModalError = (status, message, error) => {
 };
 
 /** */
-export const paymentFailLink="https://thanh-toan-that-bai"
-export const paymentSuccessLink="https://thanh-toan-thanh-cong"
+export const paymentFailLink = "http://localhost:3000";
+export const paymentSuccessLink = "http://localhost:3000";
