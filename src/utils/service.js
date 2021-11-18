@@ -677,7 +677,7 @@ export const momoSend = async (data) => {
   var requestId = partnerCode + new Date().getTime();
   var orderId = requestId;
   var orderInfo = info;
-  var redirectUrl = `http://localhost:4000/api/ticker/success-payment?token=${tokenOrder}`;
+  var redirectUrl = `https://server-api-cinema.herokuapp.com/api/ticker/success-payment?token=${tokenOrder}`;
   var ipnUrl = "https://callback.url/notify";
   var amount = data.total;
   var requestType = "captureWallet";
