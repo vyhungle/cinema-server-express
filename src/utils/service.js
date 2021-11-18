@@ -671,7 +671,6 @@ export const momoSend = async (data) => {
     }
   }
 
-  console.log(tokenOrder);
   var partnerCode = "MOMOB8LF20211028";
   var accessKey = "b8xE4uNzTm61kBbw";
   var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
@@ -730,7 +729,6 @@ export const momoSend = async (data) => {
     "https://test-payment.momo.vn/v2/gateway/api/create",
     requestBody
   );
-  console.log(response.data);
 
   return response.data;
 };

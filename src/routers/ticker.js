@@ -522,7 +522,6 @@ router.post("/create-payment", verifyToken, async (req, res) => {
         seat.wail = true;
         seat.dateEx = createDateEX(undefined, undefined, 10);
         await seat.save();
-        console.log("old seat", seat);
       } else {
         const newTicker = new Ticker({
           idSeat: item.idSeat,
@@ -535,7 +534,6 @@ router.post("/create-payment", verifyToken, async (req, res) => {
           dateEx: createDateEX(undefined, undefined, 10),
         });
         await newTicker.save();
-        console.log("new seat", newTicker);
       }
     });
     //#endregion
@@ -551,7 +549,11 @@ router.post("/create-payment", verifyToken, async (req, res) => {
       total: await getTotalPayment(gifts, data, combos),
     });
     if (resMOMO.resultCode == 0) {
-      return res.redirect(resMOMO.payUrl);
+      return res.json({
+        success: true,
+        message: "Tạo thanh toán thành công",
+        uri: resMOMO.payUrl,
+      });
     }
     return res.json({
       success: false,

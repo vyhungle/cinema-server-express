@@ -33,19 +33,12 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//     optionsSuccessStatus: 200,
-//     methods: "GET, PUT, POST",
-//   })
-// );
 app.use(
   cors({
-    origin: true,
+    origin: "http://localhost:3000",
     credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    optionsSuccessStatus: 200,
+    methods: "GET, PUT, POST",
   })
 );
 
