@@ -10,6 +10,7 @@ import ScreenDetail from "../models/ScreenDetail";
 import { addCategoryDetail, addSCreenDetail } from "../api/serverAPI";
 import { ValidateMovie } from "../utils/validators";
 import { errorCatch } from "../utils/constaints";
+import { getMoviePlay } from "../utils/service";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -278,6 +279,26 @@ router.get("/:id", async (req, res) => {
     return res.json({
       success: false,
       message: "Lấy phim thất bại",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/movie-play", async (req, res) => {
+  try {
+    const movie = await getMoviePlay();
+    return res.json({
+      success: true,
+      message: "Lấy danh sách phim thành công",
+      values: {
+        play: movie.play,
+        noPlay: movie.noPlay,
+      },
     });
   } catch (error) {
     res.status(400).json({

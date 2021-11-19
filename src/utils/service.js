@@ -22,6 +22,26 @@ import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
 import axios from "axios";
 
+export const getMoviePlay = async () => {
+  const res = {
+    play: [],
+    noPlay: [],
+  };
+  const movie = await Movie.find();
+
+  movie.forEach((item) => {
+    const dateStart = new Date(item.dateStart);
+    const dateEnd = new Date(item.dateEnd);
+    const dateNow = Date.now();
+    if (dateStart < dateNow && dateEnd > dateNow) {
+      res.play.push(item);
+    } else {
+      res.noPlay.push(item);
+    }
+  });
+  return res;
+};
+
 export const sendEmail = (email, id) => {
   const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${id}`;
   transporter.sendMail(mailOption(email, link), function (error, info) {});
