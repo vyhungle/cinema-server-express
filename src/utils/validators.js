@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const isEmpty = (value) => {
   if (value === undefined || value === null || value.trim() === "") return true;
   return false;
@@ -251,13 +253,15 @@ export const ValidateMovie = (
   trailer,
   directorId,
   cast,
-  age
+  age,
+  dateStart,
+  dateEnd
 ) => {
   let errors = {};
   if (isEmpty(name)) {
     errors.name = "Vui lòng nhập tên phim";
   }
-  if (moveDuration === undefined) {
+  if (moveDuration === 0) {
     errors.moveDuration = "Vui lòng nhập thời lượng phim";
   }
   if (isEmpty(image)) {
@@ -272,8 +276,28 @@ export const ValidateMovie = (
   if (isEmpty(cast)) {
     errors.cast = "Vui lòng nhập diễn viên";
   }
-  if (typeof age !== "number" || age === undefined) {
+  if (typeof age !== "number" || age === undefined || age === 0) {
     errors.cast = "Vui lòng nhập tuổi";
+  }
+  const _dateStart = new Date(dateStart);
+  const _dateEnd = new Date(dateEnd);
+
+  if (isEmpty(dateStart)) {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu.";
+  } else if (!moment(dateStart).format("MM/dd/YYYY")) {
+    errors.dateStart = "Ngày bắt đầu phải đúng format MM/dd/YYYY";
+  } else if (_dateStart < Date.now()) {
+    errors.dateStart = "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại.";
+  }
+
+  if (isEmpty(dateEnd)) {
+    errors.dateEnd = "Vui lòng chọn ngày kết thúc.";
+  } else if (!moment(dateEnd).format("MM/dd/YYYY")) {
+    errors.dateEnd = "Ngày kết thúc phải đúng format MM/dd/YYYY";
+  } else if (_dateStart < Date.now()) {
+    errors.dateStart = "Vui lòng chọn ngày kết thúc lớn hơn ngày hiện tại.";
+  } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
+    errors.dateEnd = "Vui lòng chọn ngày kết thúc lớn hơn ngày bắt đầu.";
   }
 
   return {

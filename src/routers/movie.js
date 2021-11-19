@@ -24,6 +24,8 @@ router.post("/add", async (req, res) => {
     screensId,
     categoryId,
     age,
+    dateStart,
+    dateEnd,
   } = req.body;
 
   try {
@@ -34,7 +36,9 @@ router.post("/add", async (req, res) => {
       trailer,
       directorId,
       cast,
-      age
+      age,
+      dateStart,
+      dateEnd
     );
     if (valid) {
       const movie = new Movie({
@@ -46,6 +50,8 @@ router.post("/add", async (req, res) => {
         director: directorId,
         cast,
         age,
+        dateStart,
+        dateEnd,
       });
       await movie.save();
       // thêm xuất chiếu phim
@@ -94,6 +100,8 @@ router.put("/update/:id", async (req, res) => {
     screensId,
     categoryId,
     age,
+    dateStart,
+    dateEnd,
   } = req.body;
 
   try {
@@ -105,7 +113,9 @@ router.put("/update/:id", async (req, res) => {
       trailer,
       directorId,
       cast,
-      age
+      age,
+      dateStart,
+      dateEnd
     );
     if (valid) {
       movie.name = name;
@@ -116,6 +126,8 @@ router.put("/update/:id", async (req, res) => {
       movie.directorId = directorId;
       movie.cast = cast;
       movie.age = age;
+      movie.dateStart = dateStart;
+      movie.dateEnd = dateEnd;
       await movie.save();
 
       // delete screen detail

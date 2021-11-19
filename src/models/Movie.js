@@ -12,5 +12,7 @@ const movieSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "directors",
   },
+  dateStart: String,
+  dateEnd: String,
 });
 module.exports = model("movies", movieSchema);
