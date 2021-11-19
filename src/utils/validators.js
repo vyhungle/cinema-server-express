@@ -261,7 +261,7 @@ export const ValidateMovie = (
   if (isEmpty(name)) {
     errors.name = "Vui lòng nhập tên phim";
   }
-  if (moveDuration === 0) {
+  if (moveDuration === 0 || typeof moveDuration !== "number") {
     errors.moveDuration = "Vui lòng nhập thời lượng phim";
   }
   if (isEmpty(image)) {
