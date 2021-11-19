@@ -665,7 +665,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"A2", "price":10000, "idSeat":"4e1ef2cd050afc556b87d119b96345d4", "status":1,"type":0}
+        {"seatName":"A3", "price":20000, "idSeat":"4af34e12c90b1718545744aff8a8a7a9", "status":1,"type":0}
     ],
     "showTimeDetailId":"618e8f1381140b0037dd343c",
     "userId":"613da2d8736aa826841481b3",
@@ -673,7 +673,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
         "type":"1"
     },
     "combos":[
-        {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
     ],
     "gifts":[
     ],
@@ -730,11 +729,27 @@ POST http://localhost:4000/api/food/add
 Content-Type: application/json
 
 {
-    "name":"iCombo Family 2 Big",
+    "name":"iCombo Family 3 Big",
     "price":"162000",
     "unit":"2 BẮP + 4 NƯỚC 32 Oz + 2 PHẦN SNACK",
     "image":"https://www.galaxycine.vn/media/2021/4/7/f2_1617790556406.jpg"
 }
+
+
+####
+PUT http://localhost:4000/api/food/update/617cf58ffb0f0b175c1d80cc
+Content-Type: application/json
+
+{
+      "name":"iCombo Family 2 Big",
+    "price":"162000",
+    "unit":"2 BẮP + 4 NƯỚC 32 Oz + 2 PHẦN SNACK",
+    "image":"https://www.galaxycine.vn/media/2021/4/7/f2_1617790556406.jpg"
+}
+
+
+####
+DELETE  http://localhost:4000/api/food/delete/6196506408985e43e8336f9d
 
 ###
 GET http://localhost:4000/api/food/get-all

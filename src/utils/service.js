@@ -671,13 +671,13 @@ export const momoSend = async (data) => {
     }
   }
 
-  var partnerCode = "MOMOB8LF20211028";
-  var accessKey = "b8xE4uNzTm61kBbw";
-  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
+  var partnerCode = process.env.MOMO_PARTNER_CODE;
+  var accessKey = process.env.MOMO_ACCESS_KEY;
+  var secretkey = process.env.MOMO_SECRET_KEY;
   var requestId = partnerCode + new Date().getTime();
   var orderId = requestId;
   var orderInfo = info;
-  var redirectUrl = `http://localhost:4000/api/ticker/success-payment?token=${tokenOrder}`;
+  var redirectUrl = `https://server-api-cinema.herokuapp.com/api/ticker/success-payment?token=${tokenOrder}`;
   var ipnUrl = "https://callback.url/notify";
   var amount = data.total;
   var requestType = "captureWallet";
@@ -734,9 +734,9 @@ export const momoSend = async (data) => {
 };
 
 export const checkMomoSuccess = async (orderId, requestId) => {
-  var partnerCode = "MOMOB8LF20211028";
-  var accessKey = "b8xE4uNzTm61kBbw";
-  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
+  var partnerCode = process.env.MOMO_PARTNER_CODE;
+  var accessKey = process.env.MOMO_ACCESS_KEY;
+  var secretkey = process.env.MOMO_SECRET_KEY;
   var rawSignature =
     "accessKey=" +
     accessKey +

@@ -418,3 +418,27 @@ export const ValidateMovieDetail = (movieId, cinemaId, dateStart, dateEnd) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+export const ValidateFood = (name, price, image, unit) => {
+  let errors = {};
+  if (isEmpty(name)) {
+    errors.name = "Vui lòng nhập tên phim.";
+  }
+
+  if (isEmpty(price) || price < 0) {
+    errors.price = "Vui lòng nhập giá.";
+  }
+
+  if (isEmpty(image)) {
+    errors.image = "Vui lòng chọn hình.";
+  }
+
+  if (isEmpty(unit)) {
+    errors.unit = "Vui lòng nhập đơn vị tính.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
