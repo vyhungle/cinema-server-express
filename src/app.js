@@ -38,7 +38,7 @@ app.use(
     origin: "*",
     credentials: true,
     optionsSuccessStatus: 200,
-    methods: "GET, PUT, POST",
+    methods: "GET, PUT, POST,DELETE",
   })
 );
 
