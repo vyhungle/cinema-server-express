@@ -296,7 +296,10 @@ export const ValidateMovie = (
     errors.dateEnd = "Ngày kết thúc phải đúng format MM/dd/YYYY";
   } else if (_dateStart < Date.now()) {
     errors.dateStart = "Vui lòng chọn ngày kết thúc lớn hơn ngày hiện tại.";
-  } else if (_dateStart > _dateEnd && dateEnd.trim() !== "") {
+  } else if (
+    (_dateStart > _dateEnd && dateEnd.trim() !== "") ||
+    _dateStart === _dateEnd
+  ) {
     errors.dateEnd = "Vui lòng chọn ngày kết thúc lớn hơn ngày bắt đầu.";
   }
 
