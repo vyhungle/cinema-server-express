@@ -24,8 +24,9 @@ import axios from "axios";
 
 export const getMoviePlay = async () => {
   const res = {
-    play: [],
-    noPlay: [],
+    moviePlay: [],
+    movieComing: [],
+    movieEx: [],
   };
   const movie = await Movie.find();
 
@@ -34,9 +35,11 @@ export const getMoviePlay = async () => {
     const dateEnd = new Date(item.dateEnd);
     const dateNow = Date.now();
     if (dateStart < dateNow && dateEnd > dateNow) {
-      res.play.push(item);
+      res.moviePlay.push(item);
+    } else if (dateStart > dateNow) {
+      res.movieComing.push(item);
     } else {
-      res.noPlay.push(item);
+      res.movieEx.push(item);
     }
   });
   return res;

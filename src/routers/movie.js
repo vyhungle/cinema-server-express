@@ -295,10 +295,7 @@ router.get("/get/movie-play", async (req, res) => {
     return res.json({
       success: true,
       message: "Lấy danh sách phim thành công",
-      values: {
-        play: movie.play,
-        noPlay: movie.noPlay,
-      },
+      values: movie,
     });
   } catch (error) {
     res.status(400).json({
