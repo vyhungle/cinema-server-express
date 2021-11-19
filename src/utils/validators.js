@@ -295,7 +295,7 @@ export const ValidateMovie = (
   } else if (!moment(dateEnd).format("MM/dd/YYYY")) {
     errors.dateEnd = "Ngày kết thúc phải đúng format MM/dd/YYYY";
   } else if (_dateStart < Date.now()) {
-    errors.dateStart = "Vui lòng chọn ngày kết thúc lớn hơn ngày hiện tại.";
+    errors.dateEnd = "Vui lòng chọn ngày kết thúc lớn hơn ngày hiện tại.";
   } else if (
     (_dateStart > _dateEnd && dateEnd.trim() !== "") ||
     _dateStart === _dateEnd
