@@ -402,55 +402,111 @@ export const mergeSTD = (showDetails) => {
     if (!is) {
       res.push({
         date: item.date,
-        countTicket: item?.countTicket || 0,
-        countTicketCoupon: item?.countTicketCoupon || 0,
-        countTicketPoint: item?.countTicketPoint || 0,
-
-        totalPriceFood: item?.totalPriceFood || 0,
-        totalPriceFoodCoupon: item?.totalPriceFoodCoupon || 0,
-        totalPriceFoodPoint: item?.totalPriceFoodPoint || 0,
-
-        totalPriceTicket: item?.totalPriceTicket || 0,
-        totalPriceTicketCoupon: item?.totalPriceTicketCoupon || 0,
-        totalPriceTicketPoint: item?.totalPriceTicketPoint || 0,
-        totalPrice: item?.totalPriceFood || 0 + item?.totalPriceTicket || 0,
-        countAdultTicket: item?.countAdultTicket || 0,
-        countChildTicket: item?.countChildTicket || 0,
-        countStudentTicket: item?.countStudentTicket || 0,
+        ticket: item.ticket,
+        food: item.food,
+        totalPrice: item.totalPrice,
       });
     } else {
       const index = res.findIndex((x) => x.date == item.date);
       res[index] = {
         ...res[index],
-        countTicket: res[index].countTicket + item.countTicket,
-        countTicketCoupon:
-          res[index].countTicketCoupon + item.countTicketCoupon,
-        countTicketPoint: res[index].countTicketPoint + item.countTicketPoint,
-
-        totalPriceFood: res[index].totalPriceFood + item.totalPriceFood,
-        totalPriceFoodCoupon:
-          res[index].totalPriceFoodCoupon + item.totalPriceFoodCoupon,
-        totalPriceFoodPoint:
-          res[index].totalPriceFoodPoint + item.totalPriceFoodPoint,
-
-        totalPriceTicket: res[index].totalPriceTicket + item.totalPriceTicket,
-        totalPriceTicketCoupon:
-          res[index].totalPriceTicketCoupon + item.totalPriceTicketCoupon,
-        totalPriceTicketPoint:
-          res[index].totalPriceTicketPoint + item.totalPriceTicketPoint,
-        totalPrice:
-          res[index].totalPriceTicket +
-          item.totalPriceTicket +
-          res[index].totalPriceFood +
-          item.totalPriceFood,
-        countAdultTicket: res[index].countAdultTicket + item.countAdultTicket,
-        countChildTicket: res[index].countChildTicket + item.countChildTicket,
-        countStudentTicket:
-          res[index].countStudentTicket + item.countStudentTicket,
+        ticket: {
+          ...joinTicketTK(res[index].ticket, item.ticket),
+        },
+        food: {
+          ...joinFoodTK(res[index].food, item.food),
+        },
+        totalPrice: res[index].totalPrice + item.totalPrice,
       };
     }
   });
   return res;
+};
+
+const mergeSTD_OBJ = (showDetails) => {
+  let res = {
+    ticket: {
+      adult: {
+        name: "Vé người lớn",
+        count: 0,
+        price: 0,
+      },
+      child: {
+        name: "Vé trẻ em",
+        count: 0,
+        price: 0,
+      },
+      student: {
+        name: "Vé sinh viên",
+        count: 0,
+        price: 0,
+      },
+      total: 0,
+      totalPromotion: 0,
+    },
+
+    food: {
+      combo: [],
+      total: 0,
+      totalPromotion: 0,
+    },
+
+    totalPrice: 0,
+  };
+  showDetails.forEach((item, index) => {
+    res = {
+      ...res,
+      ticket: {
+        ...joinTicketTK(res.ticket, item.ticket),
+      },
+      food: {
+        ...joinFoodTK(res.food, item.food),
+      },
+      totalPrice: res.totalPrice + item.totalPrice,
+    };
+  });
+  return res;
+};
+
+const joinTicketTK = (oldItem, item) => {
+  let res = {
+    adult: {
+      name: "Vé người lớn",
+      count: oldItem.adult.count + item.adult.count,
+      price: oldItem.adult.price + item.adult.price,
+    },
+    child: {
+      name: "Vé trẻ em",
+      count: oldItem.child.count + item.child.count,
+      price: oldItem.child.price + item.child.price,
+    },
+    student: {
+      name: "Vé sinh viên",
+      count: oldItem.student.count + item.student.count,
+      price: oldItem.student.price + item.student.price,
+    },
+    total: oldItem.total + item.total,
+    totalPromotion: oldItem.totalPromotion + item.totalPromotion,
+  };
+
+  return res;
+};
+
+const joinFoodTK = (oldItem, item) => {
+  let combo = oldItem.combo;
+  item.combo.forEach((e) => {
+    const index = combo.findIndex((x) => x._id === e._id);
+    if (index === -1) {
+      combo.push(e);
+    } else {
+      combo[index].count += e.count;
+    }
+  });
+  return {
+    combo: combo,
+    total: oldItem.total + item.total,
+    totalPromotion: oldItem.totalPromotion + item.totalPromotion,
+  };
 };
 
 const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
@@ -461,7 +517,7 @@ const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
     );
     res.push({
       room: rooms[i],
-      ...mergeSTDDefault(std),
+      statistical: mergeSTD_OBJ(std),
       // timeSlots: mergeSTDTimeSlot(showTimeDetails, timeSlot, rooms[i]._id),
     });
   }
@@ -485,7 +541,7 @@ const mergeSTDTimeSlot = (showTimeDetails, timeSlots, roomId) => {
     }
     res.push({
       timeSlot: timeSlots[i],
-      ...mergeSTDDefault(std),
+      statistical: mergeSTD_OBJ(std),
     });
   }
   return res;
@@ -499,7 +555,7 @@ const mergeSTDMovie = (showTimeDetails, movies) => {
     );
     res.push({
       movie: movies[i],
-      ...mergeSTDDefault(std),
+      statistical: mergeSTD_OBJ(std),
     });
   }
   return res;

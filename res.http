@@ -275,8 +275,9 @@ Content-Type: application/json
 
 {
     "cinemaId":"614c03db576b5d00376801a6",
-    "dateStart":"10/18/2021",
-    "dateEnd":"10/20/2021"
+    "dateStart":"11/13/2021",
+    "dateEnd":"12/14/2021"
+    
 }
 
 ###
@@ -636,10 +637,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"A1", "price":10000, "idSeat":"29aa92021b6f9299bb8b2510d9546332", "status":1,"type":0}
-       
+        {"seatName":"E4", "price":80000, "idSeat":"72eff1799521a7ab842563c26b1062dd", "status":1,"type":1}
     ],
-    "showTimeDetailId":"618e8f1381140b0037dd343c",
+    "showTimeDetailId":"618e8f1381140b0037dd3442",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
        "info":{
@@ -653,7 +653,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
     ],
     "gifts":[
-         {"_id":"6183edacbaa93a3e84a7d419","quantity":1, "coupon":true}
     ],
     "coupons":["HCCX-8V61-DJ39"] 
     
@@ -668,9 +667,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"A3", "price":20000, "idSeat":"4af34e12c90b1718545744aff8a8a7a9", "status":1,"type":0}
+        {"seatName":"A1", "price":60000, "idSeat":"72eff1799521a7ab842563c26b1062dd", "status":1,"type":0}
     ],
-    "showTimeDetailId":"618e8f1381140b0037dd343c",
+    "showTimeDetailId":"618e8f1381140b0037dd3442",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
         "type":"1"
@@ -689,7 +688,10 @@ GET http://localhost:4000/api/ticker/success-payment?token=eyJhbGciOiJIUzI1NiIsI
 
 
 ###
-GET http://localhost:4000/api/ticker/get-list-ticker/618e8f1381140b0037dd343c
+GET http://localhost:4000/api/ticker/get-list-ticker/618e8f1381140b0037dd3442
+
+###
+GET http://localhost:4000/api/ticker/test/tk
 
 
 
