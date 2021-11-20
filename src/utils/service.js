@@ -365,6 +365,9 @@ export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
   };
 };
 
+
+
+
 export const revenueStatisticsByDate = async (cinemaId, dateStart, dateEnd) => {
   const showTimes = await ShowTime.find({ cinema: cinemaId });
   let showTimeDetails = [];
