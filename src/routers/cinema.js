@@ -249,14 +249,83 @@ router.post("/get/thong-ke-theo-ngay", async (req, res) => {
   }
 });
 
-router.post("/get/thong-ke-theo-ngay-v2", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd, type } = req.body;
+router.post("/get/thong-ke-theo-ngay-v2/full", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
   try {
     const data = await revenueStatisticsByDateV2(
       cinemaId,
       dateStart,
       dateEnd,
-      type
+      "full"
+    );
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.post("/get/thong-ke-theo-ngay-v2/room", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
+  try {
+    const data = await revenueStatisticsByDateV2(
+      cinemaId,
+      dateStart,
+      dateEnd,
+      "room"
+    );
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.post("/get/thong-ke-theo-ngay-v2/time", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
+  try {
+    const data = await revenueStatisticsByDateV2(
+      cinemaId,
+      dateStart,
+      dateEnd,
+      "time"
+    );
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.post("/get/thong-ke-theo-ngay-v2/movie", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
+  try {
+    const data = await revenueStatisticsByDateV2(
+      cinemaId,
+      dateStart,
+      dateEnd,
+      "movie"
     );
     return res.json({
       success: true,
