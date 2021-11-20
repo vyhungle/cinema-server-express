@@ -14,6 +14,7 @@ import {
 import { ValidateCinema } from "../utils/validators";
 import verifyToken from "../middleware/staff";
 import OtpPayment from "../models/OtpPayment";
+import { revenueStatisticsByDateV2 } from "../utils/serviceV2";
 
 router.post("/add", async (req, res) => {
   const { name, address } = req.body;
@@ -234,6 +235,24 @@ router.post("/get/thong-ke-theo-ngay", async (req, res) => {
   const { cinemaId, dateStart, dateEnd } = req.body;
   try {
     const data = await revenueStatisticsByDate(cinemaId, dateStart, dateEnd);
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.post("/get/thong-ke-theo-ngay-v2", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
+  try {
+    const data = await revenueStatisticsByDateV2(cinemaId, dateStart, dateEnd);
     return res.json({
       success: true,
       message: "",
