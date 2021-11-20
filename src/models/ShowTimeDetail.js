@@ -15,74 +15,55 @@ const showTimeDetailSchema = new Schema({
     ref: "timeslots",
   },
 
-  // field thống kê
-  ticket: {
-    adult: {
-      name: {
-        type: String,
-        default: "Vé người lớn",
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      price: {
-        type: Number,
-        default: 0,
-      },
-    },
-    child: {
-      name: {
-        type: String,
-        default: "Vé trẻ em",
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      price: {
-        type: Number,
-        default: 0,
-      },
-    },
-    student: {
-      name: {
-        type: String,
-        default: "Vé sinh viên",
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      price: {
-        type: Number,
-        default: 0,
-      },
-    },
-    total: {
-      type: Number,
-      default: 0,
-    },
-    totalPromotion: {
-      type: Number,
-      default: 0,
-    },
+  // Field để thống kê
+  // TK số lượng vé
+  countTicket: {
+    type: Number,
+    default: 0,
   },
-  food: {
-    combo: {
-      type: Array,
-      default: [],
-    },
-    total: {
-      type: Number,
-      default: 0,
-    },
-    totalPromotion: {
-      type: Number,
-      default: 0,
-    },
+  countTicketPoint: {
+    type: Number,
+    default: 0,
   },
-  totalPrice: {
+  countTicketCoupon: {
+    type: Number,
+    default: 0,
+  },
+  // TK tiền bán vé
+  totalPriceTicket: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceTicketPoint: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceTicketCoupon: {
+    type: Number,
+    default: 0,
+  },
+  // TK tiền bán bắp nước
+  totalPriceFood: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceFoodPoint: {
+    type: Number,
+    default: 0,
+  },
+  totalPriceFoodCoupon: {
+    type: Number,
+    default: 0,
+  },
+  countChildTicket: {
+    type: Number,
+    default: 0,
+  },
+  countAdultTicket: {
+    type: Number,
+    default: 0,
+  },
+  countStudentTicket: {
     type: Number,
     default: 0,
   },
