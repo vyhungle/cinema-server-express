@@ -287,15 +287,14 @@ export const ValidateMovie = (
   } else if (!moment(dateStart).format("MM/dd/YYYY")) {
     errors.dateStart = "Ngày bắt đầu phải đúng format MM/dd/YYYY";
   } else if (_dateStart < Date.now()) {
-    errors.dateStart = "Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại.";
+    errors.dateStart =
+      "Vui lòng chọn ngày bắt đầu lớn hơn hoặc bằng ngày hiện tại.";
   }
 
   if (isEmpty(dateEnd)) {
     errors.dateEnd = "Vui lòng chọn ngày kết thúc.";
   } else if (!moment(dateEnd).format("MM/dd/YYYY")) {
     errors.dateEnd = "Ngày kết thúc phải đúng format MM/dd/YYYY";
-  } else if (_dateStart < Date.now()) {
-    errors.dateEnd = "Vui lòng chọn ngày kết thúc lớn hơn ngày hiện tại.";
   } else if (
     (_dateStart > _dateEnd && dateEnd.trim() !== "") ||
     _dateStart === _dateEnd
