@@ -23,12 +23,12 @@ export const revenueStatisticsByDateV2 = async (
     showTimeDetails = showTimeDetails.concat(std);
   }
   const filterSTD = filterTimeSTD(showTimeDetails, dateStart, dateEnd);
-  if (type === 0) {
+  if (type === "full") {
     return mergeSTD(filterSTD);
-  } else if (type === 1) {
+  } else if (type === "room") {
     const rooms = await Room.find({ cinema: cinemaId });
     return await mergeSTDRoom(filterSTD, rooms);
-  } else if (type === 2) {
+  } else if (type === "time") {
     const timeSlots = await TimeSlot.find();
     const sortTimeSL = timeSlots.sort(
       (a, b) => parseTime(a.time) - parseTime(b.time)
