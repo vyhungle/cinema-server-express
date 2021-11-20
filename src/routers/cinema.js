@@ -10,6 +10,7 @@ import {
   revenueStatisticsByDate,
   revenueStatisticsMovie,
   revenueYear,
+  thongKeRapTheoQuy,
 } from "../utils/service";
 import { ValidateCinema } from "../utils/validators";
 import verifyToken from "../middleware/staff";
@@ -401,6 +402,24 @@ router.post("/add-payment", verifyToken, async (req, res) => {
     return res.json({
       success: false,
       message: "Bạn không có quyền truy cập chức năng này.",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get/thong-ke-all-rap-theo-quy", async (req, res) => {
+  try {
+    const { year } = req.query;
+    const data = await thongKeRapTheoQuy(year);
+    return res.json({
+      success: true,
+      message: "thống kê tạp thành công",
+      data,
     });
   } catch (error) {
     res.status(400).json({

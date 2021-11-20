@@ -755,3 +755,50 @@ export const getTotalPayment = async (gifts, data, combos) => {
 
   return totalFood + totalTicket - (totalFood + totalTicket) * discount;
 };
+
+export const thongKeRapTheoQuy = async (year) => {
+  const yearNow = year || new Date().getFullYear();
+  const std = await ShowTimeDetail.find();
+  const filterSTD = filterTimeSTD(std, `1/1/${yearNow}`, `12/31/${yearNow}`);
+  const yearData = [
+    {
+      quarter: 1,
+      months: [1, 2, 3],
+      totalFood: 0,
+      totalTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 2,
+      months: [4, 5, 6],
+      totalFood: 0,
+      totalTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 3,
+      months: [7, 8, 9],
+      totalFood: 0,
+      totalTicket: 0,
+      totalPrice: 0,
+    },
+    {
+      quarter: 4,
+      months: [10, 11, 12],
+      totalFood: 0,
+      totalTicket: 0,
+      totalPrice: 0,
+    },
+  ];
+
+  filterSTD.forEach((item) => {
+    const month = new Date(item.date).getMonth() + 1;
+    const index = yearData.findIndex((x) => x.months.some((x) => x == month));
+    if (index !== -1) {
+      yearData[index].totalFood += item?.food?.total || 0;
+      yearData[index].totalTicket += item?.ticket?.total || 0;
+      yearData[index].totalPrice += item?.totalPrice || 0;
+    }
+  });
+  return yearData;
+};
