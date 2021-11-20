@@ -286,7 +286,7 @@ export const ValidateMovie = (
     errors.dateStart = "Vui lòng chọn ngày bắt đầu.";
   } else if (!moment(dateStart).format("MM/dd/YYYY")) {
     errors.dateStart = "Ngày bắt đầu phải đúng format MM/dd/YYYY";
-  } else if (_dateStart <= Date.now()) {
+  } else if (_dateStart < Date.now()) {
     errors.dateStart =
       "Vui lòng chọn ngày bắt đầu lớn hơn hoặc bằng ngày hiện tại.";
   }
