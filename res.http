@@ -637,7 +637,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"E4", "price":80000, "idSeat":"72eff1799521a7ab842563c26b1062dd", "status":1,"type":1}
+        {"seatName":"E7", "price":80000, "idSeat":"72eff1799521a7ab842563c26b1062dd", "status":1,"type":1}
     ],
     "showTimeDetailId":"618e8f1381140b0037dd3442",
     "userId":"613da2d8736aa826841481b3",
@@ -651,8 +651,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
     },
     "combos":[
         {"_id":"617cf540fb0f0b175c1d80c8","quantity":1 }
+
     ],
     "gifts":[
+         {"_id":"618293aab3b05642dc7bf89f","quantity":2 , "coupon":false }
+
     ],
     "coupons":["HCCX-8V61-DJ39"] 
     

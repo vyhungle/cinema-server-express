@@ -431,6 +431,38 @@ router.post("/add", verifyToken, async (req, res) => {
         }
       }
 
+      if (gifts && giftList.length > 0) {
+        for (let i = 0; i < giftList.length; i++) {
+          const _gift = await Gift.findById(giftList[i]._id);
+          const foodGift = await Food.findById(_gift.foodId);
+          const indexCB = stDetail.food.combo.findIndex(
+            (x) => x._id.toString().trim() === foodGift._id.toString().trim()
+          );
+          if (indexCB === -1) {
+            stDetail.food.combo.push({
+              _id: foodGift._id,
+              name: foodGift.name,
+              count: giftList[i].quantity,
+              price: foodGift.price,
+            });
+          } else {
+            stDetail.food.combo.set(indexCB, {
+              _id: foodGift._id,
+              name: foodGift.name,
+              count: stDetail.food.combo[indexCB].count + giftList[i].quantity,
+              price: foodGift.price,
+            });
+          }
+
+          // Tính tiền bắp nước đổi điểm và dùng coupon
+          if (giftList[i].coupon) {
+            totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
+          } else {
+            totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
+          }
+        }
+      }
+
       stDetail.food.total += totalFood - totalFood * discount;
       stDetail.food.totalPromotion +=
         totalPriceFoodPoint + totalPriceFoodCoupon + totalFood * discount;
@@ -919,6 +951,39 @@ router.get("/success-payment", async (req, res) => {
               count: stDetail.food.combo[indexCB].count + combos[i].quantity,
               price: food.price,
             });
+          }
+        }
+
+        if (gifts && giftList.length > 0) {
+          for (let i = 0; i < giftList.length; i++) {
+            const _gift = await Gift.findById(giftList[i]._id);
+            const foodGift = await Food.findById(_gift.foodId);
+            const indexCB = stDetail.food.combo.findIndex(
+              (x) => x._id.toString().trim() === foodGift._id.toString().trim()
+            );
+            if (indexCB === -1) {
+              stDetail.food.combo.push({
+                _id: foodGift._id,
+                name: foodGift.name,
+                count: giftList[i].quantity,
+                price: foodGift.price,
+              });
+            } else {
+              stDetail.food.combo.set(indexCB, {
+                _id: foodGift._id,
+                name: foodGift.name,
+                count:
+                  stDetail.food.combo[indexCB].count + giftList[i].quantity,
+                price: foodGift.price,
+              });
+            }
+
+            // Tính tiền bắp nước đổi điểm và dùng coupon
+            if (giftList[i].coupon) {
+              totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
+            } else {
+              totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
+            }
           }
         }
 
