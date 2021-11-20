@@ -247,6 +247,23 @@ router.post("/get/thong-ke-theo-ngay", async (req, res) => {
     });
   }
 });
+router.post("/get/thong-ke-theo-ngay/v2", async (req, res) => {
+  const { cinemaId, dateStart, dateEnd } = req.body;
+  try {
+    const data = await revenueStatisticsByDate(cinemaId, dateStart, dateEnd);
+    return res.json({
+      success: true,
+      message: "",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
 
 router.post("/get/thong-ke-theo-quy", async (req, res) => {
   const { cinemaId } = req.body;
