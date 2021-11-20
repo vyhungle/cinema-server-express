@@ -8,7 +8,8 @@ import { filterTimeSTD, parseTime } from "./helper";
 export const revenueStatisticsByDateV2 = async (
   cinemaId,
   dateStart,
-  dateEnd
+  dateEnd,
+  type = 0
 ) => {
   const showTimes = await ShowTime.find({ cinema: cinemaId });
   let showTimeDetails = [];
@@ -22,27 +23,30 @@ export const revenueStatisticsByDateV2 = async (
     showTimeDetails = showTimeDetails.concat(std);
   }
   const filterSTD = filterTimeSTD(showTimeDetails, dateStart, dateEnd);
-  const res = mergeSTD(filterSTD);
-
-  const rooms = await Room.find({ cinema: cinemaId });
-  const timeSlots = await TimeSlot.find();
-  const sortTimeSL = timeSlots.sort(
-    (a, b) => parseTime(a.time) - parseTime(b.time)
-  );
-  const movie = await Movie.find();
-
-  for (let i = 0; i < res.length; i++) {
-    res[i].rooms = await mergeSTDRoom(filterSTD, rooms, sortTimeSL);
-    res[i].movies = await mergeSTDMovie(filterSTD, movie);
-    res[i].timeSlots = await mergeSTDTimeSlot(filterSTD, sortTimeSL);
+  if (type === 0) {
+    return mergeSTD(filterSTD);
+  } else if (type === 1) {
+    const rooms = await Room.find({ cinema: cinemaId });
+    return await mergeSTDRoom(filterSTD, rooms);
+  } else if (type === 2) {
+    const timeSlots = await TimeSlot.find();
+    const sortTimeSL = timeSlots.sort(
+      (a, b) => parseTime(a.time) - parseTime(b.time)
+    );
+    return await mergeSTDTimeSlot(filterSTD, sortTimeSL);
+  } else {
+    const movie = await Movie.find();
+    return await mergeSTDMovie(filterSTD, movie);
   }
-  return res;
 };
 
 const mergeSTD = (showDetails) => {
   const res = [];
+  // console.log(showDetails);
+
   showDetails.forEach((item, index) => {
     const is = res.some((x) => x.date == item.date);
+    // console.log(item.food);
     if (!is) {
       res.push({
         date: item.date,
@@ -54,12 +58,8 @@ const mergeSTD = (showDetails) => {
       const index = res.findIndex((x) => x.date == item.date);
       res[index] = {
         ...res[index],
-        ticket: {
-          ...joinTicketTK(res[index].ticket, item.ticket),
-        },
-        food: {
-          ...joinFoodTK(res[index].food, item.food),
-        },
+        ticket: joinTicketTK(res[index].ticket, item.ticket),
+        food: joinFoodTK(res[index].food, item.food),
         totalPrice: res[index].totalPrice + item.totalPrice,
       };
     }
@@ -88,13 +88,11 @@ const mergeSTD_OBJ = (showDetails) => {
       total: 0,
       totalPromotion: 0,
     },
-
     food: {
       combo: [],
       total: 0,
       totalPromotion: 0,
     },
-
     totalPrice: 0,
   };
   showDetails.forEach((item, index) => {
@@ -113,7 +111,7 @@ const mergeSTD_OBJ = (showDetails) => {
 };
 
 const joinTicketTK = (oldItem, item) => {
-  let res = {
+  const res = {
     adult: {
       name: "Vé người lớn",
       count: oldItem.adult.count + item.adult.count,
@@ -137,23 +135,31 @@ const joinTicketTK = (oldItem, item) => {
 };
 
 const joinFoodTK = (oldItem, item) => {
-  let combo = oldItem.combo;
-  item.combo.forEach((e) => {
-    const index = combo.findIndex((x) => x._id === e._id);
-    if (index === -1) {
-      combo.push(e);
-    } else {
-      combo[index].count += e.count;
-    }
-  });
-  return {
-    combo: combo,
+  const res = {
+    combo: [],
     total: oldItem.total + item.total,
     totalPromotion: oldItem.totalPromotion + item.totalPromotion,
   };
+  let tam = [];
+  const array = oldItem.combo.concat(item.combo);
+  array.forEach((element) => {
+    const is = tam.some(
+      (x) => x._id.toString().trim() === element._id.toString().trim()
+    );
+    if (!is) {
+      tam.push(element);
+    } else {
+      const index = tam.findIndex(
+        (x) => x._id.toString().trim() === element._id.toString().trim()
+      );
+      tam[index].count += element.count;
+    }
+  });
+  res.combo = tam;
+  return res;
 };
 
-const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
+const mergeSTDRoom = (showTimeDetails, rooms) => {
   let res = [];
   for (let i = 0; i < rooms.length; i++) {
     const std = showTimeDetails.filter(
@@ -162,7 +168,6 @@ const mergeSTDRoom = (showTimeDetails, rooms, timeSlot) => {
     res.push({
       room: rooms[i],
       statistical: mergeSTD_OBJ(std),
-      // timeSlots: mergeSTDTimeSlot(showTimeDetails, timeSlot, rooms[i]._id),
     });
   }
   return res;

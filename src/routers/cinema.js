@@ -250,9 +250,14 @@ router.post("/get/thong-ke-theo-ngay", async (req, res) => {
 });
 
 router.post("/get/thong-ke-theo-ngay-v2", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
+  const { cinemaId, dateStart, dateEnd, type } = req.body;
   try {
-    const data = await revenueStatisticsByDateV2(cinemaId, dateStart, dateEnd);
+    const data = await revenueStatisticsByDateV2(
+      cinemaId,
+      dateStart,
+      dateEnd,
+      type
+    );
     return res.json({
       success: true,
       message: "",
