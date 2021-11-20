@@ -867,23 +867,67 @@ router.get("/success-payment", async (req, res) => {
       //#endregion
 
       //#region Thống kê lại
-      // stDetail.countTicket += data ? data.length : 0; // tổng số vé bán được
-      // stDetail.countTicketPoint = countTicketPoint; // tổng vé dùng điểm đổi
-      // stDetail.countTicketCoupon = countTicketCoupon; // tổng vé dùng coupon đổi
 
-      // stDetail.totalPriceTicket += totalTicket - totalTicket * discount; // tổng tiền bán vé
-      // stDetail.totalPriceTicketPoint = totalPriceTicketPoint; // tổng tiền đổi vé
-      // stDetail.totalPriceTicketCoupon =
-      //   totalPriceTicketCoupon + totalTicket * discount; // tổng tiền đổi vé đổi coupon và phiếu giảm giá
+      if (data) {
+        stDetail.ticket = {
+          adult: {
+            ...stDetail.ticket.adult,
+            count:
+              stDetail.ticket.adult.count + (typeTicket == 1 ? data.length : 0),
+            price: typeTicket == 1 ? priceTicket : stDetail.ticket.adult.price,
+          },
+          child: {
+            ...stDetail.ticket.child,
+            count:
+              stDetail.ticket.child.count + (typeTicket == 0 ? data.length : 0),
+            price: typeTicket == 0 ? priceTicket : stDetail.ticket.child.price,
+          },
+          student: {
+            ...stDetail.ticket.student,
+            count:
+              stDetail.ticket.student.count +
+              (typeTicket == 2 ? data.length : 0),
+            price:
+              typeTicket == 2 ? priceTicket : stDetail.ticket.student.price,
+          },
+          total: stDetail.ticket.total + totalTicket - totalTicket * discount,
+          totalPromotion:
+            stDetail.ticket.totalPromotion +
+            totalPriceTicketPoint +
+            totalPriceTicketCoupon +
+            totalTicket * discount,
+        };
+      }
 
-      // stDetail.totalPriceFood += totalFood - totalFood * discount; // tổng tiền bán bắp nước
-      // stDetail.totalPriceFoodPoint = totalPriceFoodPoint; // tổng tiền đổi bắp nước bằng điểm
-      // stDetail.totalPriceFoodCoupon =
-      //   totalPriceFoodCoupon + totalFood * discount; // tổng tiền đổi bắp nước bằng coupon và phiếu giảm giá
+      if (combos) {
+        for (let i = 0; i < combos.length; i++) {
+          const food = await Food.findById(combos[i]._id);
+          const indexCB = stDetail.food.combo.findIndex(
+            (x) => x._id == combos[i]._id
+          );
+          if (indexCB === -1) {
+            stDetail.food.combo.push({
+              _id: food._id,
+              name: food.name,
+              count: combos[i].quantity,
+              price: food.price,
+            });
+          } else {
+            stDetail.food.combo.set(indexCB, {
+              _id: food._id,
+              name: food.name,
+              count: stDetail.food.combo[indexCB].count + combos[i].quantity,
+              price: food.price,
+            });
+          }
+        }
 
-      // stDetail.countChildTicket += data && typeTicket === 0 ? data.length : 0;
-      // stDetail.countAdultTicket += data && typeTicket === 1 ? data.length : 0;
-      // stDetail.countStudentTicket += data && typeTicket === 2 ? data.length : 0;
+        stDetail.food.total += totalFood - totalFood * discount;
+        stDetail.food.totalPromotion +=
+          totalPriceFoodPoint + totalPriceFoodCoupon + totalFood * discount;
+      }
+
+      stDetail.totalPrice = stDetail.food.total + stDetail.ticket.total;
 
       //#endregion
 
