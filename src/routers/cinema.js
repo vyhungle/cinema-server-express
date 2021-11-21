@@ -342,8 +342,8 @@ router.post("/get/thong-ke-theo-ngay-v2/movie", async (req, res) => {
   }
 });
 
-router.post("/get/thong-ke-theo-quy", async (req, res) => {
-  const { cinemaId } = req.body;
+router.get("/get/thong-ke-theo-quy", async (req, res) => {
+  const { cinemaId } = req.query;
   try {
     const data = await revenueYear(cinemaId);
     return res.json({
