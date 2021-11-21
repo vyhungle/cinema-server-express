@@ -213,7 +213,7 @@ router.get("/get/cinema-by", async (req, res) => {
   }
 });
 
-router.post("/get/thong-ke-rap", async (req, res) => {
+router.post("/get/thong-ke-phim-theo-rap", async (req, res) => {
   const { cinemaId, dateStart, dateEnd } = req.body;
   console.log(cinemaId, dateStart, dateEnd);
   try {
