@@ -794,6 +794,8 @@ router.get("/success-payment", async (req, res) => {
       if (data && data.length > 0) {
         const bill = new MovieBill({
           user: userId,
+          showTime: stDetail.showTime,
+          showTimeDetail: showTimeDetailId,
           total: 0,
           createdAt: new Date().toISOString(),
           paymentType: payment.type,
@@ -829,6 +831,8 @@ router.get("/success-payment", async (req, res) => {
       if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
         const foodBill = new FoodBill({
           user: userId,
+          showTime: stDetail.showTime,
+          showTimeDetail: showTimeDetailId,
           total: 0,
           createdAt: new Date().toISOString(),
           paymentType: payment.type,
