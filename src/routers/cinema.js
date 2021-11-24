@@ -435,7 +435,9 @@ router.get("/get/thong-ke-doanh-thu-theo-ngay", async (req, res) => {
   try {
     const { cinemaId, date } = req.query;
     return res.json({
-      data: await thongKeTheoNgay(cinemaId, date),
+      success: true,
+      message: "Thống kê thành công",
+      values: await thongKeTheoNgay(cinemaId, date),
     });
   } catch (error) {
     res.status(400).json({
