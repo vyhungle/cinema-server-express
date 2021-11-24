@@ -5,6 +5,14 @@ const foodBillSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
   },
+  showTime: {
+    type: Schema.Types.ObjectId,
+    ref: "showtimes",
+  },
+  showTimeDetail: {
+    type: Schema.Types.ObjectId,
+    ref: "showtimedetails",
+  },
   total: Number,
   createdAt: String,
   paymentType: Number,

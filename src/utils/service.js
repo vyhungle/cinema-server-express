@@ -21,6 +21,7 @@ import TimeSlot from "../models/TimeSlot";
 import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
 import axios from "axios";
+import moment from "moment";
 
 export const getMoviePlay = async () => {
   const res = {
@@ -801,4 +802,164 @@ export const thongKeRapTheoQuy = async (year) => {
     }
   });
   return yearData;
+};
+
+export const thongKeTheoNgay = async (cinemaId, date) => {
+  const st = await ShowTime.find({ cinema: cinemaId }).populate("movie");
+  let fb = [];
+  let mb = [];
+  for (let i = 0; i < st.length; i++) {
+    const tamFB = await getFoodBill(st[i], date);
+    if (tamFB) {
+      fb = [...fb, ...tamFB];
+    }
+    const tamMB = await getMovieBill(st[i], date);
+    if (tamMB) {
+      mb = [...mb, ...tamMB];
+    }
+  }
+
+  const lstFood = await getListFoodBillDetail(fb);
+  const lstTicket = await getListMovieBillDetail(mb);
+  const lstBill = [...lstFood.data, ...lstTicket.data];
+  const total = lstFood.total + lstTicket.total;
+  const lstSort = lstBill.sort(function (a, b) {
+    if (a.movieName === b.movieName && a.roomName === b.roomName) {
+      return a.billId - b.billId;
+    } else if (a.movieName === b.movieName) {
+      return a.roomName - b.roomName;
+    }
+    return a.movieName - b.movieName;
+  });
+  return {
+    data: lstSort,
+    total,
+  };
+};
+
+const getFoodBill = async (st, date) => {
+  const fb = await FoodBill.find({ showTime: st._id }).populate({
+    path: "showTimeDetail",
+    populate: {
+      path: "room",
+      populate: "screen",
+    },
+  });
+  const tam = fb.filter(
+    (x) => moment(x.createAt).format("MM/DD/YYYY") === date
+  );
+  tam.forEach((item, index) => {
+    tam[index] = {
+      _id: item._id,
+      total: item.total,
+      movieName: st.movie.name,
+      roomName: item.showTimeDetail.room.name,
+      screenName: item.showTimeDetail.room.screen.name,
+    };
+  });
+  return tam;
+};
+
+const getMovieBill = async (st, date) => {
+  const mb = await MovieBill.find({ showTime: st._id }).populate({
+    path: "showTimeDetail",
+    populate: {
+      path: "room",
+      populate: "screen",
+    },
+  });
+  let tam = mb.filter((x) => moment(x.createAt).format("MM/DD/YYYY") === date);
+  tam.forEach((item, index) => {
+    tam[index] = {
+      _id: item._id,
+      total: item.total,
+      movieName: st.movie.name,
+      roomName: item.showTimeDetail.room.name,
+      screenName: item.showTimeDetail.room.screen.name,
+    };
+  });
+  return tam;
+};
+
+const getListFoodBillDetail = async (fb) => {
+  let res = {
+    data: [],
+    total: 0,
+  };
+  for (let i = 0; i < fb.length; i++) {
+    const fbd = await FoodDetail.find({ foodBill: fb[i]._id }).populate("food");
+    if (fbd) {
+      const lstFood = [];
+      fbd.forEach((item) => {
+        lstFood.push({
+          billId: item.foodBill,
+          type: item.food.name,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.price * item.quantity,
+          movieName: fb[i].movieName,
+          roomName: fb[i].roomName,
+          screenName: fb[i].screenName,
+        });
+        res.total += item.price * item.quantity;
+      });
+      res.data = res.data.concat(lstFood);
+    }
+  }
+  return res;
+};
+
+const getTypeTicket = (type) => {
+  if (type === 0) {
+    return "Vé trẻ em";
+  } else if (type == 1) {
+    return "Vé người lớn";
+  }
+  return "Vé sinh viên";
+};
+
+const getListMovieBillDetail = async (mb) => {
+  let res = {
+    data: [],
+    total: 0,
+  };
+  for (let i = 0; i < mb.length; i++) {
+    const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id }).populate(
+      "ticket"
+    );
+    if (mbd) {
+      const lstTicket = [];
+      mbd.forEach((item) => {
+        const some = lstTicket.some(
+          (x) =>
+            x.type === getTypeTicket(item.ticket.type) &&
+            x.price === item.ticket.price
+        );
+        if (!some) {
+          lstTicket.push({
+            billId: item.movieBill,
+            type: getTypeTicket(item.ticket.type),
+            quantity: 1,
+            price: item.ticket.price,
+            total: item.ticket.price,
+            movieName: mb[i].movieName,
+            roomName: mb[i].roomName,
+            screenName: mb[i].screenName,
+          });
+        } else {
+          const index = lstTicket.findIndex(
+            (x) =>
+              x.type === getTypeTicket(item.ticket.type) &&
+              x.price === item.ticket.price
+          );
+          lstTicket[index].quantity += 1;
+          lstTicket[index].total += lstTicket[index].price;
+        }
+
+        res.total += item.ticket.price;
+      });
+      res.data = res.data.concat(lstTicket);
+    }
+  }
+  return res;
 };
