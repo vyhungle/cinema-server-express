@@ -22,6 +22,7 @@ import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
 import axios from "axios";
 import moment from "moment";
+import { time } from "console";
 
 export const getMoviePlay = async () => {
   const res = {
@@ -823,14 +824,11 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
   const lstTicket = await getListMovieBillDetail(mb);
   const lstBill = [...lstFood.data, ...lstTicket.data];
   const total = lstFood.total + lstTicket.total;
-  const lstSort = lstBill.sort(function (a, b) {
-    if (a.movieName === b.movieName && a.roomName === b.roomName) {
-      return a.billId - b.billId;
-    } else if (a.movieName === b.movieName) {
-      return a.roomName - b.roomName;
-    }
-    return a.movieName - b.movieName;
-  });
+  const lstSort = lstBill.sort(
+    (a, b) =>
+      new Date(moment(b.createdAt)).valueOf() -
+      new Date(moment(a.createdAt)).valueOf()
+  );
   return {
     data: lstSort,
     total,
@@ -855,6 +853,7 @@ const getFoodBill = async (st, date) => {
       movieName: st.movie.name,
       roomName: item.showTimeDetail.room.name,
       screenName: item.showTimeDetail.room.screen.name,
+      createdAt: item.createdAt,
     };
   });
   return tam;
@@ -876,6 +875,7 @@ const getMovieBill = async (st, date) => {
       movieName: st.movie.name,
       roomName: item.showTimeDetail.room.name,
       screenName: item.showTimeDetail.room.screen.name,
+      createdAt: item.createdAt,
     };
   });
   return tam;
@@ -900,6 +900,7 @@ const getListFoodBillDetail = async (fb) => {
           movieName: fb[i].movieName,
           roomName: fb[i].roomName,
           screenName: fb[i].screenName,
+          createdAt: fb[i].createdAt,
         });
         res.total += item.price * item.quantity;
       });
@@ -945,6 +946,7 @@ const getListMovieBillDetail = async (mb) => {
             movieName: mb[i].movieName,
             roomName: mb[i].roomName,
             screenName: mb[i].screenName,
+            createdAt: mb[i].createdAt,
           });
         } else {
           const index = lstTicket.findIndex(
