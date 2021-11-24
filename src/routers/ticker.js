@@ -282,7 +282,7 @@ router.post("/add", verifyToken, async (req, res) => {
             price: numberTicket > 0 ? 0 : item.price || priceBefore,
             status: 1,
             showTimeDetail: showTimeDetailId,
-            type: item?.type || 1,
+            type: item.type,
           });
         }
         // trừ vé free
