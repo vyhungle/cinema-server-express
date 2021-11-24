@@ -629,7 +629,7 @@ router.post("/create-payment", verifyToken, async (req, res) => {
           price: item.price || priceBefore,
           status: 1,
           showTimeDetail: showTimeDetailId,
-          type: item?.type || 1,
+          type: item.type,
           wail: true,
           dateEx: createDateEX(undefined, undefined, 10),
         });
