@@ -825,9 +825,8 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
 };
 
 const getFoodBill = async (cinemaId, date) => {
-  const fb = await FoodBill.find({ cinema: cinemaId })
-    .populate({ path: "room", populate: "screen" })
-    .populate("movie");
+  const fb = await FoodBill.find({ cinema: cinemaId });
+
   const tam = fb.filter(
     (x) => moment(x.createAt).format("MM/DD/YYYY") === date
   );
@@ -835,9 +834,9 @@ const getFoodBill = async (cinemaId, date) => {
     tam[index] = {
       _id: item._id,
       total: item.total,
-      movieName: item.movie.name,
-      roomName: item.room.name,
-      screenName: item.room.screen.name,
+      movieName: item?.movieName,
+      roomName: item?.roomName,
+      screenName: item?.screenName,
       createdAt: item.createdAt,
     };
   });
@@ -845,17 +844,15 @@ const getFoodBill = async (cinemaId, date) => {
 };
 
 const getMovieBill = async (cinemaId, date) => {
-  const mb = await MovieBill.find({ cinema: cinemaId })
-    .populate({ path: "room", populate: "screen" })
-    .populate("movie");
+  const mb = await MovieBill.find({ cinema: cinemaId });
   let tam = mb.filter((x) => moment(x.createAt).format("MM/DD/YYYY") === date);
   tam.forEach((item, index) => {
     tam[index] = {
       _id: item._id,
       total: item.total,
-      movieName: item.movie.name,
-      roomName: item.room.name,
-      screenName: item.room.screen.name,
+      movieName: item?.movieName,
+      roomName: item?.roomName,
+      screenName: item?.screenName,
       createdAt: item.createdAt,
     };
   });

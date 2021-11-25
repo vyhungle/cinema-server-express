@@ -642,17 +642,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"J7", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
-        {"seatName":"J8", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
-        {"seatName":"J9", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
-        {"seatName":"K1", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
-        {"seatName":"K2", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0}
-
-
-
-
+        {"seatName":"B1", "price":80000, "idSeat":"1", "status":1,"type":1},
+        {"seatName":"B2", "price":80000, "idSeat":"1", "status":1,"type":1},
+        {"seatName":"B3", "price":80000, "idSeat":"1", "status":1,"type":1},
+        {"seatName":"B4", "price":80000, "idSeat":"1", "status":1,"type":1},
+        {"seatName":"B5", "price":80000, "idSeat":"1", "status":1,"type":1}
     ],
-    "showTimeDetailId":"618e8f1381140b0037dd343e",
+    "showTimeDetailId":"618e8f1481140b0037dd3450",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
        

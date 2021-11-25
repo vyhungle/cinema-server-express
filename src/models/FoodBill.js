@@ -17,14 +17,9 @@ const foodBillSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "showtimedetails",
   },
-  room: {
-    type: Schema.Types.ObjectId,
-    ref: "rooms",
-  },
-  movie: {
-    type: Schema.Types.ObjectId,
-    ref: "movies",
-  },
+  movieName: String,
+  roomName: String,
+  screenName: String,
   total: Number,
   createdAt: String,
   paymentType: Number,
