@@ -5,6 +5,10 @@ const foodBillSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
   },
+  cinema: {
+    type: Schema.Types.ObjectId,
+    ref: "cinemas",
+  },
   showTime: {
     type: Schema.Types.ObjectId,
     ref: "showtimes",
@@ -12,6 +16,14 @@ const foodBillSchema = new Schema({
   showTimeDetail: {
     type: Schema.Types.ObjectId,
     ref: "showtimedetails",
+  },
+  room: {
+    type: Schema.Types.ObjectId,
+    ref: "rooms",
+  },
+  movie: {
+    type: Schema.Types.ObjectId,
+    ref: "movies",
   },
   total: Number,
   createdAt: String,

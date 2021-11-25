@@ -112,7 +112,8 @@ router.post("/add", verifyToken, async (req, res) => {
         path: "room",
         populate: [{ path: "screen" }, { path: "cinema" }],
       })
-      .populate("timeSlot");
+      .populate("timeSlot")
+      .populate({ path: "showTime", populate: "movie" });
     const oldTickets = await Ticker.find({ showTimeDetail: showTimeDetailId });
 
     const priceBefore = checkWeekend(stDetail.date)
@@ -256,8 +257,11 @@ router.post("/add", verifyToken, async (req, res) => {
     if (data && data.length > 0) {
       const bill = new MovieBill({
         user: _userId,
-        showTime: stDetail.showTime,
+        showTime: stDetail.showTime._id,
         showTimeDetail: showTimeDetailId,
+        room: stDetail.room._id,
+        movie: stDetail.showTime.movie._id,
+        cinema: cinema._id,
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
@@ -308,6 +312,9 @@ router.post("/add", verifyToken, async (req, res) => {
         user: _userId,
         showTime: stDetail.showTime,
         showTimeDetail: showTimeDetailId,
+        room: stDetail.room._id,
+        cinema: cinema._id,
+        movie: stDetail.showTime.movie._id,
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
@@ -715,7 +722,8 @@ router.get("/success-payment", async (req, res) => {
           path: "room",
           populate: [{ path: "screen" }, { path: "cinema" }],
         })
-        .populate("timeSlot");
+        .populate("timeSlot")
+        .populate({ path: "showTime", populate: "movie" });
       const oldTickets = await Ticker.find({
         showTimeDetail: showTimeDetailId,
       });
@@ -796,6 +804,9 @@ router.get("/success-payment", async (req, res) => {
           user: userId,
           showTime: stDetail.showTime,
           showTimeDetail: showTimeDetailId,
+          room: stDetail.room._id,
+          cinema: cinema._id,
+          movie: stDetail.showTime.movie._id,
           total: 0,
           createdAt: new Date().toISOString(),
           paymentType: payment.type,
@@ -833,6 +844,9 @@ router.get("/success-payment", async (req, res) => {
           user: userId,
           showTime: stDetail.showTime,
           showTimeDetail: showTimeDetailId,
+          room: stDetail.room._id,
+          cinema: cinema._id,
+          movie: stDetail.showTime.movie._id,
           total: 0,
           createdAt: new Date().toISOString(),
           paymentType: payment.type,

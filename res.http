@@ -294,7 +294,7 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=11/24/2021
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=11/25/2021
 
 ###
 GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
@@ -642,7 +642,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"A8", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0}
+        {"seatName":"J7", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
+        {"seatName":"J8", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
+        {"seatName":"J9", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
+        {"seatName":"K1", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0},
+        {"seatName":"K2", "price":60000, "idSeat":"aa2554d395633519ee301059a975302b", "status":1,"type":0}
+
+
+
+
     ],
     "showTimeDetailId":"618e8f1381140b0037dd343e",
     "userId":"613da2d8736aa826841481b3",
@@ -651,7 +659,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
         "type":"0"
     },
     "combos":[
-        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2 }
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2 },
+        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1 }
+
 
     ],
     "gifts":[
