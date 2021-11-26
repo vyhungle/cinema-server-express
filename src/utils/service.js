@@ -811,7 +811,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
 
   const lstFood = await getListFoodBillDetail(fb);
   const lstTicket = await getListMovieBillDetail(mb);
-  const lstBill = [...lstFood.data, ...lstTicket.data];
+  const lstBill = [...mergeFood(lstFood.data), ...mergeTicket(lstTicket.data)];
   const total = lstFood.total + lstTicket.total;
   const lstSort = lstBill.sort(
     (a, b) =>
@@ -826,9 +826,8 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
 
 const getFoodBill = async (cinemaId, date) => {
   const fb = await FoodBill.find({ cinema: cinemaId });
-
   const tam = fb.filter(
-    (x) => moment(x.createAt).format("MM/DD/YYYY") === date
+    (x) => moment(x.createdAt).format("MM/DD/YYYY") === date
   );
   tam.forEach((item, index) => {
     tam[index] = {
@@ -845,7 +844,7 @@ const getFoodBill = async (cinemaId, date) => {
 
 const getMovieBill = async (cinemaId, date) => {
   const mb = await MovieBill.find({ cinema: cinemaId });
-  let tam = mb.filter((x) => moment(x.createAt).format("MM/DD/YYYY") === date);
+  let tam = mb.filter((x) => moment(x.createdAt).format("MM/DD/YYYY") === date);
   tam.forEach((item, index) => {
     tam[index] = {
       _id: item._id,
@@ -885,6 +884,26 @@ const getListFoodBillDetail = async (fb) => {
       res.data = res.data.concat(lstFood);
     }
   }
+  return res;
+};
+
+const mergeFood = (lstFood) => {
+  let res = [];
+  lstFood.forEach((item) => {
+    const index = res.findIndex(
+      (x) =>
+        x.movieName === item.movieName &&
+        x.roomName === item.roomName &&
+        x.type === item.type &&
+        x.price === item.price
+    );
+    if (index !== -1) {
+      res[index].quantity += item.quantity;
+      res[index].total += item.total;
+    } else {
+      res.push(item);
+    }
+  });
   return res;
 };
 
@@ -941,5 +960,25 @@ const getListMovieBillDetail = async (mb) => {
       res.data = res.data.concat(lstTicket);
     }
   }
+  return res;
+};
+
+const mergeTicket = (lstTicket) => {
+  let res = [];
+  lstTicket.forEach((item) => {
+    const index = res.findIndex(
+      (x) =>
+        x.movieName === item.movieName &&
+        x.roomName === item.roomName &&
+        x.type === item.type &&
+        x.price === item.price
+    );
+    if (index !== -1) {
+      res[index].quantity += item.quantity;
+      res[index].total += item.total;
+    } else {
+      res.push(item);
+    }
+  });
   return res;
 };
