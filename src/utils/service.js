@@ -813,11 +813,16 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
   const lstTicket = await getListMovieBillDetail(mb);
   const lstBill = [...mergeFood(lstFood.data), ...mergeTicket(lstTicket.data)];
   const total = lstFood.total + lstTicket.total;
-  const lstSort = lstBill.sort(
-    (a, b) =>
-      new Date(moment(b.createdAt)).valueOf() -
-      new Date(moment(a.createdAt)).valueOf()
-  );
+  const lstSort = lstBill.sort((a, b) => {
+    if (a.movieName < b.movieName) {
+      return -1;
+    }
+    if (a.movieName > b.movieName) {
+      return 1;
+    }
+    return 0;
+  });
+
   return {
     data: lstSort,
     total,
