@@ -47,6 +47,33 @@ export const getMoviePlay = async () => {
   return res;
 };
 
+export const getMoviePlayCMS = async () => {
+  let res = [
+    {
+      movieGroupName: "Phim đang chiếu",
+      movies: [],
+    },
+    {
+      movieGroupName: "Phim sắp chiếu",
+      movies: [],
+    },
+  ];
+
+  const movie = await Movie.find();
+
+  movie.forEach((item) => {
+    const dateStart = new Date(item.dateStart);
+    const dateEnd = new Date(item.dateEnd);
+    const dateNow = Date.now();
+    if (dateStart < dateNow && dateEnd > dateNow) {
+      res[0].movies = [...res[0].movies, item];
+    } else if (dateStart > dateNow) {
+      res[1].movies = [...res[1].movies, item];
+    }
+  });
+  return res;
+};
+
 export const sendEmail = (email, id) => {
   const link = `https://server-api-cinema.herokuapp.com/api/auth/accept-token/${id}`;
   transporter.sendMail(mailOption(email, link), function (error, info) {});
