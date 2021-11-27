@@ -344,16 +344,16 @@ DELETE http://localhost:4000/api/permission/delete/6149d4db9c68673610441a59
 ### Thêm nhân viên
 POST http://localhost:4000/api/staff/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlkZTM1MzNlYmE5MzY0MDViMDhhMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwidHlwZSI6IjAiLCJpYXQiOjE2MzIyMzM5NjMsImV4cCI6MTYzMzQ0MzU2M30.eQfNJrqIRNtQWSBJF25dGtdnY4fJQ-m6dQw_xl9xXro
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2Mzc5OTk0NjMsImV4cCI6MTYzOTIwOTA2M30.rK8jRBowlvPS22mHKZEY0IVD9nkIkPj5JUk5CE0KNoQ
 
 {
     "email":"admin@gmail.com",
-    "phoneNumber":"0983782941",
-    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "phoneNumber":"0983782100",
+    "fullName":"Admin",
     "male":true,
     "dateOfBirth":"11/26/2000",
     "permissionId":"6149d3ff52d8c52050d24e3c",
-    "cinemaId":"614c03db576b5d00376801a6"
+    "cinemaId":"614c8a9e192439003768b5c1"
 }
 
 #### Đăng nhập
@@ -841,3 +841,7 @@ Content-Type: application/json
     "otp":"401780",
     "paymentType":"1"
 }
+
+
+###
+GET http://localhost:4000/api/quick/cinema-by-movie/616a41d1c24a660037796ac2

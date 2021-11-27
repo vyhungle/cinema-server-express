@@ -25,6 +25,7 @@ import foodRouter from "./routers/food";
 import billRouter from "./routers/bill";
 import couponRouter from "./routers/coupon";
 import paymentRouter from "./routers/payment";
+import quickRouter from "./routers/quick";
 
 //CORS middleware
 
@@ -66,6 +67,7 @@ app.use("/api/food", foodRouter);
 app.use("/api/bill", billRouter);
 app.use("/api/coupon", couponRouter);
 app.use("/api/payment", paymentRouter);
+app.use("/api/quick", quickRouter);
 
 //Connect db
 ConnectionMongoDB();
