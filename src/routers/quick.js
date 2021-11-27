@@ -46,7 +46,6 @@ router.get("/get-date-by-cinema-movie", async (req, res) => {
         showTime: showTimes[i]._id,
       });
       showTimeDetails.forEach((item) => {
-
         if (new Date(dateNow).valueOf() >= new Date(item.date).valueOf()) {
           const index = dates.findIndex((x) => x === item.date);
           if (index === -1) {
@@ -60,6 +59,38 @@ router.get("/get-date-by-cinema-movie", async (req, res) => {
       success: true,
       message: "Lấy danh sách ngày thành công",
       values: { dates },
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-show-time-detail-by-cinema-movie-date", async (req, res) => {
+  try {
+    const { date, cinemaId, movieId } = req.query;
+    const showTimes = await ShowTime.find({ cinema: cinemaId, movie: movieId });
+
+    let showTimeDetails = [];
+    for (let i = 0; i < showTimes.length; i++) {
+      const std = await ShowTimeDetail.find({
+        showTime: showTimes[i]._id,
+        date,
+      })
+        .populate("room")
+        .populate("timeSlot");
+      showTimeDetails = [...showTimeDetails, ...std];
+    }
+
+    return res.json({
+      success: true,
+      message: "Lấy danh sách xuất chiếu thành công",
+      values: {
+        showTimeDetails,
+      },
     });
   } catch (error) {
     res.status(400).json({
