@@ -7,6 +7,12 @@ export const generateToken = (data) => {
   return jwt.sign(data, process.env.SECRET_KEY, { expiresIn: 30 * 60 });
 };
 
+export const getDateNow = () => {
+  const now = new Date();
+  const dateNow = `${now.getMonth()}/${now.getDate()}/${now.getFullYear()}`;
+  return dateNow;
+};
+
 export const createDateEX = (day, hour, minute) => {
   console.log(day, hour, minute);
   if (day) {

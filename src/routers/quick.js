@@ -1,8 +1,12 @@
 import express from "express";
+import moment from "moment";
 const router = express.Router();
 import Cinema from "../models/Cinema";
 import ShowTime from "../models/ShowTime";
+import ShowTimeDetail from "../models/ShowTimeDetail";
+
 import { errorCatch } from "../utils/constaints";
+import { getDateNow } from "../utils/helper";
 
 router.get("/cinema-by-movie/:id", async (req, res) => {
   try {
@@ -21,6 +25,41 @@ router.get("/cinema-by-movie/:id", async (req, res) => {
       values: {
         cinemas,
       },
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-date-by-cinema-movie", async (req, res) => {
+  try {
+    const { cinemaId, movieId } = req.query;
+    const showTimes = await ShowTime.find({ cinema: cinemaId, movie: movieId });
+    const dates = [];
+    const dateNow = getDateNow();
+    for (let i = 0; i < showTimes.length; i++) {
+      const showTimeDetails = await ShowTimeDetail.find({
+        showTime: showTimes[i]._id,
+      });
+      showTimeDetails.forEach((item) => {
+
+        if (new Date(dateNow).valueOf() >= new Date(item.date).valueOf()) {
+          const index = dates.findIndex((x) => x === item.date);
+          if (index === -1) {
+            dates.push(item.date);
+          }
+        }
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Lấy danh sách ngày thành công",
+      values: { dates },
     });
   } catch (error) {
     res.status(400).json({

@@ -845,3 +845,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4000/api/quick/cinema-by-movie/616a41d1c24a660037796ac2
+
+###
+GET http://localhost:4000/api/quick/get-date-by-cinema-movie?movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6
