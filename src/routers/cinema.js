@@ -202,7 +202,9 @@ router.get("/get/cinema-by", async (req, res) => {
       success: true,
       message: "lấy danh sách cinema thành công",
       values: {
-        cinemas: cinemas.filter((x) => x.address.city === location),
+        cinemas: cinemas.filter(
+          (x) => x.address.city === location.toString().trim()
+        ),
       },
     });
   } catch (error) {
