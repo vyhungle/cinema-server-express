@@ -46,7 +46,7 @@ router.get("/get-date-by-cinema-movie", async (req, res) => {
         showTime: showTimes[i]._id,
       });
       showTimeDetails.forEach((item) => {
-        if (new Date(dateNow).valueOf() >= new Date(item.date).valueOf()) {
+        if (new Date(dateNow).valueOf() <= new Date(item.date).valueOf()) {
           const index = dates.findIndex((x) => x === item.date);
           if (index === -1) {
             dates.push(item.date);

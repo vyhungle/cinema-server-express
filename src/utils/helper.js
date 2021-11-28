@@ -9,7 +9,7 @@ export const generateToken = (data) => {
 
 export const getDateNow = () => {
   const now = new Date();
-  const dateNow = `${now.getMonth()}/${now.getDate()}/${now.getFullYear()}`;
+  const dateNow = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
   return dateNow;
 };
 
