@@ -297,7 +297,7 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=11/26/2021
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=11/29/2021
 
 ###
 GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
@@ -645,13 +645,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
 {
     "data":[
-        {"seatName":"B1", "price":80000, "idSeat":"1", "status":1,"type":1},
-        {"seatName":"B2", "price":80000, "idSeat":"1", "status":1,"type":1},
-        {"seatName":"B3", "price":80000, "idSeat":"1", "status":1,"type":1},
-        {"seatName":"B4", "price":80000, "idSeat":"1", "status":1,"type":1},
-        {"seatName":"B5", "price":80000, "idSeat":"1", "status":1,"type":1}
+        {"seatName":"F6", "price":80000, "idSeat":"1", "status":1,"type":1}
+       
     ],
-    "showTimeDetailId":"618e8f1481140b0037dd3465",
+    "showTimeDetailId":"61a1f48f0fa507003716b805",
     "userId":"613da2d8736aa826841481b3",
     "payment":{
        
@@ -664,6 +661,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwia
 
     ],
     "gifts":[
+         {"_id":"61829514a96d972d441fb345","quantity":1, "coupon":false },
+         {"_id":"618293aab3b05642dc7bf89f","quantity":1, "coupon":false }
+
     ],
     "coupons":[] 
     

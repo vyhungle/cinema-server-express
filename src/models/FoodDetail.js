@@ -9,8 +9,9 @@ const foodDetailSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "foodbills",
   },
-  quantity: Number,
-  price: Number,
+  quantity: { type: Number, default: 0 },
+  price: { type: Number, default: 0 },
+  promotion: { type: Number, default: 0 },
 });
 
 module.exports = model("fooddetails", foodDetailSchema);

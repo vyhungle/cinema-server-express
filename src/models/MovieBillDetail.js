@@ -9,6 +9,8 @@ const movieBillDetailSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "tickets",
   },
+  price: { type: Number, default: 0 },
+  promotion: { type: Number, default: 0 },
 });
 
 module.exports = model("moviebilldetails", movieBillDetailSchema);

@@ -39,6 +39,7 @@ import {
 } from "../utils/constaints";
 import { mailOptionPayment, transporter } from "../config/nodeMailer";
 import moment from "moment";
+import { renderBillId } from "../utils/format";
 
 router.get("/test/tk", async (req, res) => {
   try {
@@ -255,7 +256,10 @@ router.post("/add", verifyToken, async (req, res) => {
 
     //#region  Tạo hóa đơn vé và vé
     if (data && data.length > 0) {
+      const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
+      const oldId = lastBill[0]?.billId || `HDT_00000`;
       const bill = new MovieBill({
+        billId: renderBillId(oldId),
         user: _userId,
         showTime: stDetail.showTime._id,
         showTimeDetail: showTimeDetailId,
@@ -290,15 +294,18 @@ router.post("/add", verifyToken, async (req, res) => {
             type: item.type,
           });
         }
-        // trừ vé free
-        numberTicket -= 1;
+
         await newTicker.save();
         // Tạo chi tiết hóa đơn
         const billDetail = new MovieBillDetail({
           movieBill: bill._id,
           ticket: newTicker._id,
+          price: numberTicket > 0 ? 0 : item.price,
+          promotion: numberTicket <= 0 ? 0 : item.price,
         });
         await billDetail.save();
+        // trừ vé free
+        numberTicket -= 1;
       });
       // tính lại total bill
       bill.total = totalTicket - totalTicket * discount;
@@ -309,7 +316,10 @@ router.post("/add", verifyToken, async (req, res) => {
 
     //#region  Tạo hóa đơn combo và combo detail
     if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
+      const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
+      const oldId = lastBill[0]?.billId || `HDF_00000`;
       const foodBill = new FoodBill({
+        billId: renderBillId(oldId),
         user: _userId,
         showTime: stDetail.showTime,
         showTimeDetail: showTimeDetailId,
@@ -345,6 +355,7 @@ router.post("/add", verifyToken, async (req, res) => {
             foodBill: foodBill._id,
             quantity: giftList[i].quantity,
             price: 0,
+            promotion: giftList[i].quantity * foodGift.price,
           });
           await foodDetailGift.save();
 
@@ -802,7 +813,10 @@ router.get("/success-payment", async (req, res) => {
 
       //#region  Tạo hóa đơn vé và vé
       if (data && data.length > 0) {
+        const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
+        const oldId = lastBill[0]?.billId || `HDT_00000`;
         const bill = new MovieBill({
+          billId: renderBillId(oldId),
           user: userId,
           showTime: stDetail.showTime,
           showTimeDetail: showTimeDetailId,
@@ -823,14 +837,17 @@ router.get("/success-payment", async (req, res) => {
           });
           newTicker.wail = false;
           newTicker.dateEx = 0;
-          // trừ vé free
-          numberTicket -= 1;
+
           await newTicker.save();
           // Tạo chi tiết hóa đơn
           const billDetail = new MovieBillDetail({
             movieBill: bill._id,
             ticket: newTicker._id,
+            price: numberTicket > 0 ? 0 : item.price,
+            promotion: numberTicket <= 0 ? 0 : item.price,
           });
+          // trừ vé free
+          numberTicket -= 1;
           await billDetail.save();
           console.log("seat success", newTicker);
         });
@@ -843,7 +860,10 @@ router.get("/success-payment", async (req, res) => {
 
       //#region  Tạo hóa đơn combo và combo detail
       if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
+        const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
+        const oldId = lastBill[0]?.billId || `HDF_00000`;
         const foodBill = new FoodBill({
+          billId: renderBillId(oldId),
           user: userId,
           showTime: stDetail.showTime,
           showTimeDetail: showTimeDetailId,
@@ -865,6 +885,7 @@ router.get("/success-payment", async (req, res) => {
               foodBill: foodBill._id,
               quantity: combos[i].quantity,
               price: food.price,
+              promotion: 0,
             });
             await foodDetail.save();
           }
@@ -879,6 +900,7 @@ router.get("/success-payment", async (req, res) => {
               foodBill: foodBill._id,
               quantity: giftList[i].quantity,
               price: 0,
+              promotion: giftList[i].quantity * foodGift.price,
             });
             await foodDetailGift.save();
 

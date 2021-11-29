@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const movieBillSchema = new Schema({
+  billId: String,
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",

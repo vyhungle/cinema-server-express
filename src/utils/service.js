@@ -838,7 +838,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
 
   const lstFood = await getListFoodBillDetail(fb);
   const lstTicket = await getListMovieBillDetail(mb);
-  const lstBill = [...mergeFood(lstFood.data), ...mergeTicket(lstTicket.data)];
+  const lstBill = [...lstFood.data, ...lstTicket.data];
   const total = lstFood.total + lstTicket.total;
   const lstSort = lstBill.sort((a, b) => {
     if (a.movieName < b.movieName) {
@@ -864,6 +864,7 @@ const getFoodBill = async (cinemaId, date) => {
   tam.forEach((item, index) => {
     tam[index] = {
       _id: item._id,
+      billId: item.billId,
       total: item.total,
       movieName: item?.movieName,
       roomName: item?.roomName,
@@ -880,6 +881,7 @@ const getMovieBill = async (cinemaId, date) => {
   tam.forEach((item, index) => {
     tam[index] = {
       _id: item._id,
+      billId: item.billId,
       total: item.total,
       movieName: item?.movieName,
       roomName: item?.roomName,
@@ -901,11 +903,12 @@ const getListFoodBillDetail = async (fb) => {
       const lstFood = [];
       fbd.forEach((item) => {
         lstFood.push({
-          billId: item.foodBill,
+          billId: fb[i].billId,
           type: item.food.name,
           quantity: item.quantity,
           price: item.price,
           total: item.price * item.quantity,
+          promotion: item.promotion,
           movieName: fb[i].movieName,
           roomName: fb[i].roomName,
           screenName: fb[i].screenName,
@@ -954,9 +957,7 @@ const getListMovieBillDetail = async (mb) => {
     total: 0,
   };
   for (let i = 0; i < mb.length; i++) {
-    const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id }).populate(
-      "ticket"
-    );
+    const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id });
     if (mbd) {
       const lstTicket = [];
       mbd.forEach((item) => {
@@ -967,11 +968,12 @@ const getListMovieBillDetail = async (mb) => {
         );
         if (!some) {
           lstTicket.push({
-            billId: item.movieBill,
+            billId: mb[i].billId,
             type: getTypeTicket(item.ticket.type),
             quantity: 1,
-            price: item.ticket.price,
-            total: item.ticket.price,
+            price: item.price,
+            total: item.price,
+            promotion: item.promotion,
             movieName: mb[i].movieName,
             roomName: mb[i].roomName,
             screenName: mb[i].screenName,
