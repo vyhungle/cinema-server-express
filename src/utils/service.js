@@ -840,6 +840,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
   const lstTicket = await getListMovieBillDetail(mb);
   const lstBill = [...lstFood.data, ...lstTicket.data];
   const total = lstFood.total + lstTicket.total;
+  const promotion = lstFood.promotion + lstTicket.promotion;
   const lstSort = lstBill.sort((a, b) => {
     if (a.movieName < b.movieName) {
       return -1;
@@ -853,6 +854,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
   return {
     data: lstSort,
     total,
+    promotion,
   };
 };
 
@@ -896,6 +898,7 @@ const getListFoodBillDetail = async (fb) => {
   let res = {
     data: [],
     total: 0,
+    promotion: 0,
   };
   for (let i = 0; i < fb.length; i++) {
     const fbd = await FoodDetail.find({ foodBill: fb[i]._id }).populate("food");
@@ -915,6 +918,7 @@ const getListFoodBillDetail = async (fb) => {
           createdAt: fb[i].createdAt,
         });
         res.total += item.price * item.quantity;
+        res.promotion += item.promotion;
       });
       res.data = res.data.concat(lstFood);
     }
@@ -955,6 +959,7 @@ const getListMovieBillDetail = async (mb) => {
   let res = {
     data: [],
     total: 0,
+    promotion: 0,
   };
   for (let i = 0; i < mb.length; i++) {
     const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id });
@@ -989,7 +994,8 @@ const getListMovieBillDetail = async (mb) => {
           lstTicket[index].total += lstTicket[index].price;
         }
 
-        res.total += item.ticket.price;
+        res.total += item.price;
+        res.promotion += item.price;
       });
       res.data = res.data.concat(lstTicket);
     }
