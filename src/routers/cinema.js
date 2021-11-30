@@ -458,7 +458,7 @@ router.get(
     try {
       const { month, year } = req.query;
       return res.json({
-        data: getBillByMonth(month, year),
+        data: await getBillByMonth(month, year),
       });
     } catch (error) {
       res.status(400).json({
