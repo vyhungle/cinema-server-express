@@ -128,9 +128,12 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/all", async (req, res) => {
+router.get("/all", validateToken, async (req, res) => {
+  const { cinema } = req;
   try {
-    const rooms = await Room.find().populate("cinema").populate("screen");
+    const rooms = await Room.find({ cinema })
+      .populate("cinema")
+      .populate("screen");
     if (rooms) {
       return res.json({
         success: true,
