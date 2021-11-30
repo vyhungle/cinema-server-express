@@ -449,5 +449,24 @@ router.get("/get/thong-ke-doanh-thu-theo-ngay", async (req, res) => {
     });
   }
 });
+router.get(
+  "/get/thong-ke-doanh-thu-theo-thang",
+  verifyToken,
+  async (req, res) => {
+    const { cinema } = req;
+    try {
+      const { month, year } = req.query;
+      const dateStart = `${month}/1/${year}`;
+      const dateEnd = new Date(year, month + 1, 0);
+      console.log(dateStart, dateEnd);
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: errorCatch,
+        errors: error.message,
+      });
+    }
+  }
+);
 
 module.exports = router;

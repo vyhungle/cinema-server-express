@@ -178,13 +178,17 @@ router.get("/get-room-by-screen/:id", validateToken, async (req, res) => {
   }
 });
 
-router.get("/get-by-movie/:id", async (req, res) => {
+router.get("/get-by-movie/:id", validateToken, async (req, res) => {
+  const { cinema } = req;
+
   try {
-    const listDetail = await ScreenDetail.find({ movie: req.params.id });
+    const listDetail = await ScreenDetail.find({
+      movie: req.params.id,
+    });
     const timeSlots = await TimeSlot.find();
     let listRooms = [];
     for (let item of listDetail) {
-      const rooms = await Room.find({ screen: item.screen })
+      const rooms = await Room.find({ screen: item.screen, cinema })
         .populate("cinema")
         .populate("screen");
       listRooms = listRooms.concat(rooms);
