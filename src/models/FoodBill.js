@@ -22,7 +22,7 @@ const foodBillSchema = new Schema({
   roomName: String,
   screenName: String,
   total: Number,
-  createdAt: String,
+  createdAt: Date,
   paymentType: Number,
 });
 

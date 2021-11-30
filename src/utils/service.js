@@ -1024,14 +1024,14 @@ const mergeTicket = (lstTicket) => {
 };
 
 export const getBillByMonth = async (month, year) => {
-  const dateStart = `${month}/1/${year}`;
+  const dateStart = new Date(year, month, 1);
   const dateEnd = new Date(year, parseInt(month, 10) + 1, 0);
-  console.log(new Date(year, month, 1), new Date(year, month, 30));
+  console.log(dateStart, dateEnd);
 
   const lstFoodBill = await FoodBill.find({
     createdAt: {
-      $gte: "2021-11-30T16:18:15.118+00:00",
-      $lte: "2021-11-30T16:18:15.118+00:00",
+      $gte: "2021-11-30T16:23:36.323+00:00",
+      $lte: "2021-11-30T16:23:36.323+00:00",
     },
   });
 
