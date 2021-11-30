@@ -1030,8 +1030,8 @@ export const getBillByMonth = async (month, year) => {
 
   const lstFoodBill = await FoodBill.find({
     createdAt: {
-      $gte: new Date(year, parseInt(month, 10), 1).toISOString(),
-      $lt: dateEnd.toISOString(),
+      $gte: "2021-11-30T16:18:15.118+00:00",
+      $lte: "2021-11-30T16:18:15.118+00:00",
     },
   });
 
