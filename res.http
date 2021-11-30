@@ -364,7 +364,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"lnhv.26112000@gmail.com",    
+    "username":"admin@gmail.com",    
     "password":"123456"
 }
 
@@ -503,7 +503,8 @@ Content-Type: application/json
 GET http://localhost:4000/api/room/all
 
 ###
-GET http://localhost:4000/api/room/get-room-by-screen/61644b12df1b9d2700e43b27
+GET http://localhost:4000/api/room/get-room-by-screen/61644b08df1b9d2700e43b23
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZTM3NDVhNTE2NzM5OTg2MTJhMWIiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjEwMCIsInR5cGUiOiIwIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjM4Mjc4NjI2LCJleHAiOjE2Mzk0ODgyMjZ9.jW-yA7F7pu28LaGw32KVUVoPeHo8r6uAr1VgH_o0ex8
 
 ###
 GET http://localhost:4000/api/room/get-by-movie/616a41d1c24a660037796ac2

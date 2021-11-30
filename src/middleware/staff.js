@@ -19,6 +19,7 @@ const verifyToken = (req, res, next) => {
     }
     req.staffId = decoded.id;
     req.type = decoded.type;
+    req.cinema = decoded.cinema;
     next();
   } catch (error) {
     return res.status(403).json({

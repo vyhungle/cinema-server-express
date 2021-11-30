@@ -13,12 +13,13 @@ import {
 } from "../utils/helper";
 import { ValidateShowTime } from "../utils/validators";
 import { errorCatch } from "../utils/constaints";
+import validateToken from "../middleware/staff";
 const getDate = (parentDate, childDate) => {
   return childDate === "" || childDate === undefined || childDate === null
     ? parentDate
     : childDate;
 };
-router.post("/add", async (req, res) => {
+router.post("/add", validateToken, async (req, res) => {
   const { dateStart, dateEnd, movieId, cinemaId, showTimes } = req.body;
   try {
     const { errors, valid } = ValidateShowTime(

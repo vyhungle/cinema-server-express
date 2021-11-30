@@ -24,6 +24,7 @@ function generateToken(staff) {
       email: staff.email,
       phoneNumber: staff.phoneNumber,
       type: staff.permission.type,
+      cinema:staff.cinema._id
     },
     process.env.SECRET_KEY,
     { expiresIn: "14d" }

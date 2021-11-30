@@ -9,6 +9,7 @@ import TimeSlot from "../models/TimeSlot";
 import { ValidateRoom } from "../utils/validators";
 import { addTimeSlotInRoom } from "../utils/helper";
 import { errorCatch } from "../utils/constaints";
+import validateToken from "../middleware/staff";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -150,9 +151,10 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get("/get-room-by-screen/:id", async (req, res) => {
+router.get("/get-room-by-screen/:id", validateToken, async (req, res) => {
+  const { cinema } = req;
   try {
-    const rooms = await Room.find({ screen: req.params.id })
+    const rooms = await Room.find({ screen: req.params.id, cinema })
       .populate("cinema")
       .populate("screen");
     if (rooms) {
