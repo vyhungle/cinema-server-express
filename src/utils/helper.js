@@ -182,7 +182,7 @@ export const mergeShowTime = (showTimes) => {
           {
             time: element.timeSlot.time,
             room: element.room,
-            movie: element.showTime.movie,
+            movie: element.showTime?.movie,
           },
           element.date,
           res[index].date
@@ -195,7 +195,7 @@ export const mergeShowTime = (showTimes) => {
           {
             time: element.timeSlot.time,
             room: element.room,
-            movie: element.showTime.movie,
+            movie: element.showTime?.movie,
           },
         ],
       });

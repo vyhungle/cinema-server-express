@@ -299,6 +299,14 @@ Content-Type: application/json
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=11/29/2021
 
+####
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=11&year=2021
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZTM3NDVhNTE2NzM5OTg2MTJhMWIiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjEwMCIsInR5cGUiOiIwIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjM4MjgxNzg5LCJleHAiOjE2Mzk0OTEzODl9.NSISvl6GjaqZXlRRMxLm8s8IBeqctrOVQ1XczdO6seI
+
+
+
+
+
 ###
 GET http://localhost:4000/api/cinema/61488d31d0f7a71044a2fe1e
 
@@ -364,7 +372,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"admin@gmail.com",    
+    "username":"long.long@gmail.com",    
     "password":"123456"
 }
 
@@ -508,7 +516,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 ###
 GET http://localhost:4000/api/room/get-by-movie/6169a42f038631344897c7c6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZTM3NDVhNTE2NzM5OTg2MTJhMWIiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjEwMCIsInR5cGUiOiIwIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjM4MjgxNzg5LCJleHAiOjE2Mzk0OTEzODl9.NSISvl6GjaqZXlRRMxLm8s8IBeqctrOVQ1XczdO6seI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTYzODI4MjcxOCwiZXhwIjoxNjM5NDkyMzE4fQ.cxtcFwnZkh8ZVwUSDMvC6cgVGqyc_ilRh_BpbAMDL-k
 
 
 ###
@@ -611,10 +619,11 @@ Content-Type: application/json
 ####
 POST http://localhost:4000/api/showTime/get-list-showtime
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTYzODI4MjcxOCwiZXhwIjoxNjM5NDkyMzE4fQ.cxtcFwnZkh8ZVwUSDMvC6cgVGqyc_ilRh_BpbAMDL-k
 
 {
-    "dateStart":"10/16/2021",
-    "dateEnd":"11/20/2021"
+    "dateStart":"12/1/2021",
+    "dateEnd":"12/20/2021"
    
 }
 

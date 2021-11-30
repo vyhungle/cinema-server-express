@@ -88,7 +88,7 @@ router.post("/add", validateToken, async (req, res) => {
   }
 });
 
-router.post("/get-list-showtime", async (req, res) => {
+router.post("/get-list-showtime", validateToken, async (req, res) => {
   const { dateStart, dateEnd } = req.body;
   try {
     const date_start = new Date(dateStart);
@@ -195,7 +195,7 @@ router.get("/get-list-showtime-full", async (req, res) => {
           path: "movie",
         },
       });
-      console.log(showTimeList[2].room.cinema)
+    console.log(showTimeList[2].room.cinema);
     const showTimeFilter = renderShowTime(
       showTimeList,
       movieId,

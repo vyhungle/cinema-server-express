@@ -183,7 +183,6 @@ router.get("/get-room-by-screen/:id", validateToken, async (req, res) => {
 
 router.get("/get-by-movie/:id", validateToken, async (req, res) => {
   const { cinema } = req;
-
   try {
     const listDetail = await ScreenDetail.find({
       movie: req.params.id,

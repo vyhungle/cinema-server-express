@@ -6,6 +6,7 @@ import Cinema from "../models/Cinema";
 import { errorCatch } from "../utils/constaints";
 import { checkIsEmptyAddress, getCinemaLocation } from "../utils/helper";
 import {
+  getBillByMonth,
   revenueStatistics,
   revenueStatisticsByDate,
   revenueStatisticsMovie,
@@ -456,9 +457,9 @@ router.get(
     const { cinema } = req;
     try {
       const { month, year } = req.query;
-      const dateStart = `${month}/1/${year}`;
-      const dateEnd = new Date(year, month + 1, 0);
-      console.log(dateStart, dateEnd);
+      return res.json({
+        data: getBillByMonth(month, year),
+      });
     } catch (error) {
       res.status(400).json({
         success: false,
