@@ -108,6 +108,9 @@ router.post("/add", verifyToken, async (req, res) => {
     let totalPriceFoodCoupon = 0;
     let typeTicket = 0;
 
+    let ticketPromotion = 0;
+    let foodPromotion = 0;
+
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
         path: "room",
@@ -305,10 +308,13 @@ router.post("/add", verifyToken, async (req, res) => {
         });
         await billDetail.save();
         // trừ vé free
+        ticketPromotion =
+          numberTicket > 0 ? ticketPromotion + item.price : ticketPromotion;
         numberTicket -= 1;
       });
       // tính lại total bill
       bill.total = totalTicket - totalTicket * discount;
+      bill.promotion = ticketPromotion;
       idTicketBill = bill._id;
       await bill.save();
     }
@@ -368,6 +374,7 @@ router.post("/add", verifyToken, async (req, res) => {
         }
       }
       foodBill.total = totalFood - totalFood * discount;
+      foodBill.promotion = totalPriceFoodCoupon + totalPriceFoodPoint;
       idFoodBill = foodBill._id;
       await foodBill.save();
     }

@@ -23,6 +23,7 @@ const foodBillSchema = new Schema({
   screenName: String,
   total: Number,
   createdAt: Date,
+  promotion: { type: Number, default: 0 },
   paymentType: Number,
 });
 
