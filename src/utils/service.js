@@ -942,7 +942,7 @@ const getMovieBill = async (cinemaId, date) => {
   return tam;
 };
 
-const getListFoodBillDetail = async (fb) => {
+const getListFoodBillDetail = async (fb, merge) => {
   let res = {
     data: [],
     total: 0,
@@ -954,7 +954,7 @@ const getListFoodBillDetail = async (fb) => {
       const lstFood = [];
       fbd.forEach((item) => {
         lstFood.push({
-          billId: fb[i].billId,
+          billId: merge ? undefined : fb[i].billId,
           type: item.food.name,
           quantity: item.quantity,
           price: item.price,
@@ -984,7 +984,7 @@ const getTypeTicket = (type) => {
   return "Vé sinh viên";
 };
 
-const getListMovieBillDetail = async (mb) => {
+const getListMovieBillDetail = async (mb, merge) => {
   let res = {
     data: [],
     total: 0,
@@ -1002,7 +1002,7 @@ const getListMovieBillDetail = async (mb) => {
         );
         if (!some) {
           lstTicket.push({
-            billId: mb[i].billId,
+            billId: merge ? undefined : mb[i].billId,
             type: getTypeTicket(item.ticket.type),
             quantity: 1,
             price: item.price,
@@ -1105,8 +1105,8 @@ export const getBillByMonth = async (month, year, cinema) => {
     cinema,
   });
 
-  const lstFood = await getListFoodBillDetail(lstFoodBill);
-  const lstTicket = await getListMovieBillDetail(lstTicketBill);
+  const lstFood = await getListFoodBillDetail(lstFoodBill, true);
+  const lstTicket = await getListMovieBillDetail(lstTicketBill, true);
 
   return {
     data: [
