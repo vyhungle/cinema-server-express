@@ -308,12 +308,11 @@ router.post("/add", verifyToken, async (req, res) => {
         });
         await billDetail.save();
         // trừ vé free
-        ticketPromotion = totalPriceTicketPoint + totalPriceTicketCoupon;
         numberTicket -= 1;
       });
       // tính lại total bill
       bill.total = totalTicket - totalTicket * discount;
-      bill.promotion = ticketPromotion;
+      bill.promotion = totalPriceTicketPoint + totalPriceTicketCoupon;
       idTicketBill = bill._id;
       await bill.save();
     }
@@ -859,6 +858,7 @@ router.get("/success-payment", async (req, res) => {
         });
         // tính lại total bill
         bill.total = totalTicket - totalTicket * discount;
+        bill.promotion = totalPriceTicketPoint + totalPriceTicketCoupon;
         idTicketBill = bill._id;
         await bill.save();
       }
@@ -919,6 +919,7 @@ router.get("/success-payment", async (req, res) => {
           }
         }
         foodBill.total = totalFood - totalFood * discount;
+        foodBill.promotion = totalPriceFoodCoupon + totalPriceFoodPoint;
         idFoodBill = foodBill._id;
         await foodBill.save();
       }
