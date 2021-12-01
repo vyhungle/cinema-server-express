@@ -864,4 +864,4 @@ GET http://localhost:4000/api/quick/cinema-by-movie/616a41d1c24a660037796ac2
 GET http://localhost:4000/api/quick/get-date-by-cinema-movie?movieId=6169a42f038631344897c7c6&cinemaId=614c8a9e192439003768b5c1
 
 ###
-GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6&date=11/28/2021
+GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6&date=12/01/2021

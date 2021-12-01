@@ -80,7 +80,7 @@ router.get("/get-show-time-detail-by-cinema-movie-date", async (req, res) => {
         showTime: showTimes[i]._id,
         date,
       })
-        .populate("room")
+        .populate({ path: "room", populate: "screen" })
         .populate("timeSlot");
       showTimeDetails = [...showTimeDetails, ...std];
     }
