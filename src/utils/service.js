@@ -916,6 +916,7 @@ const getListFoodBillDetail = async (fb) => {
           roomName: fb[i].roomName,
           screenName: fb[i].screenName,
           createdAt: fb[i].createdAt,
+          date: moment(fb[i].createdAt).format("DD/MM/YYYY"),
         });
         res.total += item.price * item.quantity;
         res.promotion += item.promotion;
@@ -983,6 +984,7 @@ const getListMovieBillDetail = async (mb) => {
             roomName: mb[i].roomName,
             screenName: mb[i].screenName,
             createdAt: mb[i].createdAt,
+            date: moment(mb[i].createdAt).format("DD/MM/YYYY"),
           });
         } else {
           const index = lstTicket.findIndex(
@@ -1023,16 +1025,20 @@ const mergeTicket = (lstTicket) => {
   return res;
 };
 
+const getMonthPlus = (value) => {
+  const month = parseInt(value, 10);
+  if (month === 12) {
+    return 1;
+  }
+  return month + 1;
+};
+
 export const getBillByMonth = async (month, year) => {
   const dateStart = moment(`${month}/1/${year}`, "MM-DD-YYYY").format();
   const dateEnd = moment(
-    `${parseInt(month, 10) + 1}/1/${year}`,
+    `${getMonthPlus(month)}/1/${month == 12 ? parseInt(year) + 1 : year}`,
     "MM-DD-YYYY"
   ).format();
-
-  console.log(
-    moment(`${parseInt(month, 10) + 1}/1/${year}`, "MM-DD-YYYY").format()
-  );
 
   const lstFoodBill = await FoodBill.find({
     createdAt: {
@@ -1041,5 +1047,18 @@ export const getBillByMonth = async (month, year) => {
     },
   });
 
-  return lstFoodBill;
+  const lstTicketBill = await MovieBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+  });
+
+  const lstFood = await getListFoodBillDetail(lstFoodBill);
+  const lstTicket = await getListMovieBillDetail(lstTicketBill);
+
+  return {
+    lstFood,
+    lstTicket,
+  };
 };

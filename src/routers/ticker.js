@@ -300,15 +300,29 @@ router.post("/add", verifyToken, async (req, res) => {
 
         await newTicker.save();
         // Tạo chi tiết hóa đơn
+        const price = numberTicket > 0 ? 0 : item.price;
+        const promotion = numberTicket > 0 ? item.price : 0;
+        numberTicket -= 1;
         const billDetail = new MovieBillDetail({
           movieBill: bill._id,
           ticket: newTicker._id,
-          price: numberTicket > 0 ? 0 : item.price,
-          promotion: numberTicket <= 0 ? 0 : item.price,
+          price,
+          promotion,
         });
         await billDetail.save();
         // trừ vé free
-        numberTicket -= 1;
+        console.log(
+          "numeber ticket",
+          numberTicket,
+          "if",
+          numberTicket > 0,
+          "price",
+          item.price,
+          "price",
+          price,
+          "promotion",
+          promotion
+        );
       });
       // tính lại total bill
       bill.total = totalTicket - totalTicket * discount;
@@ -845,14 +859,16 @@ router.get("/success-payment", async (req, res) => {
 
           await newTicker.save();
           // Tạo chi tiết hóa đơn
+          const price = numberTicket > 0 ? 0 : item.price;
+          const promotion = numberTicket > 0 ? item.price : 0;
+          numberTicket -= 1;
           const billDetail = new MovieBillDetail({
             movieBill: bill._id,
             ticket: newTicker._id,
-            price: numberTicket > 0 ? 0 : item.price,
-            promotion: numberTicket <= 0 ? 0 : item.price,
+            price,
+            promotion,
           });
-          // trừ vé free
-          numberTicket -= 1;
+
           await billDetail.save();
           console.log("seat success", newTicker);
         });
