@@ -552,24 +552,27 @@ const mergeSTDDefault = (showTimeDetails) => {
   };
 };
 
-export const revenueYear = async (cinemaId) => {
-  const showTimes = await ShowTime.find({ cinema: cinemaId });
-  const yearNow = new Date().getFullYear();
+export const revenueYear = async (cinemaId, year) => {
+  const dateStart = moment(`1/1/${year}`, "MM-DD-YYYY").format();
+  const dateEnd = moment(
+    `1/1/${parseInt(year, 10) + 1}`,
+    "MM-DD-YYYY"
+  ).format();
+  const dataFood = await FoodBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+    cinema: cinemaId,
+  });
+  const dataTicket = await MovieBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+    cinema: cinemaId,
+  });
 
-  let showTimeDetails = [];
-  for (let i = 0; i < showTimes.length; i++) {
-    const std = await ShowTimeDetail.find({ showTime: showTimes[i] });
-    showTimeDetails = showTimeDetails.concat(std);
-  }
-  const filterSTD = filterTimeSTD(
-    showTimeDetails,
-    `1/1/${yearNow}`,
-    `12/31/${yearNow}`
-  );
-  return mergeSDTByQuarter(filterSTD);
-};
-
-export const mergeSDTByQuarter = (showDetails) => {
   const yearData = [
     {
       quarter: 1,
@@ -577,6 +580,7 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 2,
@@ -584,6 +588,7 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 3,
@@ -591,6 +596,7 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 4,
@@ -598,17 +604,30 @@ export const mergeSDTByQuarter = (showDetails) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
   ];
-  showDetails.forEach((item) => {
-    const month = new Date(item.date).getMonth() + 1;
+
+  dataFood.forEach((item) => {
+    const month = new Date(moment(item.createAt).format()).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
-      yearData[index].totalFood += item?.food?.total || 0;
-      yearData[index].totalTicket += item?.ticket?.total || 0;
-      yearData[index].totalPrice += item?.totalPrice || 0;
+      yearData[index].totalFood += item.total;
+      yearData[index].totalPrice += item.total;
+      yearData[index].totalPromotion += item.promotion;
     }
   });
+
+  dataTicket.forEach((item) => {
+    const month = new Date(item.createAt).getMonth() + 1;
+    const index = yearData.findIndex((x) => x.months.some((x) => x == month));
+    if (index !== -1) {
+      yearData[index].totalTicket += item.total;
+      yearData[index].totalPrice += item.total;
+      yearData[index].totalPromotion += item.promotion;
+    }
+  });
+
   return yearData;
 };
 
@@ -786,9 +805,24 @@ export const getTotalPayment = async (gifts, data, combos) => {
 };
 
 export const thongKeRapTheoQuy = async (year) => {
-  const yearNow = year || new Date().getFullYear();
-  const std = await ShowTimeDetail.find();
-  const filterSTD = filterTimeSTD(std, `1/1/${yearNow}`, `12/31/${yearNow}`);
+  const dateStart = moment(`1/1/${year}`, "MM-DD-YYYY").format();
+  const dateEnd = moment(
+    `1/1/${parseInt(year, 10) + 1}`,
+    "MM-DD-YYYY"
+  ).format();
+  const dataFood = await FoodBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+  });
+  const dataTicket = await MovieBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+  });
+
   const yearData = [
     {
       quarter: 1,
@@ -796,6 +830,7 @@ export const thongKeRapTheoQuy = async (year) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 2,
@@ -803,6 +838,7 @@ export const thongKeRapTheoQuy = async (year) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 3,
@@ -810,6 +846,7 @@ export const thongKeRapTheoQuy = async (year) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
     {
       quarter: 4,
@@ -817,16 +854,27 @@ export const thongKeRapTheoQuy = async (year) => {
       totalFood: 0,
       totalTicket: 0,
       totalPrice: 0,
+      totalPromotion: 0,
     },
   ];
 
-  filterSTD.forEach((item) => {
-    const month = new Date(item.date).getMonth() + 1;
+  dataFood.forEach((item) => {
+    const month = new Date(moment(item.createAt).format()).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
-      yearData[index].totalFood += item?.food?.total || 0;
-      yearData[index].totalTicket += item?.ticket?.total || 0;
-      yearData[index].totalPrice += item?.totalPrice || 0;
+      yearData[index].totalFood += item.total;
+      yearData[index].totalPrice += item.total;
+      yearData[index].totalPromotion += item.promotion;
+    }
+  });
+
+  dataTicket.forEach((item) => {
+    const month = new Date(item.createAt).getMonth() + 1;
+    const index = yearData.findIndex((x) => x.months.some((x) => x == month));
+    if (index !== -1) {
+      yearData[index].totalTicket += item.total;
+      yearData[index].totalPrice += item.total;
+      yearData[index].totalPromotion += item.promotion;
     }
   });
   return yearData;

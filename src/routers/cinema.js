@@ -347,9 +347,10 @@ router.post("/get/thong-ke-theo-ngay-v2/movie", async (req, res) => {
 });
 
 router.get("/get/thong-ke-theo-quy", async (req, res) => {
-  const { cinemaId } = req.query;
+  const { cinemaId, year } = req.query;
+  const dateNow = new Date();
   try {
-    const data = await revenueYear(cinemaId);
+    const data = await revenueYear(cinemaId, year || dateNow.getFullYear());
     return res.json({
       success: true,
       message: "",
@@ -419,7 +420,9 @@ router.post("/add-payment", verifyToken, async (req, res) => {
 router.get("/get/thong-ke-all-rap-theo-quy", async (req, res) => {
   try {
     const { year } = req.query;
-    const data = await thongKeRapTheoQuy(year);
+    const dateNow = new Date();
+
+    const data = await thongKeRapTheoQuy(year || dateNow.getFullYear());
     return res.json({
       success: true,
       message: "thống kê tạp thành công",
