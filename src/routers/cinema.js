@@ -458,7 +458,9 @@ router.get(
     try {
       const { month, year } = req.query;
       return res.json({
-        data: await getBillByMonth(month, year),
+        success: true,
+        message: "Thống kê thành công",
+        values: await getBillByMonth(month, year, cinema),
       });
     } catch (error) {
       res.status(400).json({

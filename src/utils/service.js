@@ -927,26 +927,6 @@ const getListFoodBillDetail = async (fb) => {
   return res;
 };
 
-const mergeFood = (lstFood) => {
-  let res = [];
-  lstFood.forEach((item) => {
-    const index = res.findIndex(
-      (x) =>
-        x.movieName === item.movieName &&
-        x.roomName === item.roomName &&
-        x.type === item.type &&
-        x.price === item.price
-    );
-    if (index !== -1) {
-      res[index].quantity += item.quantity;
-      res[index].total += item.total;
-    } else {
-      res.push(item);
-    }
-  });
-  return res;
-};
-
 const getTypeTicket = (type) => {
   if (type === 0) {
     return "Vé trẻ em";
@@ -1013,11 +993,34 @@ const mergeTicket = (lstTicket) => {
         x.movieName === item.movieName &&
         x.roomName === item.roomName &&
         x.type === item.type &&
-        x.price === item.price
+        x.price === item.price &&
+        x.date === item.date
     );
     if (index !== -1) {
       res[index].quantity += item.quantity;
       res[index].total += item.total;
+      res[index].promotion += item.promotion;
+    } else {
+      res.push(item);
+    }
+  });
+  return res;
+};
+const mergeFood = (lstFood) => {
+  let res = [];
+  lstFood.forEach((item) => {
+    const index = res.findIndex(
+      (x) =>
+        x.movieName === item.movieName &&
+        x.roomName === item.roomName &&
+        x.type === item.type &&
+        x.price === item.price &&
+        x.date === item.date
+    );
+    if (index !== -1) {
+      res[index].quantity += item.quantity;
+      res[index].total += item.total;
+      res[index].promotion += item.promotion;
     } else {
       res.push(item);
     }
@@ -1033,7 +1036,7 @@ const getMonthPlus = (value) => {
   return month + 1;
 };
 
-export const getBillByMonth = async (month, year) => {
+export const getBillByMonth = async (month, year, cinema) => {
   const dateStart = moment(`${month}/1/${year}`, "MM-DD-YYYY").format();
   const dateEnd = moment(
     `${getMonthPlus(month)}/1/${month == 12 ? parseInt(year) + 1 : year}`,
@@ -1045,6 +1048,7 @@ export const getBillByMonth = async (month, year) => {
       $gte: dateStart,
       $lte: dateEnd,
     },
+    cinema,
   });
 
   const lstTicketBill = await MovieBill.find({
@@ -1052,13 +1056,18 @@ export const getBillByMonth = async (month, year) => {
       $gte: dateStart,
       $lte: dateEnd,
     },
+    cinema,
   });
 
   const lstFood = await getListFoodBillDetail(lstFoodBill);
   const lstTicket = await getListMovieBillDetail(lstTicketBill);
 
   return {
-    lstFood,
-    lstTicket,
+    data: [
+      ...(await mergeTicket(lstFood.data)),
+      ...(await mergeFood(lstTicket.data)),
+    ],
+    total: lstFood.total + lstTicket.total,
+    promotion: lstFood.promotion + lstTicket.promotion,
   };
 };

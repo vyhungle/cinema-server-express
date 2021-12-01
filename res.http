@@ -372,7 +372,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"long.long@gmail.com",    
+    "username":"manage@gmail.com",    
     "password":"123456"
 }
 
@@ -867,4 +867,7 @@ GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?mo
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&year=2021
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZTM3NDVhNTE2NzM5OTg2MTJhMWIiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjEwMCIsInR5cGUiOiIwIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjM4MjgxNzg5LCJleHAiOjE2Mzk0OTEzODl9.NSISvl6GjaqZXlRRMxLm8s8IBeqctrOVQ1XczdO6seI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzODM2NjM2NSwiZXhwIjoxNjM5NTc1OTY1fQ.iE_QWWW2-MhbthRn87zlB9bCMrqIBghbiZEo_NQkTWw
+
+###
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/01/2021
