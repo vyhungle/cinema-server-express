@@ -308,8 +308,7 @@ router.post("/add", verifyToken, async (req, res) => {
         });
         await billDetail.save();
         // trừ vé free
-        ticketPromotion =
-          numberTicket > 0 ? ticketPromotion + item.price : ticketPromotion;
+        ticketPromotion = totalPriceTicketPoint + totalPriceTicketCoupon;
         numberTicket -= 1;
       });
       // tính lại total bill
