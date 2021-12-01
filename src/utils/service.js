@@ -1041,7 +1041,6 @@ const mergeTicket = (lstTicket) => {
         x.movieName === item.movieName &&
         x.roomName === item.roomName &&
         x.type === item.type &&
-        x.price === item.price &&
         x.date === item.date
     );
     if (index !== -1) {
@@ -1062,7 +1061,6 @@ const mergeFood = (lstFood) => {
         x.movieName === item.movieName &&
         x.roomName === item.roomName &&
         x.type === item.type &&
-        x.price === item.price &&
         x.date === item.date
     );
     if (index !== -1) {
