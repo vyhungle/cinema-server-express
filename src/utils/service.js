@@ -887,7 +887,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
   const lstFood = await getListFoodBillDetail(fb);
   const lstTicket = await getListMovieBillDetail(mb);
 
-  const lstBill = [...lstFood.data, ...lstTicket.data];
+  const lstBill = [...lstFood.data, ...mergeTicketBill(lstTicket.data)];
   const total = lstFood.total + lstTicket.total;
   const promotion = lstFood.promotion + lstTicket.promotion;
   const lstSort = lstBill.sort((a, b) => {
@@ -905,6 +905,23 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
     total,
     promotion,
   };
+};
+
+const mergeTicketBill = (lstTicket) => {
+  let res = [];
+  lstTicket.forEach((item) => {
+    const index = res.findIndex(
+      (x) => x.billId === item.billId && x.type === item.type
+    );
+    if (index !== -1) {
+      res[index].quantity += item.quantity;
+      res[index].total += item.total;
+      res[index].promotion += item.promotion;
+    } else {
+      res.push(item);
+    }
+  });
+  return res;
 };
 
 const getFoodBill = async (cinemaId, date) => {
