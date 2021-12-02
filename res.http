@@ -876,3 +876,15 @@ GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-theo-quy?cinemaId=614c8a9e192439003768b5c1
+
+
+###
+POST http://localhost:4000/api/cinema/get/thong-ke-phim-theo-rap
+Content-Type: application/json
+
+{
+    "cinemaId":"614c8a9e192439003768b5c1",
+    "dateStart":"10/18/2021",
+    "dateEnd":"12/20/2021",
+    "movieId":"6169a42f038631344897c7c6"
+}

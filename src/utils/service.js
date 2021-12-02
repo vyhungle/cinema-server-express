@@ -316,54 +316,6 @@ export const revenueStatistics = async () => {
   return list;
 };
 
-export const revenueStatisticsMovie = async (cinemaId, dateStart, dateEnd) => {
-  const showTimes = await ShowTime.find({ cinema: cinemaId });
-  let list = [];
-
-  for (let i = 0; i < showTimes.length; i++) {
-    const is = list.some(
-      (x) => x.movie._id.toString() == showTimes[i].movie.toString()
-    );
-    if (!is) {
-      const data = await getCountAndPriceTicket(
-        showTimes[i].movie,
-        dateStart,
-        dateEnd
-      );
-      list.push({
-        movie: await Movie.findById(showTimes[i].movie),
-        ...data,
-      });
-    }
-  }
-
-  return list;
-};
-
-export const getCountAndPriceTicket = async (movieId, dateStart, dateEnd) => {
-  let totalFood = 0;
-  let totalTicket = 0;
-  let totalPrice = 0;
-
-  const showTimes = await ShowTime.find({ movie: movieId });
-  for (let i = 0; i < showTimes.length; i++) {
-    const showDetails = await ShowTimeDetail.find({
-      showTime: showTimes[i]._id,
-    });
-    const filterSTD = filterTimeSTD(showDetails, dateStart, dateEnd);
-    for (let j = 0; j < filterSTD.length; j++) {
-      totalFood += filterSTD[j]?.food?.total || 0;
-      totalTicket += filterSTD[j]?.ticket?.total || 0;
-      totalPrice += filterSTD[j]?.totalPrice || 0;
-    }
-  }
-  return {
-    totalFood,
-    totalTicket,
-    totalPrice,
-  };
-};
-
 export const revenueStatisticsByDate = async (cinemaId, dateStart, dateEnd) => {
   const showTimes = await ShowTime.find({ cinema: cinemaId });
   let showTimeDetails = [];
@@ -984,7 +936,7 @@ const getListFoodBillDetail = async (fb, merge) => {
           createdAt: fb[i].createdAt,
           date: moment(fb[i].createdAt).format("DD/MM/YYYY"),
         });
-        res.total += item.price * item.quantity;
+        res.total += item.priceSell * item.quantity;
         res.promotion += item.promotion;
       });
       res.data = res.data.concat(lstFood);
@@ -1041,10 +993,10 @@ const getListMovieBillDetail = async (mb, merge) => {
               x.price === item.ticket.price
           );
           lstTicket[index].quantity += 1;
-          lstTicket[index].total += lstTicket[index].price;
+          lstTicket[index].total += lstTicket[index].priceSell;
         }
 
-        res.total += item.price;
+        res.total += item.priceSell;
         res.promotion += item.price;
       });
       res.data = res.data.concat(lstTicket);
@@ -1135,5 +1087,55 @@ export const getBillByMonth = async (month, year, cinema) => {
     ],
     total: lstFood.total + lstTicket.total,
     promotion: lstFood.promotion + lstTicket.promotion,
+  };
+};
+
+export const revenueStatisticsMovie = async (
+  cinema,
+  _dateStart,
+  _dateEnd,
+  movieId
+) => {
+  const movie = await Movie.findById(movieId);
+  if (movie) {
+    const dateStart = moment(_dateStart, "MM-DD-YYYY").format();
+    const dateEnd = moment(_dateEnd, "MM-DD-YYYY").format();
+
+    console.log(dateStart, dateEnd);
+
+    const lstFoodBill = await FoodBill.find({
+      createdAt: {
+        $gte: dateStart,
+        $lte: dateEnd,
+      },
+      cinema,
+      movieName: movie.name,
+    });
+
+    const lstTicketBill = await MovieBill.find({
+      createdAt: {
+        $gte: dateStart,
+        $lte: dateEnd,
+      },
+      cinema,
+      movieName: movie.name,
+    });
+
+    const lstFood = await getListFoodBillDetail(lstFoodBill, true);
+    const lstTicket = await getListMovieBillDetail(lstTicketBill, true);
+    return {
+      movie: movie.name,
+      totalFood: lstFood.total,
+      totalTicket: lstTicket.total,
+      totalPrice: lstFood.total + lstTicket.total,
+      totalPromotion: lstFood.promotion + lstTicket.promotion,
+    };
+  }
+  return {
+    movie: movieId,
+    totalFood: 0,
+    totalTicket: 0,
+    totalPrice: 0,
+    totalPromotion: 0,
   };
 };

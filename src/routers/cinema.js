@@ -7,8 +7,6 @@ import { errorCatch } from "../utils/constaints";
 import { checkIsEmptyAddress, getCinemaLocation } from "../utils/helper";
 import {
   getBillByMonth,
-  revenueStatistics,
-  revenueStatisticsByDate,
   revenueStatisticsMovie,
   revenueYear,
   thongKeRapTheoQuy,
@@ -16,8 +14,6 @@ import {
 } from "../utils/service";
 import { ValidateCinema } from "../utils/validators";
 import verifyToken from "../middleware/staff";
-import OtpPayment from "../models/OtpPayment";
-import { revenueStatisticsByDateV2 } from "../utils/serviceV2";
 
 router.post("/add", async (req, res) => {
   const { name, address } = req.body;
@@ -218,119 +214,14 @@ router.get("/get/cinema-by", async (req, res) => {
 });
 
 router.post("/get/thong-ke-phim-theo-rap", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  console.log(cinemaId, dateStart, dateEnd);
+  const { cinemaId, dateStart, dateEnd, movieId } = req.body;
+  console.log(cinemaId, dateStart, dateEnd, movieId);
   try {
-    const data = await revenueStatisticsMovie(cinemaId, dateStart, dateEnd);
-    return res.json({
-      success: true,
-      message: "",
-      data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/get/thong-ke-theo-ngay", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  try {
-    const data = await revenueStatisticsByDate(cinemaId, dateStart, dateEnd);
-    return res.json({
-      success: true,
-      message: "",
-      data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/get/thong-ke-theo-ngay-v2/full", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  try {
-    const data = await revenueStatisticsByDateV2(
+    const data = await revenueStatisticsMovie(
       cinemaId,
       dateStart,
       dateEnd,
-      "full"
-    );
-    return res.json({
-      success: true,
-      message: "",
-      data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/get/thong-ke-theo-ngay-v2/room", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  try {
-    const data = await revenueStatisticsByDateV2(
-      cinemaId,
-      dateStart,
-      dateEnd,
-      "room"
-    );
-    return res.json({
-      success: true,
-      message: "",
-      data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/get/thong-ke-theo-ngay-v2/time", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  try {
-    const data = await revenueStatisticsByDateV2(
-      cinemaId,
-      dateStart,
-      dateEnd,
-      "time"
-    );
-    return res.json({
-      success: true,
-      message: "",
-      data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/get/thong-ke-theo-ngay-v2/movie", async (req, res) => {
-  const { cinemaId, dateStart, dateEnd } = req.body;
-  try {
-    const data = await revenueStatisticsByDateV2(
-      cinemaId,
-      dateStart,
-      dateEnd,
-      "movie"
+      movieId
     );
     return res.json({
       success: true,
@@ -355,58 +246,6 @@ router.get("/get/thong-ke-theo-quy", async (req, res) => {
       success: true,
       message: "",
       data,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
-  }
-});
-
-router.post("/add-payment", verifyToken, async (req, res) => {
-  const { staffId, type } = req;
-  const { cinemaId, user, paymentType, otp } = req.body;
-  try {
-    if (type == 0) {
-      const otpMail = await OtpPayment.findOne({ otp, user });
-      if (otpMail && (Date.now() > otpMail.dateEX || !otpMail.status)) {
-        return res.json({
-          success: false,
-          message: "Mã xác thực đã hết hạng.",
-        });
-      } else if (!otpMail) {
-        return res.json({
-          success: false,
-          message: "Mã xác thực không đúng.",
-        });
-      }
-      otpMail.status = false;
-      await otpMail.save();
-
-      const cinema = await Cinema.findById(cinemaId);
-      const isPayment = cinema.payments.some((x) => x.type == paymentType);
-      if (isPayment) {
-        return res.json({
-          success: false,
-          message: "Đã tồn tại hình thức thanh toán này trong rạp.",
-        });
-      } else {
-        cinema.payments.push({
-          type: paymentType,
-          user,
-        });
-        await cinema.save();
-        return res.json({
-          success: true,
-          message: "Thêm hình thức thanh toán thành công",
-        });
-      }
-    }
-    return res.json({
-      success: false,
-      message: "Bạn không có quyền truy cập chức năng này.",
     });
   } catch (error) {
     res.status(400).json({
