@@ -98,18 +98,11 @@ router.post("/add", verifyToken, async (req, res) => {
     let totalTicket = 0;
     let totalFood = 0;
 
-    let countTicketPoint = 0;
-    let countTicketCoupon = 0;
-
     let totalPriceTicketPoint = 0;
     let totalPriceTicketCoupon = 0;
 
     let totalPriceFoodPoint = 0;
     let totalPriceFoodCoupon = 0;
-    let typeTicket = 0;
-
-    let ticketPromotion = 0;
-    let foodPromotion = 0;
 
     const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
       .populate({
@@ -219,7 +212,6 @@ router.post("/add", verifyToken, async (req, res) => {
       data.forEach((item) => {
         totalTicket += item.price || priceBefore;
         priceTicket = item.price || priceBefore;
-        typeTicket = item?.type || 0;
       });
     }
     // trừ vé đổi điểm và coupon
@@ -300,13 +292,14 @@ router.post("/add", verifyToken, async (req, res) => {
 
         await newTicker.save();
         // Tạo chi tiết hóa đơn
-        const price = numberTicket > 0 ? 0 : item.price;
+        const priceSell = numberTicket > 0 ? 0 : item.price;
         const promotion = numberTicket > 0 ? item.price : 0;
         numberTicket -= 1;
         const billDetail = new MovieBillDetail({
           movieBill: bill._id,
           ticket: newTicker._id,
-          price,
+          price: item.price,
+          priceSell,
           promotion,
         });
         await billDetail.save();
@@ -359,6 +352,7 @@ router.post("/add", verifyToken, async (req, res) => {
             foodBill: foodBill._id,
             quantity: combos[i].quantity,
             price: food.price,
+            priceSell: food.price,
           });
           await foodDetail.save();
         }
@@ -372,7 +366,8 @@ router.post("/add", verifyToken, async (req, res) => {
             food: foodGift._id,
             foodBill: foodBill._id,
             quantity: giftList[i].quantity,
-            price: 0,
+            price: foodGift.price,
+            priceSell: 0,
             promotion: giftList[i].quantity * foodGift.price,
           });
           await foodDetailGift.save();
@@ -419,101 +414,6 @@ router.post("/add", verifyToken, async (req, res) => {
       }
       await userPoint.save();
     }
-    //#endregion
-
-    //#region Thống kê lại
-
-    if (data) {
-      stDetail.ticket = {
-        adult: {
-          ...stDetail.ticket.adult,
-          count:
-            stDetail.ticket.adult.count + (typeTicket == 1 ? data.length : 0),
-          price: typeTicket == 1 ? priceTicket : stDetail.ticket.adult.price,
-        },
-        child: {
-          ...stDetail.ticket.child,
-          count:
-            stDetail.ticket.child.count + (typeTicket == 0 ? data.length : 0),
-          price: typeTicket == 0 ? priceTicket : stDetail.ticket.child.price,
-        },
-        student: {
-          ...stDetail.ticket.student,
-          count:
-            stDetail.ticket.student.count + (typeTicket == 2 ? data.length : 0),
-          price: typeTicket == 2 ? priceTicket : stDetail.ticket.student.price,
-        },
-        total: stDetail.ticket.total + totalTicket - totalTicket * discount,
-        totalPromotion:
-          stDetail.ticket.totalPromotion +
-          totalPriceTicketPoint +
-          totalPriceTicketCoupon +
-          totalTicket * discount,
-      };
-    }
-
-    if (combos) {
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        const indexCB = stDetail.food.combo.findIndex(
-          (x) => x._id == combos[i]._id
-        );
-        if (indexCB === -1) {
-          stDetail.food.combo.push({
-            _id: food._id,
-            name: food.name,
-            count: combos[i].quantity,
-            price: food.price,
-          });
-        } else {
-          stDetail.food.combo.set(indexCB, {
-            _id: food._id,
-            name: food.name,
-            count: stDetail.food.combo[indexCB].count + combos[i].quantity,
-            price: food.price,
-          });
-        }
-      }
-
-      if (gifts && giftList.length > 0) {
-        for (let i = 0; i < giftList.length; i++) {
-          const _gift = await Gift.findById(giftList[i]._id);
-          const foodGift = await Food.findById(_gift.foodId);
-          const indexCB = stDetail.food.combo.findIndex(
-            (x) => x._id.toString().trim() === foodGift._id.toString().trim()
-          );
-          if (indexCB === -1) {
-            stDetail.food.combo.push({
-              _id: foodGift._id,
-              name: foodGift.name,
-              count: giftList[i].quantity,
-              price: foodGift.price,
-            });
-          } else {
-            stDetail.food.combo.set(indexCB, {
-              _id: foodGift._id,
-              name: foodGift.name,
-              count: stDetail.food.combo[indexCB].count + giftList[i].quantity,
-              price: foodGift.price,
-            });
-          }
-
-          // Tính tiền bắp nước đổi điểm và dùng coupon
-          if (giftList[i].coupon) {
-            totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
-          } else {
-            totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
-          }
-        }
-      }
-
-      stDetail.food.total += totalFood - totalFood * discount;
-      stDetail.food.totalPromotion +=
-        totalPriceFoodPoint + totalPriceFoodCoupon + totalFood * discount;
-    }
-
-    stDetail.totalPrice = stDetail.food.total + stDetail.ticket.total;
-
     //#endregion
 
     //#region Xử lý email
@@ -727,8 +627,6 @@ router.get("/success-payment", async (req, res) => {
       //#endregion
 
       //#region data default
-      let idTicketBill = "";
-      let idFoodBill = "";
       let numberTicket = 0;
       let giftPoint = 0;
       let giftList = [];
@@ -739,15 +637,11 @@ router.get("/success-payment", async (req, res) => {
       let totalTicket = 0;
       let totalFood = 0;
 
-      let countTicketPoint = 0;
-      let countTicketCoupon = 0;
-
       let totalPriceTicketPoint = 0;
       let totalPriceTicketCoupon = 0;
 
       let totalPriceFoodPoint = 0;
       let totalPriceFoodCoupon = 0;
-      let typeTicket = 0;
 
       const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
         .populate({
@@ -817,7 +711,6 @@ router.get("/success-payment", async (req, res) => {
         data.forEach((item) => {
           totalTicket += item.price || priceBefore;
           priceTicket = item.price || priceBefore;
-          typeTicket = item?.type || 0;
         });
       }
       // trừ vé đổi điểm và coupon
@@ -969,39 +862,6 @@ router.get("/success-payment", async (req, res) => {
         await userPoint.save();
       }
       //#endregion
-
-      //#region Thống kê lại
-
-      if (data) {
-        stDetail.ticket = {
-          adult: {
-            ...stDetail.ticket.adult,
-            count:
-              stDetail.ticket.adult.count + (typeTicket == 1 ? data.length : 0),
-            price: typeTicket == 1 ? priceTicket : stDetail.ticket.adult.price,
-          },
-          child: {
-            ...stDetail.ticket.child,
-            count:
-              stDetail.ticket.child.count + (typeTicket == 0 ? data.length : 0),
-            price: typeTicket == 0 ? priceTicket : stDetail.ticket.child.price,
-          },
-          student: {
-            ...stDetail.ticket.student,
-            count:
-              stDetail.ticket.student.count +
-              (typeTicket == 2 ? data.length : 0),
-            price:
-              typeTicket == 2 ? priceTicket : stDetail.ticket.student.price,
-          },
-          total: stDetail.ticket.total + totalTicket - totalTicket * discount,
-          totalPromotion:
-            stDetail.ticket.totalPromotion +
-            totalPriceTicketPoint +
-            totalPriceTicketCoupon +
-            totalTicket * discount,
-        };
-      }
 
       if (combos) {
         for (let i = 0; i < combos.length; i++) {

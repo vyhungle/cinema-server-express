@@ -11,6 +11,7 @@ const movieBillDetailSchema = new Schema({
   },
   price: { type: Number, default: 0 },
   promotion: { type: Number, default: 0 },
+  priceSell: { type: Number, default: 0 },
 });
 
 module.exports = model("moviebilldetails", movieBillDetailSchema);

@@ -12,6 +12,7 @@ const foodDetailSchema = new Schema({
   quantity: { type: Number, default: 0 },
   price: { type: Number, default: 0 },
   promotion: { type: Number, default: 0 },
+  priceSell: { type: Number, default: 0 },
 });
 
 module.exports = model("fooddetails", foodDetailSchema);
