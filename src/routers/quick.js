@@ -168,8 +168,8 @@ router.get("/get-movie-by-cinema", async (req, res) => {
   try {
     const { cinemaId } = req.query;
     const now = new Date();
-    const date = `${now.getDay()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-    const showTimeDetails = await ShowTimeDetail.find({ date }).populate({
+    // const date = `${now.getDay()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+    const showTimeDetails = await ShowTimeDetail.find().populate({
       path: "showTime",
       populate: ["cinema", "movie"],
     });
