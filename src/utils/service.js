@@ -561,7 +561,7 @@ export const revenueYear = async (cinemaId, year) => {
   ];
 
   dataFood.forEach((item) => {
-    const month = new Date(moment(item.createAt).format()).getMonth() + 1;
+    const month = new Date(moment(item.createdAt).format()).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
       yearData[index].totalFood += item.total;
@@ -571,7 +571,7 @@ export const revenueYear = async (cinemaId, year) => {
   });
 
   dataTicket.forEach((item) => {
-    const month = new Date(item.createAt).getMonth() + 1;
+    const month = new Date(item.createdAt).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
       yearData[index].totalTicket += item.total;
@@ -811,7 +811,7 @@ export const thongKeRapTheoQuy = async (year) => {
   ];
 
   dataFood.forEach((item) => {
-    const month = new Date(moment(item.createAt).format()).getMonth() + 1;
+    const month = new Date(moment(item.createdAt).format()).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
       yearData[index].totalFood += item.total;
@@ -821,7 +821,7 @@ export const thongKeRapTheoQuy = async (year) => {
   });
 
   dataTicket.forEach((item) => {
-    const month = new Date(item.createAt).getMonth() + 1;
+    const month = new Date(item.createdAt).getMonth() + 1;
     const index = yearData.findIndex((x) => x.months.some((x) => x == month));
     if (index !== -1) {
       yearData[index].totalTicket += item.total;
