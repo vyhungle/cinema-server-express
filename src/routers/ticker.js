@@ -752,13 +752,15 @@ router.get("/success-payment", async (req, res) => {
 
           await newTicker.save();
           // Tạo chi tiết hóa đơn
-          const price = numberTicket > 0 ? 0 : item.price;
+
+          const priceSell = numberTicket > 0 ? 0 : item.price;
           const promotion = numberTicket > 0 ? item.price : 0;
           numberTicket -= 1;
           const billDetail = new MovieBillDetail({
             movieBill: bill._id,
             ticket: newTicker._id,
-            price,
+            price: item.price,
+            priceSell,
             promotion,
           });
 
@@ -800,7 +802,7 @@ router.get("/success-payment", async (req, res) => {
               foodBill: foodBill._id,
               quantity: combos[i].quantity,
               price: food.price,
-              promotion: 0,
+              priceSell: food.price,
             });
             await foodDetail.save();
           }
@@ -814,7 +816,8 @@ router.get("/success-payment", async (req, res) => {
               food: foodGift._id,
               foodBill: foodBill._id,
               quantity: giftList[i].quantity,
-              price: 0,
+              price: foodGift.price,
+              priceSell: 0,
               promotion: giftList[i].quantity * foodGift.price,
             });
             await foodDetailGift.save();
@@ -918,13 +921,7 @@ router.get("/success-payment", async (req, res) => {
             }
           }
         }
-
-        stDetail.food.total += totalFood - totalFood * discount;
-        stDetail.food.totalPromotion +=
-          totalPriceFoodPoint + totalPriceFoodCoupon + totalFood * discount;
       }
-
-      stDetail.totalPrice = stDetail.food.total + stDetail.ticket.total;
 
       //#endregion
 
