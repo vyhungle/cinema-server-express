@@ -656,9 +656,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 {
     "data":[
-        {"seatName":"J2", "price":80000, "idSeat":"1", "status":1,"type":1}
-
-       
+        {"seatName":"J3", "price":80000, "idSeat":"1", "status":1,"type":1},
+        {"seatName":"J4", "price":50000, "idSeat":"1", "status":1,"type":2}
     ],
     "showTimeDetailId":"61a65911b939bf0037f22c7d",
     "userId":"613da2d8736aa826841481b3",
