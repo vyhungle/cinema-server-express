@@ -859,8 +859,24 @@ GET http://localhost:4000/api/quick/cinema-by-movie/616a41d1c24a660037796ac2
 ###
 GET http://localhost:4000/api/quick/get-date-by-cinema-movie?movieId=6169a42f038631344897c7c6&cinemaId=614c8a9e192439003768b5c1
 
-###
-GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6&date=12/01/2021
+
+
+### lấy danh sách rạp theo ngày
+GET http://localhost:4000/api/quick/get-cinema-by-date?date=12/02/2021
+
+
+### lấy danh sách phim theo rạp, ngày
+GET http://localhost:4000/api/quick/get-movie-by-cinema-date?cinemaId=614c8a9e192439003768b5c1&date=12/02/2021
+
+
+### lấy danh sách suất chiếu theo ngày, rạp, phim
+GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?movieId=6169a42f038631344897c7c6&cinemaId=614c8a9e192439003768b5c1&date=12/02/2021
+
+
+
+### lấy danh sách phim theo rạp
+GET http://localhost:4000/api/quick/get-movie-by-cinema?cinemaId=614c8a9e192439003768b5c1
+
 
 
 
