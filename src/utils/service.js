@@ -886,6 +886,7 @@ export const thongKeTheoNgay = async (cinemaId, date) => {
 
   const lstFood = await getListFoodBillDetail(fb);
   const lstTicket = await getListMovieBillDetail(mb);
+
   const lstBill = [...lstFood.data, ...lstTicket.data];
   const total = lstFood.total + lstTicket.total;
   const promotion = lstFood.promotion + lstTicket.promotion;
@@ -991,7 +992,9 @@ const getListMovieBillDetail = async (mb, merge) => {
     promotion: 0,
   };
   for (let i = 0; i < mb.length; i++) {
-    const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id });
+    const mbd = await MovieBillDetail.find({ movieBill: mb[i]._id }).populate(
+      "ticket"
+    );
     if (mbd) {
       const lstTicket = [];
       mbd.forEach((item) => {
