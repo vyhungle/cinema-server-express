@@ -89,10 +89,8 @@ router.post("/add", validateToken, async (req, res) => {
   }
 });
 
-router.post("/get-list-showtime", validateTokenAll, async (req, res) => {
-  const { dateStart, dateEnd } = req.body;
-  const { typeUser, cinema } = req;
-  console.log(typeUser, cinema);
+router.post("/get-list-showtime", async (req, res) => {
+  const { dateStart, dateEnd, cinemaId } = req.body;
   try {
     const date_start = new Date(dateStart);
     const date_end =
@@ -125,7 +123,7 @@ router.post("/get-list-showtime", validateTokenAll, async (req, res) => {
     return res.json({
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
-      showTimes: mergeShowTime(showTimes, typeUser, cinema),
+      showTimes: mergeShowTime(showTimes, cinemaId),
     });
   } catch (error) {
     res.status(400).json({

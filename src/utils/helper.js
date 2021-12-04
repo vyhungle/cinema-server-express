@@ -169,10 +169,10 @@ const mergeDates = (times, obj, dateParent, dateChild) => {
   // return res
 };
 
-export const mergeShowTime = (showTimes, typeUser, cinema) => {
+export const mergeShowTime = (showTimes, cinema) => {
   let res = [];
   showTimes.forEach((element) => {
-    if (typeUser === 1 && element.room.cinema == cinema) {
+    if (cinema && element.room.cinema == cinema) {
       const isDate = res.some((x) => x.date === element.date);
       if (isDate) {
         const index = res.findIndex((x) => x.date === element.date);
@@ -201,7 +201,7 @@ export const mergeShowTime = (showTimes, typeUser, cinema) => {
           ],
         });
       }
-    } else if (typeUser === 0) {
+    } else if (cinema === undefined) {
       const isDate = res.some((x) => x.date === element.date);
       if (isDate) {
         const index = res.findIndex((x) => x.date === element.date);
