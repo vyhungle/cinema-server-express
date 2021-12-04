@@ -30,6 +30,7 @@ const verifyToken = (req, res, next) => {
       req.id = USER_DEFAULT;
       req.staffId = decoded.id;
       req.type = decoded.type;
+      req.cinema = decoded.cinema;
     }
     next();
   } catch (error) {

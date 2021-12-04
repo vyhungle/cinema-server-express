@@ -14,6 +14,7 @@ import {
 import { ValidateShowTime } from "../utils/validators";
 import { errorCatch } from "../utils/constaints";
 import validateToken from "../middleware/staff";
+import validateTokenAll from "../middleware/custom";
 const getDate = (parentDate, childDate) => {
   return childDate === "" || childDate === undefined || childDate === null
     ? parentDate
@@ -88,8 +89,10 @@ router.post("/add", validateToken, async (req, res) => {
   }
 });
 
-router.post("/get-list-showtime", validateToken, async (req, res) => {
+router.post("/get-list-showtime", validateTokenAll, async (req, res) => {
   const { dateStart, dateEnd } = req.body;
+  const { typeUser, cinema } = req;
+  console.log(typeUser, cinema);
   try {
     const date_start = new Date(dateStart);
     const date_end =
@@ -122,7 +125,7 @@ router.post("/get-list-showtime", validateToken, async (req, res) => {
     return res.json({
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
-      showTimes: mergeShowTime(showTimes),
+      showTimes: mergeShowTime(showTimes, typeUser, cinema),
     });
   } catch (error) {
     res.status(400).json({

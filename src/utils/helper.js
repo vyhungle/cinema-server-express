@@ -169,36 +169,67 @@ const mergeDates = (times, obj, dateParent, dateChild) => {
   // return res
 };
 
-export const mergeShowTime = (showTimes) => {
+export const mergeShowTime = (showTimes, typeUser, cinema) => {
   let res = [];
   showTimes.forEach((element) => {
-    const isDate = res.some((x) => x.date === element.date);
-    if (isDate) {
-      const index = res.findIndex((x) => x.date === element.date);
-      res[index] = {
-        date: res[index].date,
-        times: mergeDates(
-          res[index].times,
-          {
-            time: element.timeSlot.time,
-            room: element.room,
-            movie: element.showTime?.movie,
-          },
-          element.date,
-          res[index].date
-        ),
-      };
-    } else {
-      res.push({
-        date: element.date,
-        times: [
-          {
-            time: element.timeSlot.time,
-            room: element.room,
-            movie: element.showTime?.movie,
-          },
-        ],
-      });
+    if (typeUser === 1 && element.room.cinema == cinema) {
+      const isDate = res.some((x) => x.date === element.date);
+      if (isDate) {
+        const index = res.findIndex((x) => x.date === element.date);
+        res[index] = {
+          date: res[index].date,
+          times: mergeDates(
+            res[index].times,
+            {
+              time: element.timeSlot.time,
+              room: element.room,
+              movie: element.showTime?.movie,
+            },
+            element.date,
+            res[index].date
+          ),
+        };
+      } else {
+        res.push({
+          date: element.date,
+          times: [
+            {
+              time: element.timeSlot.time,
+              room: element.room,
+              movie: element.showTime?.movie,
+            },
+          ],
+        });
+      }
+    } else if (typeUser === 0) {
+      const isDate = res.some((x) => x.date === element.date);
+      if (isDate) {
+        const index = res.findIndex((x) => x.date === element.date);
+        res[index] = {
+          date: res[index].date,
+          times: mergeDates(
+            res[index].times,
+            {
+              time: element.timeSlot.time,
+              room: element.room,
+              movie: element.showTime?.movie,
+            },
+            element.date,
+            res[index].date
+          ),
+        };
+      } else {
+        res.push({
+          date: element.date,
+          times: [
+            {
+              time: element.timeSlot.time,
+              room: element.room,
+              movie: element.showTime?.movie,
+            },
+          ],
+        });
+      }
     }
   });
 
@@ -591,4 +622,3 @@ export const filterTimeSTD = (std, dateStart, dateEnd) => {
 
   return Object.values(res);
 };
-
