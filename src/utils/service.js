@@ -977,8 +977,8 @@ const getListMovieBillDetail = async (mb, merge) => {
             billId: merge ? undefined : mb[i].billId,
             type: getTypeTicket(item.ticket.type),
             quantity: 1,
-            price: item.price,
-            total: item.price,
+            price: item.ticket.price,
+            total: item.priceSell,
             promotion: item.promotion,
             movieName: mb[i].movieName,
             roomName: mb[i].roomName,
@@ -993,7 +993,7 @@ const getListMovieBillDetail = async (mb, merge) => {
               x.price === item.ticket.price
           );
           lstTicket[index].quantity += 1;
-          lstTicket[index].total += lstTicket[index].priceSell;
+          lstTicket[index].total += item.priceSell;
         }
 
         res.total += item.priceSell;

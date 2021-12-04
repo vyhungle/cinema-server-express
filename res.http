@@ -891,7 +891,7 @@ GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzODM2NjM2NSwiZXhwIjoxNjM5NTc1OTY1fQ.iE_QWWW2-MhbthRn87zlB9bCMrqIBghbiZEo_NQkTWw
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/02/2021
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/04/2021
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
