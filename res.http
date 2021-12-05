@@ -655,25 +655,36 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 
 {
-    "data":[
-        {"seatName":"J3", "price":80000, "idSeat":"1", "status":1,"type":1},
-        {"seatName":"J4", "price":50000, "idSeat":"1", "status":1,"type":2}
-    ],
-    "showTimeDetailId":"61a65911b939bf0037f22c7d",
-    "userId":"613da2d8736aa826841481b3",
-    "payment":{
-       
-        "type":"0"
-    },
-    "combos":[
-       
-
-    ],
-    "gifts":[
-
-    ],
-    "coupons":[] 
-    
+  "combos": [],
+  "data": [
+    {
+      "idSeat": "34f4856b847c6e7b630b01fd897e8a09",
+      "seatName": "C6",
+      "price": 80000,
+      "status": 0,
+      "type": 1,
+      "showTimesDetails": "61ac74b915d3500037d6ebea"
+    }
+  ],
+  "payment": {
+    "type": "0"
+  },
+  "showTimeDetailId": "61ac74b915d3500037d6ebea",
+  "userId": "613e17d875cc9e00375d5ce5",
+  "gifts": [
+    {
+      "_id": "61829514a96d972d441fb345",
+      "name": "Vé xem phim 2D",
+      "image": "https://www.galaxycine.vn/media/2021/4/7/combo1_1617790472299.jpg",
+      "point": 350,
+      "type": 0,
+      "__v": 0,
+      "screenId": "61644b0edf1b9d2700e43b25",
+      "quantity": 1,
+      "coupon": false
+    }
+  ],
+  "coupons": []
 }
 
 

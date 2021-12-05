@@ -164,12 +164,12 @@ router.post("/add", verifyToken, async (req, res) => {
           // nếu vé coupon
           if (gift.coupon) {
             // tính tổng số lượng và tổng tiền vé coupon
-            countTicketCoupon += gifts[i].quantity;
+            // countTicketCoupon += gifts[i].quantity;
             totalPriceTicketCoupon +=
               data && data.length > 0 ? data[0].price : priceBefore;
           } else {
             // tính tổng số lượng và tổng tiền vé đổi điểm
-            countTicketPoint += gifts[i].quantity;
+            // countTicketPoint += gifts[i].quantity;
             totalPriceTicketPoint +=
               data && data.length > 0 ? data[0].price : priceBefore;
           }
@@ -672,12 +672,12 @@ router.get("/success-payment", async (req, res) => {
             // nếu vé coupon
             if (gift.coupon) {
               // tính tổng số lượng và tổng tiền vé coupon
-              countTicketCoupon += gifts[i].quantity;
+              // countTicketCoupon += gifts[i].quantity;
               totalPriceTicketCoupon +=
                 data && data.length > 0 ? data[0].price : priceBefore;
             } else {
               // tính tổng số lượng và tổng tiền vé đổi điểm
-              countTicketPoint += gifts[i].quantity;
+              // countTicketPoint += gifts[i].quantity;
               totalPriceTicketPoint +=
                 data && data.length > 0 ? data[0].price : priceBefore;
             }
