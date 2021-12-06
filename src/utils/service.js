@@ -977,7 +977,7 @@ const getListMovieBillDetail = async (mb, merge) => {
             billId: merge ? undefined : mb[i].billId,
             type: getTypeTicket(item.ticket.type),
             quantity: 1,
-            price: item.ticket.price,
+            price: item.price,
             total: item.priceSell,
             promotion: item.promotion,
             movieName: mb[i].movieName,
