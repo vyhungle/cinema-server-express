@@ -75,8 +75,8 @@ POST http://localhost:4000/api/auth/login
 Content-Type: application/json
 
 {
-    "username":"0983782942",    
-    "password":"vykt2000"
+    "username":"lnhv.26112000@gmail.com",    
+    "password":"6r8ytunq"
 }
 
 ### get my user
@@ -920,4 +920,58 @@ Content-Type: application/json
     "dateStart":"10/18/2021",
     "dateEnd":"12/20/2021",
     "movieId":"6169a42f038631344897c7c6"
+}
+
+
+
+### đổi mật khẩu
+PUT http://localhost:4000/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MCwiaWQiOiI2MTNkYTJkODczNmFhODI2ODQxNDgxYjMiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQyIiwiaWF0IjoxNjM5NTcwNTQzLCJleHAiOjE2NDA3ODAxNDN9.19TkcXGxTgiSWsdpMH2OowW-P0qpHYBNzZju8CUSl6I
+
+{
+    "oldPassword":"vykt2000",
+    "newPassword":"123456",
+    "confirmPassword":"123456"
+}
+
+
+
+### update user
+PUT http://localhost:4000/api/auth/update/613da2d8736aa826841481b3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzOTU3MjM1MiwiZXhwIjoxNjQwNzgxOTUyfQ.pnzGHGyRaOeA8J4IlRQG_kW2qcNyb8Q80tiz1ZqOhpI
+
+{
+    "email":"lnhv.26112000@gmail.com",
+    "phoneNumber":"0983782500",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "address":{
+        "city":"TP.HCM",
+        "district":"Tân phú",
+        "ward":"Tây thạnh",
+        "street":"37, T4A"
+    },
+    "dateOfBirth":"11/26/2000",
+    "hobby":"",
+    "male":true,
+    "avatar":""
+}
+
+### delete user
+DELETE http://localhost:4000/api/auth/delete/613e17d875cc9e00375d5ce5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzOTU3MjM1MiwiZXhwIjoxNjQwNzgxOTUyfQ.pnzGHGyRaOeA8J4IlRQG_kW2qcNyb8Q80tiz1ZqOhpI
+Content-Type: application/json
+
+
+### Tạo tài khoản khách hàng
+POST http://localhost:4000/api/auth/create-user-cms
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzOTU3MjM1MiwiZXhwIjoxNjQwNzgxOTUyfQ.pnzGHGyRaOeA8J4IlRQG_kW2qcNyb8Q80tiz1ZqOhpI
+Content-Type: application/json
+
+{
+    "email":"lnhv.26112000@gmail.com",
+    "phoneNumber":"0983782400",
+    "fullName":"Lê Nguyễn Hùng Vỹ",
+    "dateOfBirth":"11/26/2000"
 }

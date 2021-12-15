@@ -1139,3 +1139,27 @@ export const revenueStatisticsMovie = async (
     totalPromotion: 0,
   };
 };
+
+export const isDeleteRoom = async (roomId) => {
+  const lstShoTimes = await ShowTimeDetail.find({ room: roomId });
+  if (lstShoTimes) {
+    return true;
+  }
+  return false;
+};
+
+export const isDeleteMovie = async (cinemaId) => {
+  const lstShoTimes = await ShowTime.find({ cinema: cinemaId });
+  if (lstShoTimes) {
+    return true;
+  }
+  return false;
+};
+
+export const isCheckPointUser = async (userId) => {
+  const user = await User.findById(userId);
+  if (user && user.point > 0) {
+    return true;
+  }
+  return false;
+};

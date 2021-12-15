@@ -73,6 +73,111 @@ module.exports.ValidateRegisterInput = (
   };
 };
 
+module.exports.ValidateUserUpdate = (
+  isEmail,
+  isPhone,
+  phoneNumber,
+  email,
+  fullName,
+  address,
+  dateOfBirth
+) => {
+  var errors = {};
+  const regEx =
+    /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+  const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+
+  if (isEmpty(fullName)) {
+    errors.fullName = "Vui lòng nhập họ tên";
+  } else if (fullName.length < 5) {
+    errors.fullName = "Họ tên không được nhỏ hơn 5 ký tự";
+  }
+
+  if (isEmpty(phoneNumber)) {
+    errors.phoneNumber = "Vui lòng nhập số điện thoại";
+  } else if (!phoneNumber.match(vnf_regex)) {
+    errors.phoneNumber = "Số điện thoại phải là số điện thoại hợp lệ";
+  } else if (isPhone) {
+    errors.phoneNumber = "Số điện thoại này đã tồn tại";
+  }
+
+  if (isEmpty(email)) {
+    errors.email = "Vui lòng nhập email";
+  } else if (!email.match(regEx)) {
+    errors.email = "Email phải là một địa chỉ email hợp lệ";
+  } else if (isEmail) {
+    errors.email = "Email này đã tồn tại";
+  }
+
+  if (isEmpty(address.city)) {
+    errors.city = "Vui lòng chọn Tỉnh/Thành phố";
+  } else if (isEmpty(address.district)) {
+    errors.district = "Vui lòng chọn Quận/Huyện";
+  } else if (isEmpty(address.ward)) {
+    errors.ward = "Vui lòng chọn Phường/Xã";
+  } else if (isEmpty(address.street)) {
+    errors.street = "Vui lòng nhập số nhà, tên đường";
+  }
+
+  if (isEmpty(dateOfBirth)) {
+    errors.dateOfBirth = "Vui lòng chọn ngày sinh";
+  } else if (new Date(dateOfBirth) > Date.now()) {
+    errors.dateOfBirth = "Vui lòng chọn lại ngày sinh";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
+module.exports.ValidateCreateUserCms = (
+  isEmail,
+  isPhone,
+  phoneNumber,
+  email,
+  fullName,
+  dateOfBirth
+) => {
+  var errors = {};
+  const regEx =
+    /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+  const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+
+  if (isEmpty(fullName)) {
+    errors.fullName = "Vui lòng nhập họ tên";
+  } else if (fullName.length < 5) {
+    errors.fullName = "Họ tên không được nhỏ hơn 5 ký tự";
+  }
+
+  if (isEmpty(phoneNumber)) {
+    errors.phoneNumber = "Vui lòng nhập số điện thoại";
+  } else if (!phoneNumber.match(vnf_regex)) {
+    errors.phoneNumber = "Số điện thoại phải là số điện thoại hợp lệ";
+  } else if (isPhone) {
+    errors.phoneNumber = "Số điện thoại này đã tồn tại";
+  }
+
+  if (isEmpty(email)) {
+    errors.email = "Vui lòng nhập email";
+  } else if (!email.match(regEx)) {
+    errors.email = "Email phải là một địa chỉ email hợp lệ";
+  } else if (isEmail) {
+    errors.email = "Email này đã tồn tại";
+  }
+
+  if (isEmpty(dateOfBirth)) {
+    errors.dateOfBirth = "Vui lòng chọn ngày sinh";
+  } else if (new Date(dateOfBirth) > Date.now()) {
+    errors.dateOfBirth = "Vui lòng chọn lại ngày sinh";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
 module.exports.ValidateLoginInput = (username, password) => {
   var errors = {};
   const regEx =

@@ -10,6 +10,7 @@ import { ValidateRoom } from "../utils/validators";
 import { addTimeSlotInRoom } from "../utils/helper";
 import { errorCatch } from "../utils/constaints";
 import validateToken from "../middleware/staff";
+import { isDeleteRoom } from "../utils/service";
 
 router.post("/add", async (req, res) => {
   const client = request(req.app);
@@ -108,17 +109,25 @@ router.put("/update/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
   try {
-    const is = await Room.findByIdAndDelete(req.params.id);
-    if (is) {
+    const checkDelete = await isDeleteRoom(req.params.id);
+    if (checkDelete) {
       return res.json({
-        success: true,
-        message: "Xóa phòng chiếu thành công",
+        success: false,
+        message: `Hiện tại phòng này đang có xuất chiếu sử dụng, nên không thể xóa phòng này.`,
+      });
+    } else {
+      const is = await Room.findByIdAndDelete(req.params.id);
+      if (is) {
+        return res.json({
+          success: true,
+          message: "Xóa phòng chiếu thành công",
+        });
+      }
+      return res.json({
+        success: false,
+        message: "Không tìm thấy phòng chiếu này",
       });
     }
-    return res.json({
-      success: false,
-      message: "Không tìm thấy phòng chiếu này",
-    });
   } catch (error) {
     res.status(400).json({
       success: false,

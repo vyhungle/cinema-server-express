@@ -78,3 +78,17 @@ export const mailOptionInvite = (email, cinema, address, link) => {
     },
   };
 };
+
+export const mailOptionSendPassword = (name, email, password) => {
+  return {
+    form: process.env.EMAIL_USER,
+    to: email,
+    subject: "Gửi mật khẩu truy cập",
+    template: "sendPassword",
+    context: {
+      name,
+      email,
+      password,
+    },
+  };
+};
