@@ -22,7 +22,6 @@ import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
 import axios from "axios";
 import moment from "moment";
-import { time } from "console";
 
 export const getMoviePlay = async () => {
   const res = {
@@ -701,12 +700,10 @@ export const checkMomoSuccess = async (orderId, requestId) => {
     signature: signature,
     lang: "vi",
   };
-  console.log(requestBody);
   const response = await axios.post(
     "https://test-payment.momo.vn/v2/gateway/api/query",
     requestBody
   );
-  console.log(response.data);
   if (response.data.resultCode == 0) {
     return true;
   }
@@ -1101,7 +1098,6 @@ export const revenueStatisticsMovie = async (
     const dateStart = moment(_dateStart, "MM-DD-YYYY").format();
     const dateEnd = moment(_dateEnd, "MM-DD-YYYY").format();
 
-    console.log(dateStart, dateEnd);
 
     const lstFoodBill = await FoodBill.find({
       createdAt: {

@@ -40,7 +40,6 @@ router.get("/test", async (req, res) => {
 router.post("/test-momo", async (req, res) => {
   const data = req.body;
   const tokenOrder = generateToken(data);
-  console.log(tokenOrder);
 
   var partnerCode = "MOMOB8LF20211028";
   var accessKey = "b8xE4uNzTm61kBbw";
@@ -82,7 +81,6 @@ router.post("/test-momo", async (req, res) => {
     .update(rawSignature)
     .digest("hex");
 
-  console.log(signature, requestBody);
 
   const requestBody = {
     partnerCode: partnerCode,
@@ -134,7 +132,6 @@ router.post("/check-status", async (req, res) => {
     .update(rawSignature)
     .digest("hex");
 
-  console.log(signature, requestBody);
 
   const requestBody = {
     partnerCode: partnerCode,
@@ -161,7 +158,6 @@ router.get("/order-payment", async (req, res) => {
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const isOrder = postAPI(client, "/api/ticker/add", decoded);
-    console.log(isOrder);
     res.json(isOrder);
   } catch (error) {
     return res.json({

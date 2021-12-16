@@ -327,7 +327,6 @@ router.post("/login", async (req, res) => {
 
 router.put("/update/:id", verifyToken, async (req, res) => {
   try {
-    console.log(req.type);
     if (req.type < 2) {
       const oldStaff = await Staff.findById(req.params.id);
       const {

@@ -14,7 +14,6 @@ export const getDateNow = () => {
 };
 
 export const createDateEX = (day, hour, minute) => {
-  console.log(day, hour, minute);
   if (day) {
     const dateNow = new Date().toISOString();
     return new Date(dateNow).setDate(new Date(dateNow).getDate() + day);
@@ -601,7 +600,6 @@ export const filterGiftByScreen = (gifts, screenId) => {
 };
 
 export const sortBill = (bills) => {
-  console.log(new Date(bills[0].createdAt));
   return bills.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 };
 

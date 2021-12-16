@@ -118,7 +118,6 @@ router.put("/update/:id", async (req, res) => {
       });
     } else {
       if (!checkIsEmptyAddress(oldCinema.address, address)) {
-        console.log(checkIsEmptyAddress(oldCinema.address, address));
         const geo = await getGeoLocation(
           `${address.street}, ${address.ward}, ${address.district}, ${address.city}`
         );
@@ -215,7 +214,6 @@ router.get("/get/cinema-by", async (req, res) => {
 
 router.post("/get/thong-ke-phim-theo-rap", async (req, res) => {
   const { cinemaId, dateStart, dateEnd, movieId } = req.body;
-  console.log(cinemaId, dateStart, dateEnd, movieId);
   try {
     const data = await revenueStatisticsMovie(
       cinemaId,

@@ -42,11 +42,9 @@ export const revenueStatisticsByDateV2 = async (
 
 const mergeSTD = (showDetails) => {
   const res = [];
-  // console.log(showDetails);
 
   showDetails.forEach((item, index) => {
     const is = res.some((x) => x.date == item.date);
-    // console.log(item.food);
     if (!is) {
       res.push({
         date: item.date,

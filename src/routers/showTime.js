@@ -196,7 +196,6 @@ router.get("/get-list-showtime-full", async (req, res) => {
           path: "movie",
         },
       });
-    console.log(showTimeList[2].room.cinema);
     const showTimeFilter = renderShowTime(
       showTimeList,
       movieId,

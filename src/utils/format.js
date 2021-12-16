@@ -1,5 +1,4 @@
 const formatCode = (code) => {
-  console.log(code)
   if (code.toString().length === 4) {
     return "0" + code.toString();
   } else if (code.toString().code === 3) {
