@@ -282,7 +282,7 @@ module.exports.ValidateChangePassword = (
   if (isEmpty(oldPassword)) {
     errors.oldPassword = "Vui lòng nhập mật khẩu cũ";
   } else if (!match) {
-    errors.oldPassword = "Mật khẩu cũ không chính sát";
+    errors.oldPassword = "Mật khẩu cũ không chính xát";
   }
   if (isEmpty(newPassword)) {
     errors.newPassword = "Vui lòng nhập mật khẩu mới";
