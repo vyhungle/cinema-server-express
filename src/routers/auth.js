@@ -488,4 +488,29 @@ router.post("/create-user-cms", verifyTokenStaff, async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find().select("-password").populate("permission");
+    if (users) {
+      return res.json({
+        success: true,
+        message: "Lấy danh sách khách hàng thành công",
+        values: {
+          users,
+        },
+      });
+    }
+    return res.json({
+      success: false,
+      message: "Lấy danh sách khách hàng thất bại",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
 module.exports = router;
