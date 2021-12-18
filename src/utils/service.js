@@ -584,6 +584,7 @@ export const revenueYear = async (cinemaId, year) => {
 
 export const momoSend = async (data) => {
   const tokenOrder = generateToken(data);
+  console.log(tokenOrder)
   let info = "";
   data.data.forEach((item, index) => {
     if (data.data.length === 1) {

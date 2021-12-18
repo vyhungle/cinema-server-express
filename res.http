@@ -696,7 +696,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 {
     "data":[
-        {"seatName":"K2", "price":80000, "idSeat":"f8c3a128c13f53a624cc80dfab32507d", "status":1,"type":1}
+        {"seatName":"K3", "price":80000, "idSeat":"f8c3a128c13f53a624cc80dfab32507d", "status":1,"type":1}
     ],
     "showTimeDetailId":"61a649095ffee10037731f1a",
     "userId":"613da2d8736aa826841481b3",
@@ -713,7 +713,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 
 ####
-GET http://localhost:4000/api/ticker/success-payment?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJzZWF0TmFtZSI6IkQ3IiwicHJpY2UiOjk1MDAwLCJpZFNlYXQiOiI4MDBjYTFiZWFiMTdhODlkZjE1Yzk4YTg2ZmIxZmUxNSIsInN0YXR1cyI6MSwidHlwZSI6MH1dLCJzaG93VGltZURldGFpbElkIjoiNjE4ZThmMTM4MTE0MGIwMDM3ZGQzNDNjIiwidXNlcklkIjoiNjEzZGEyZDg3MzZhYTgyNjg0MTQ4MWIzIiwicGF5bWVudCI6eyJpbmZvIjp7InVzZXJuYW1lIjoiMDEyMzQ4ODg4OTQxMiIsInR5cGUiOiIxIiwib3RwIjoiNjgyNjgzIn0sInR5cGUiOiIwIn0sImNvbWJvcyI6W3siX2lkIjoiNjE3Y2Y1NDBmYjBmMGIxNzVjMWQ4MGM4IiwicXVhbnRpdHkiOjF9XSwiZ2lmdHMiOlt7Il9pZCI6IjYxODNlZGFjYmFhOTNhM2U4NGE3ZDQxOSIsInF1YW50aXR5IjoxLCJjb3Vwb24iOnRydWV9XSwiY291cG9ucyI6WyJIQ0NYLThWNjEtREozOSJdLCJpYXQiOjE2MzcxMzQ4OTYsImV4cCI6MTYzNzEzNjY5Nn0.z3-WJ-3yuxVhNNkLkQOZRbZOVfQWDKa1gx6AmElOd3I&orderId=MOMOB8LF202110281637134896446&requestId=MOMOB8LF202110281637134896446
+GET http://localhost:4000/api/ticker/success-payment?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjpbeyJzZWF0TmFtZSI6IkszIiwicHJpY2UiOjgwMDAwLCJpZFNlYXQiOiJmOGMzYTEyOGMxM2Y1M2E2MjRjYzgwZGZhYjMyNTA3ZCIsInN0YXR1cyI6MSwidHlwZSI6MX1dLCJzaG93VGltZURldGFpbElkIjoiNjFhNjQ5MDk1ZmZlZTEwMDM3NzMxZjFhIiwidXNlcklkIjoiNjEzZGEyZDg3MzZhYTgyNjg0MTQ4MWIzIiwicGF5bWVudCI6eyJ0eXBlIjoiMCJ9LCJjb21ib3MiOltdLCJnaWZ0cyI6W10sImNvdXBvbnMiOltdLCJ0b3RhbCI6ODAwMDAsImlhdCI6MTYzOTc5MDkyOCwiZXhwIjoxNjM5NzkyNzI4fQ.8QjfNSKpsZgj_3kYznKS_zbPcDTpFiMIaDuaeIyiU8A
 
 
 ###

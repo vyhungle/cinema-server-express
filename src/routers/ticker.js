@@ -135,7 +135,6 @@ router.post("/add", verifyToken, async (req, res) => {
           isTicker &&
           (isTicker.dateEx > Date.now() || isTicker.dateEx === 0)
         ) {
-         
           duplicateSeat.push(data[i].seatName);
         }
       }
@@ -301,7 +300,6 @@ router.post("/add", verifyToken, async (req, res) => {
         });
         await billDetail.save();
         // trừ vé free
-       
       });
       // tính lại total bill
       bill.total = totalTicket - totalTicket * discount;
@@ -601,333 +599,275 @@ router.get("/success-payment", async (req, res) => {
   try {
     const checkOrder = await checkMomoSuccess(orderId, requestId);
     if (checkOrder) {
-    //#region validate user
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.redirect(paymentFailLink);
-    }
+      //#region validate user
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.redirect(paymentFailLink);
+      }
 
-    //#endregion
+      //#endregion
 
-    //#region data default
-    let idTicketBill = "";
-    let idFoodBill = "";
-    let numberTicket = 0;
-    let giftPoint = 0;
-    let giftList = [];
-    let priceTicket = 0;
-    let discount = 0;
-    let countGiftDiscount = 0;
+      //#region data default
+      let idTicketBill = "";
+      let idFoodBill = "";
+      let numberTicket = 0;
+      let giftPoint = 0;
+      let giftList = [];
+      let priceTicket = 0;
+      let discount = 0;
+      let countGiftDiscount = 0;
 
-    let totalTicket = 0;
-    let totalFood = 0;
+      let totalTicket = 0;
+      let totalFood = 0;
 
-    let totalPriceTicketPoint = 0;
-    let totalPriceTicketCoupon = 0;
+      let totalPriceTicketPoint = 0;
+      let totalPriceTicketCoupon = 0;
 
-    let totalPriceFoodPoint = 0;
-    let totalPriceFoodCoupon = 0;
+      let totalPriceFoodPoint = 0;
+      let totalPriceFoodCoupon = 0;
 
-    const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
-      .populate({
-        path: "room",
-        populate: [{ path: "screen" }, { path: "cinema" }],
-      })
-      .populate("timeSlot")
-      .populate({ path: "showTime", populate: "movie" });
-    const oldTickets = await Ticker.find({
-      showTimeDetail: showTimeDetailId,
-    });
+      const stDetail = await ShowTimeDetail.findById(showTimeDetailId)
+        .populate({
+          path: "room",
+          populate: [{ path: "screen" }, { path: "cinema" }],
+        })
+        .populate("timeSlot")
+        .populate({ path: "showTime", populate: "movie" });
+      const oldTickets = await Ticker.find({
+        showTimeDetail: showTimeDetailId,
+      });
 
-    const cinema = stDetail?.room?.cinema;
+      const cinema = stDetail?.room?.cinema;
 
-    const priceBefore = checkWeekend(stDetail.date)
-      ? stDetail.room.screen.weekendPrice
-      : stDetail.room.screen.weekdayPrice;
+      const priceBefore = checkWeekend(stDetail.date)
+        ? stDetail.room.screen.weekendPrice
+        : stDetail.room.screen.weekdayPrice;
 
-    // return res.json(cinema);
+      // return res.json(cinema);
 
-    //#endregion
+      //#endregion
 
-    //#region kiểm tra gift point và số lượng phiếu giảm giá
-    for (let i = 0; i < gifts.length; i++) {
-      const gift = await Gift.findById(gifts[i]._id);
-      if (gift) {
-        // type = 0 loại vé
-        if (gift.type === 0) {
-          numberTicket += gifts[i].quantity;
-          // nếu vé coupon
-          if (gift.coupon) {
-            // tính tổng số lượng và tổng tiền vé coupon
-            // countTicketCoupon += gifts[i].quantity;
-            totalPriceTicketCoupon +=
-              data && data.length > 0 ? data[0].price : priceBefore;
-          } else {
-            // tính tổng số lượng và tổng tiền vé đổi điểm
-            // countTicketPoint += gifts[i].quantity;
-            totalPriceTicketPoint +=
-              data && data.length > 0 ? data[0].price : priceBefore;
+      //#region kiểm tra gift point và số lượng phiếu giảm giá
+      for (let i = 0; i < gifts.length; i++) {
+        const gift = await Gift.findById(gifts[i]._id);
+        if (gift) {
+          // type = 0 loại vé
+          if (gift.type === 0) {
+            numberTicket += gifts[i].quantity;
+            // nếu vé coupon
+            if (gift.coupon) {
+              // tính tổng số lượng và tổng tiền vé coupon
+              // countTicketCoupon += gifts[i].quantity;
+              totalPriceTicketCoupon +=
+                data && data.length > 0 ? data[0].price : priceBefore;
+            } else {
+              // tính tổng số lượng và tổng tiền vé đổi điểm
+              // countTicketPoint += gifts[i].quantity;
+              totalPriceTicketPoint +=
+                data && data.length > 0 ? data[0].price : priceBefore;
+            }
           }
-        }
-        // type = 1, bắp nước thì push vào mảng
-        else if (gift.type === 1) {
-          giftList.push({
-            ...gift._doc,
-            quantity: gifts[i].quantity,
-          });
-        }
-        // type = 2 phiếu giảm giá
-        else if (gift.type === 2) {
-          discount = gift.discount;
-          countGiftDiscount += 1;
-        }
+          // type = 1, bắp nước thì push vào mảng
+          else if (gift.type === 1) {
+            giftList.push({
+              ...gift._doc,
+              quantity: gifts[i].quantity,
+            });
+          }
+          // type = 2 phiếu giảm giá
+          else if (gift.type === 2) {
+            discount = gift.discount;
+            countGiftDiscount += 1;
+          }
 
-        giftPoint += gifts[0].coupon ? 0 : gift.point * gifts[0].quantity;
+          giftPoint += gifts[0].coupon ? 0 : gift.point * gifts[0].quantity;
+        }
       }
-    }
-    if (user.point < giftPoint) {
-      return res.redirect(paymentFailLink);
-    }
-    if (countGiftDiscount > 1) {
-      return res.redirect(paymentFailLink);
-    }
-    //#endregion
-
-    //#region tính total bill
-    if (data && data.length > 0) {
-      data.forEach((item) => {
-        totalTicket += item.price || priceBefore;
-        priceTicket = item.price || priceBefore;
-      });
-    }
-    // trừ vé đổi điểm và coupon
-    totalTicket -= numberTicket * priceTicket;
-    if (combos && combos.length > 0) {
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        totalFood += food.price * combos[i].quantity;
+      if (user.point < giftPoint) {
+        return res.redirect(paymentFailLink);
       }
-    }
-    //#endregion
+      if (countGiftDiscount > 1) {
+        return res.redirect(paymentFailLink);
+      }
+      //#endregion
 
-    //#region  Tạo hóa đơn vé và vé
-    if (data && data.length > 0) {
-      const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
-      const oldId = lastBill[0]?.billId || `HDT_00000`;
-      const bill = new MovieBill({
-        billId: renderBillId(oldId),
-        user: userId,
-        showTime: stDetail.showTime,
-        showTimeDetail: showTimeDetailId,
-        cinema: cinema._id,
-        movieName: stDetail.showTime.movie.name,
-        roomName: stDetail.room.name,
-        screenName: stDetail.room.screen.name,
-        total: 0,
-        createdAt: new Date().toISOString(),
-        paymentType: payment.type,
-      });
-
-      // tạo vé
-      data.forEach(async (item) => {
-        const newTicker = await Ticker.findOne({
-          idSeat: item.idSeat,
-          seatName: item.seatName,
+      //#region tính total bill
+      if (data && data.length > 0) {
+        data.forEach((item) => {
+          totalTicket += item.price || priceBefore;
+          priceTicket = item.price || priceBefore;
         });
-        newTicker.wail = false;
-        newTicker.dateEx = 0;
-
-        await newTicker.save();
-        // Tạo chi tiết hóa đơn
-
-        const priceSell = numberTicket > 0 ? 0 : item.price;
-        const promotion = numberTicket > 0 ? item.price : 0;
-        numberTicket -= 1;
-        const billDetail = new MovieBillDetail({
-          movieBill: bill._id,
-          ticket: newTicker._id,
-          price: item.price,
-          priceSell,
-          promotion,
-        });
-
-        await billDetail.save();
-      });
-      // tính lại total bill
-      bill.total = totalTicket - totalTicket * discount;
-      bill.promotion = totalPriceTicketPoint + totalPriceTicketCoupon;
-      idTicketBill = bill._id;
-      await bill.save();
-    }
-    //#endregion
-
-    //#region  Tạo hóa đơn combo và combo detail
-    if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
-      const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
-      const oldId = lastBill[0]?.billId || `HDF_00000`;
-      const foodBill = new FoodBill({
-        billId: renderBillId(oldId),
-        user: userId,
-        showTime: stDetail.showTime,
-        showTimeDetail: showTimeDetailId,
-        cinema: cinema._id,
-        movieName: stDetail.showTime.movie.name,
-        roomName: stDetail.room.name,
-        screenName: stDetail.room.screen.name,
-        total: 0,
-        createdAt: new Date().toISOString(),
-        paymentType: payment.type,
-      });
-
-      // tạo combo detail
+      }
+      // trừ vé đổi điểm và coupon
+      totalTicket -= numberTicket * priceTicket;
       if (combos && combos.length > 0) {
         for (let i = 0; i < combos.length; i++) {
           const food = await Food.findById(combos[i]._id);
-          const foodDetail = new FoodDetail({
-            food: combos[i]._id,
-            foodBill: foodBill._id,
-            quantity: combos[i].quantity,
-            price: food.price,
-            priceSell: food.price,
-          });
-          await foodDetail.save();
+          totalFood += food.price * combos[i].quantity;
         }
       }
+      //#endregion
 
-      if (gifts && giftList.length > 0) {
-        for (let i = 0; i < giftList.length; i++) {
-          const _gift = await Gift.findById(giftList[i]._id);
-          const foodGift = await Food.findById(_gift.foodId);
-          const foodDetailGift = new FoodDetail({
-            food: foodGift._id,
-            foodBill: foodBill._id,
-            quantity: giftList[i].quantity,
-            price: foodGift.price,
-            priceSell: 0,
-            promotion: giftList[i].quantity * foodGift.price,
+      //#region  Tạo hóa đơn vé và vé
+      if (data && data.length > 0) {
+        const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
+        const oldId = lastBill[0]?.billId || `HDT_00000`;
+        const bill = new MovieBill({
+          billId: renderBillId(oldId),
+          user: userId,
+          showTime: stDetail.showTime,
+          showTimeDetail: showTimeDetailId,
+          cinema: cinema._id,
+          movieName: stDetail.showTime.movie.name,
+          roomName: stDetail.room.name,
+          screenName: stDetail.room.screen.name,
+          total: 0,
+          createdAt: new Date().toISOString(),
+          paymentType: payment.type,
+        });
+
+        // tạo vé
+        data.forEach(async (item) => {
+          const newTicker = await Ticker.findOne({
+            idSeat: item.idSeat,
+            seatName: item.seatName,
           });
-          await foodDetailGift.save();
+          newTicker.wail = false;
+          newTicker.dateEx = 0;
 
-          // Tính tiền bắp nước đổi điểm và dùng coupon
-          if (giftList[i].coupon) {
-            totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
-          } else {
-            totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
+          await newTicker.save();
+          // Tạo chi tiết hóa đơn
+
+          const priceSell = numberTicket > 0 ? 0 : item.price;
+          const promotion = numberTicket > 0 ? item.price : 0;
+          numberTicket -= 1;
+          const billDetail = new MovieBillDetail({
+            movieBill: bill._id,
+            ticket: newTicker._id,
+            price: item.price,
+            priceSell,
+            promotion,
+          });
+
+          await billDetail.save();
+        });
+        // tính lại total bill
+        bill.total = totalTicket - totalTicket * discount;
+        bill.promotion = totalPriceTicketPoint + totalPriceTicketCoupon;
+        idTicketBill = bill._id;
+        await bill.save();
+      }
+      //#endregion
+
+      //#region  Tạo hóa đơn combo và combo detail
+      if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
+        const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
+        const oldId = lastBill[0]?.billId || `HDF_00000`;
+        const foodBill = new FoodBill({
+          billId: renderBillId(oldId),
+          user: userId,
+          showTime: stDetail.showTime,
+          showTimeDetail: showTimeDetailId,
+          cinema: cinema._id,
+          movieName: stDetail.showTime.movie.name,
+          roomName: stDetail.room.name,
+          screenName: stDetail.room.screen.name,
+          total: 0,
+          createdAt: new Date().toISOString(),
+          paymentType: payment.type,
+        });
+
+        // tạo combo detail
+        if (combos && combos.length > 0) {
+          for (let i = 0; i < combos.length; i++) {
+            const food = await Food.findById(combos[i]._id);
+            const foodDetail = new FoodDetail({
+              food: combos[i]._id,
+              foodBill: foodBill._id,
+              quantity: combos[i].quantity,
+              price: food.price,
+              priceSell: food.price,
+            });
+            await foodDetail.save();
+          }
+        }
+
+        if (gifts && giftList.length > 0) {
+          for (let i = 0; i < giftList.length; i++) {
+            const _gift = await Gift.findById(giftList[i]._id);
+            const foodGift = await Food.findById(_gift.foodId);
+            const foodDetailGift = new FoodDetail({
+              food: foodGift._id,
+              foodBill: foodBill._id,
+              quantity: giftList[i].quantity,
+              price: foodGift.price,
+              priceSell: 0,
+              promotion: giftList[i].quantity * foodGift.price,
+            });
+            await foodDetailGift.save();
+
+            // Tính tiền bắp nước đổi điểm và dùng coupon
+            if (giftList[i].coupon) {
+              totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
+            } else {
+              totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
+            }
+          }
+        }
+        foodBill.total = totalFood - totalFood * discount;
+        foodBill.promotion = totalPriceFoodCoupon + totalPriceFoodPoint;
+        idFoodBill = foodBill._id;
+        await foodBill.save();
+      }
+
+      //#endregion
+
+      //#region Disable coupon
+      if (coupons && coupons.length > 0) {
+        for (let i = 0; i < coupons.length; i++) {
+          const coupon = await Coupon.findOne({ code: coupons[i] });
+          if (coupon) {
+            coupon.status = 1;
+            await coupon.save();
           }
         }
       }
-      foodBill.total = totalFood - totalFood * discount;
-      foodBill.promotion = totalPriceFoodCoupon + totalPriceFoodPoint;
-      idFoodBill = foodBill._id;
-      await foodBill.save();
-    }
+      //#endregion
 
-    //#endregion
-
-    //#region Disable coupon
-    if (coupons && coupons.length > 0) {
-      for (let i = 0; i < coupons.length; i++) {
-        const coupon = await Coupon.findOne({ code: coupons[i] });
-        if (coupon) {
-          coupon.status = 1;
-          await coupon.save();
-        }
-      }
-    }
-    //#endregion
-
-    //#region update điểm thưởng
-    if (userId != USER_DEFAULT) {
-      const userPoint = await User.findById(userId);
-      const point =
-        (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS;
-      if (point > 1) {
-        userPoint.point = userPoint.point + Math.floor(point);
-        userPoint.moneyPoint = (point - Math.floor(point)) * POINT_BONUS;
-      } else {
-        userPoint.moneyPoint = userPoint.moneyPoint + totalFood + totalTicket;
-      }
-      await userPoint.save();
-    }
-    //#endregion
-
-    if (combos) {
-      for (let i = 0; i < combos.length; i++) {
-        const food = await Food.findById(combos[i]._id);
-        const indexCB = stDetail.food.combo.findIndex(
-          (x) => x._id == combos[i]._id
-        );
-        if (indexCB === -1) {
-          stDetail.food.combo.push({
-            _id: food._id,
-            name: food.name,
-            count: combos[i].quantity,
-            price: food.price,
-          });
+      //#region update điểm thưởng
+      if (userId != USER_DEFAULT) {
+        const userPoint = await User.findById(userId);
+        const point =
+          (userPoint.moneyPoint + totalFood + totalTicket) / POINT_BONUS;
+        if (point > 1) {
+          userPoint.point = userPoint.point + Math.floor(point);
+          userPoint.moneyPoint = (point - Math.floor(point)) * POINT_BONUS;
         } else {
-          stDetail.food.combo.set(indexCB, {
-            _id: food._id,
-            name: food.name,
-            count: stDetail.food.combo[indexCB].count + combos[i].quantity,
-            price: food.price,
-          });
+          userPoint.moneyPoint = userPoint.moneyPoint + totalFood + totalTicket;
         }
+        await userPoint.save();
       }
+      //#endregion
 
-      if (gifts && giftList.length > 0) {
-        for (let i = 0; i < giftList.length; i++) {
-          const _gift = await Gift.findById(giftList[i]._id);
-          const foodGift = await Food.findById(_gift.foodId);
-          const indexCB = stDetail.food.combo.findIndex(
-            (x) => x._id.toString().trim() === foodGift._id.toString().trim()
-          );
-          if (indexCB === -1) {
-            stDetail.food.combo.push({
-              _id: foodGift._id,
-              name: foodGift.name,
-              count: giftList[i].quantity,
-              price: foodGift.price,
-            });
-          } else {
-            stDetail.food.combo.set(indexCB, {
-              _id: foodGift._id,
-              name: foodGift.name,
-              count: stDetail.food.combo[indexCB].count + giftList[i].quantity,
-              price: foodGift.price,
-            });
-          }
+      //#region Xử lý email
 
-          // Tính tiền bắp nước đổi điểm và dùng coupon
-          if (giftList[i].coupon) {
-            totalPriceFoodCoupon += foodGift.price * giftList[i].quantity;
-          } else {
-            totalPriceFoodPoint += foodGift.price * giftList[i].quantity;
-          }
-        }
-      }
-    }
+      const email = user.email;
+      const paymentName = "Ví Momo";
+      const name = user?.profile?.fullName;
+      const tk = payment && payment?.username;
+      const date = moment().format("DD-MM-YYYY h:mm:ss");
+      const price =
+        totalTicket - totalTicket * discount + totalFood - totalFood * discount;
+      transporter.sendMail(
+        mailOptionPayment(email, paymentName, name, tk, date, price),
+        function (error, info) {}
+      );
+      //#endregion
 
-    //#endregion
-
-    //#region Xử lý email
-
-    const email = user.email;
-    const paymentName = "Ví Momo";
-    const name = user?.profile?.fullName;
-    const tk = payment && payment?.username;
-    const date = moment().format("DD-MM-YYYY h:mm:ss");
-    const price =
-      totalTicket - totalTicket * discount + totalFood - totalFood * discount;
-    transporter.sendMail(
-      mailOptionPayment(email, paymentName, name, tk, date, price),
-      function (error, info) {}
-    );
-    //#endregion
-
-    //#region render data showtime and response
-    await stDetail.save();
-    return res.redirect(paymentSuccessLink);
-    //#endregion
+      //#region render data showtime and response
+      await stDetail.save();
+      return res.redirect(paymentSuccessLink);
+      //#endregion
     }
     return res.redirect(paymentFailLink);
   } catch (error) {

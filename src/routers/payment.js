@@ -98,7 +98,7 @@ router.post("/login", verifyToken, async (req, res) => {
     }
     return res.json({
       success: false,
-      message: "Thông tin tài khoảng, hoặc mật khẩu không chính sác",
+      message: "Thông tin tài khoảng, hoặc mật khẩu không chính xác",
     });
   } catch (error) {
     return res.status(400).json({
