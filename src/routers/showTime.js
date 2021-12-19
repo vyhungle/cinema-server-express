@@ -15,6 +15,7 @@ import { ValidateShowTime } from "../utils/validators";
 import { errorCatch } from "../utils/constaints";
 import validateToken from "../middleware/staff";
 import validateTokenAll from "../middleware/custom";
+import { formatObjST } from "../utils/service";
 const getDate = (parentDate, childDate) => {
   return childDate === "" || childDate === undefined || childDate === null
     ? parentDate
@@ -119,11 +120,12 @@ router.post("/get-list-showtime", async (req, res) => {
       showTimes = showTimes.concat(showTimeList);
       date_start.setDate(date_start.getDate() + 1);
     } while (date_start <= date_end);
+    const data = mergeShowTime(showTimes, cinemaId);
 
     return res.json({
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
-      showTimes: mergeShowTime(showTimes, cinemaId),
+      showTimes: formatObjST(data),
     });
   } catch (error) {
     res.status(400).json({
@@ -164,6 +166,50 @@ router.get("/get-list-showtime-by-date", async (req, res) => {
       success: true,
       message: "Lấy danh sách lịch chiếu thành công",
       showTimes: resShowTimeByDate(showTimeFilter),
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
+
+router.get("/get-list-showtime-full", async (req, res) => {
+  const { movieId, date, screenId, location } = req.query;
+  try {
+    const showTimeList = await ShowTimeDetail.find({
+      date: moment(new Date(date)).format("L"),
+    })
+      .populate({
+        path: "room",
+        populate: {
+          path: "screen",
+        },
+        populate: {
+          path: "cinema",
+        },
+      })
+      .populate("timeSlot")
+      .populate({
+        path: "showTime",
+        populate: {
+          path: "movie",
+        },
+      });
+    const showTimeFilter = renderShowTime(
+      showTimeList,
+      movieId,
+      undefined,
+      screenId,
+      location
+    );
+
+    return res.json({
+      success: true,
+      message: "Lấy danh sách lịch chiếu thành công",
+      showTimes: mergeCinemaShowtime(showTimeFilter),
     });
   } catch (error) {
     res.status(400).json({

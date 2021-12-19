@@ -584,7 +584,7 @@ export const revenueYear = async (cinemaId, year) => {
 
 export const momoSend = async (data) => {
   const tokenOrder = generateToken(data);
-  console.log(tokenOrder)
+  console.log(tokenOrder);
   let info = "";
   data.data.forEach((item, index) => {
     if (data.data.length === 1) {
@@ -1099,7 +1099,6 @@ export const revenueStatisticsMovie = async (
     const dateStart = moment(_dateStart, "MM-DD-YYYY").format();
     const dateEnd = moment(_dateEnd, "MM-DD-YYYY").format();
 
-
     const lstFoodBill = await FoodBill.find({
       createdAt: {
         $gte: dateStart,
@@ -1159,4 +1158,24 @@ export const isCheckPointUser = async (userId) => {
     return true;
   }
   return false;
+};
+
+export const formatObjST = (lst) => {
+  const res = [];
+  lst.forEach((item) => {
+    item.times.forEach((time) => {
+      time.movieRoom.forEach((room) => {
+        const obj = {
+          date: item.date,
+          time: time.time,
+          room: room.room.name,
+          screen: room.room.screen.name,
+          movie: room.movie.name,
+        };
+        res.push(obj);
+      });
+    });
+  });
+
+  return res;
 };

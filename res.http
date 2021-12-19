@@ -634,7 +634,7 @@ GET http://localhost:4000/api/showTime/get-list-showtime-by-date?date=10/26/2021
 GET http://localhost:4000/api/showTime/get-showTime?date=10/26/2021&movieId=6169a42f038631344897c7c6&cinemaId=614c03db576b5d00376801a6&screenId=61644b0edf1b9d2700e43b25
 
 ###
-GET http://localhost:4000/api/showTime/get-list-showtime-full?date=12/1/2021&movieId=6169a42f038631344897c7c6&screenId=61644b0edf1b9d2700e43b25&location=Tỉnh%20Bắc%20Kạn
+GET http://localhost:4000/api/showTime/get-list-showtime-full
 
 
 ####

@@ -111,7 +111,7 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const checkDelete = await isDeleteRoom(req.params.id);
     if (checkDelete) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: `Hiện tại phòng này đang có xuất chiếu sử dụng, nên không thể xóa phòng này.`,
       });
