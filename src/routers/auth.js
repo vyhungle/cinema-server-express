@@ -225,21 +225,27 @@ router.post("/login", async (req, res) => {
 router.get("/get-user-by-phone", async (req, res) => {
   try {
     const user = await User.findOne({ phoneNumber: req.query.phoneNumber });
-    return res.json({
-      success: true,
-      message: "Lấy dữ liệu thành công",
-      user: {
-        ...user._doc,
-        password: undefined,
-        profile: {
-          ...user._doc.profile,
-          address: {
-            ...user._doc.profile.address,
-            lat: undefined,
-            lng: undefined,
+    if (user) {
+      return res.json({
+        success: true,
+        message: "Lấy dữ liệu thành công",
+        user: {
+          ...user._doc,
+          password: undefined,
+          profile: {
+            ...user._doc.profile,
+            address: {
+              ...user._doc.profile.address,
+              lat: undefined,
+              lng: undefined,
+            },
           },
         },
-      },
+      });
+    }
+    return res.status(404).json({
+      success: false,
+      message: "Không tìm thấy khách hàng này",
     });
   } catch (error) {
     res.status(400).json({
