@@ -58,7 +58,7 @@ export const objStaffDefault = {
   email: "admin@gmail.com",
   phoneNumber: "0983782100",
   profile: {
-    fullName: "Admin",
+    fullName: "Mua tại WEB",
     dateOfBirth: "11/26/2000",
     male: true,
     avatar:
