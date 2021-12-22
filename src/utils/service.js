@@ -949,6 +949,7 @@ const getListFoodBillDetail = async (fb, merge) => {
           date: moment(fb[i].createdAt).format("DD/MM/YYYY"),
           user: fb[i].user,
           staff: fb[i].staff,
+          promotionType: item.promotionType,
         });
         res.total += item.priceSell * item.quantity;
         res.promotion += item.promotion;
@@ -1001,6 +1002,7 @@ const getListMovieBillDetail = async (mb, merge) => {
             date: moment(mb[i].createdAt).format("DD/MM/YYYY"),
             user: mb[i].user,
             staff: mb[i].staff,
+            promotionType: item.promotionType,
           });
         } else {
           const index = lstTicket.findIndex(

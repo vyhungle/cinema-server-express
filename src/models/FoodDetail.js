@@ -13,6 +13,7 @@ const foodDetailSchema = new Schema({
   price: { type: Number, default: 0 },
   promotion: { type: Number, default: 0 },
   priceSell: { type: Number, default: 0 },
+  promotionType: { type: String, default: "Không dùng khuyến mãi" },
 });
 
 module.exports = model("fooddetails", foodDetailSchema);
