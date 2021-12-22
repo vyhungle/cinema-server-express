@@ -22,6 +22,12 @@ import { filterTimeSTD, generateToken, parseTime } from "./helper";
 import { mailOption, transporter } from "../config/nodeMailer";
 import axios from "axios";
 import moment from "moment";
+import {
+  objStaffDefault,
+  objUserDefault,
+  STAFF_DEFAULT,
+  USER_DEFAULT,
+} from "./constaints";
 
 export const getMoviePlay = async () => {
   const res = {
@@ -875,7 +881,9 @@ const mergeTicketBill = (lstTicket) => {
 };
 
 const getFoodBill = async (cinemaId, date) => {
-  const fb = await FoodBill.find({ cinema: cinemaId });
+  const fb = await FoodBill.find({ cinema: cinemaId })
+    .populate("user")
+    .populate("staff");
   const tam = fb.filter(
     (x) => moment(x.createdAt).format("MM/DD/YYYY") === date
   );
@@ -888,13 +896,17 @@ const getFoodBill = async (cinemaId, date) => {
       roomName: item?.roomName,
       screenName: item?.screenName,
       createdAt: item.createdAt,
+      user: item?.user == USER_DEFAULT ? objUserDefault : item.user,
+      staff: item?.staff == STAFF_DEFAULT ? objStaffDefault : item.staff,
     };
   });
   return tam;
 };
 
 const getMovieBill = async (cinemaId, date) => {
-  const mb = await MovieBill.find({ cinema: cinemaId });
+  const mb = await MovieBill.find({ cinema: cinemaId })
+    .populate("user")
+    .populate("staff");
   let tam = mb.filter((x) => moment(x.createdAt).format("MM/DD/YYYY") === date);
   tam.forEach((item, index) => {
     tam[index] = {
@@ -905,6 +917,8 @@ const getMovieBill = async (cinemaId, date) => {
       roomName: item?.roomName,
       screenName: item?.screenName,
       createdAt: item.createdAt,
+      user: item?.user == USER_DEFAULT ? objUserDefault : item.user,
+      staff: item?.staff == STAFF_DEFAULT ? objStaffDefault : item.staff,
     };
   });
   return tam;
@@ -917,7 +931,7 @@ const getListFoodBillDetail = async (fb, merge) => {
     promotion: 0,
   };
   for (let i = 0; i < fb.length; i++) {
-    const fbd = await FoodDetail.find({ foodBill: fb[i]._id }).populate("food");
+    const fbd = await FoodDetail.find({ foodBill: fb[i]._id });
     if (fbd) {
       const lstFood = [];
       fbd.forEach((item) => {
@@ -933,6 +947,8 @@ const getListFoodBillDetail = async (fb, merge) => {
           screenName: fb[i].screenName,
           createdAt: fb[i].createdAt,
           date: moment(fb[i].createdAt).format("DD/MM/YYYY"),
+          user: fb[i].user,
+          staff: fb[i].staff,
         });
         res.total += item.priceSell * item.quantity;
         res.promotion += item.promotion;
@@ -983,6 +999,8 @@ const getListMovieBillDetail = async (mb, merge) => {
             screenName: mb[i].screenName,
             createdAt: mb[i].createdAt,
             date: moment(mb[i].createdAt).format("DD/MM/YYYY"),
+            user: mb[i].user,
+            staff: mb[i].staff,
           });
         } else {
           const index = lstTicket.findIndex(
@@ -1120,6 +1138,7 @@ export const revenueStatisticsMovie = async (
     const lstFood = await getListFoodBillDetail(lstFoodBill, true);
     const lstTicket = await getListMovieBillDetail(lstTicketBill, true);
     return {
+      user: movie.user,
       movie: movie.name,
       totalFood: lstFood.total,
       totalTicket: lstTicket.total,

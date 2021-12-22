@@ -71,7 +71,7 @@ router.post("/add", verifyToken, async (req, res) => {
     gifts,
     coupons,
   } = req.body;
-  const { typeUser, id, type } = req;
+  const { typeUser, id, type, staffId } = req;
   try {
     //#region validate user
     const _userId = typeUser === 0 ? id : userId;
@@ -79,7 +79,7 @@ router.post("/add", verifyToken, async (req, res) => {
     if (!user) {
       res.status(400).json({
         success: false,
-        message: "Không tiềm thấy người dùng này trong hệ thống.",
+        message: "Không tìm thấy người dùng này trong hệ thống.",
       });
     }
 
@@ -261,6 +261,7 @@ router.post("/add", verifyToken, async (req, res) => {
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
+        staff: staffId,
       });
 
       // tạo vé
@@ -325,6 +326,7 @@ router.post("/add", verifyToken, async (req, res) => {
         total: 0,
         createdAt: new Date().toISOString(),
         paymentType: payment.type,
+        staff: staffId,
       });
 
       // tạo combo detail

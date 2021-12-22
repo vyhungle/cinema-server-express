@@ -1,10 +1,17 @@
 import { model, Schema } from "mongoose";
+import { STAFF_DEFAULT, USER_DEFAULT } from "../utils/constaints";
 
 const movieBillSchema = new Schema({
   billId: String,
   user: {
     type: Schema.Types.ObjectId,
+    default: USER_DEFAULT,
     ref: "users",
+  },
+  staff: {
+    type: Schema.Types.ObjectId,
+    default: STAFF_DEFAULT,
+    ref: "staffs",
   },
   showTime: {
     type: Schema.Types.ObjectId,
