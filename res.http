@@ -717,7 +717,7 @@ GET http://localhost:4000/api/ticker/success-payment?token=eyJhbGciOiJIUzI1NiIsI
 
 
 ###
-GET http://localhost:4000/api/ticker/get-list-ticker/618e8f1381140b0037dd343e
+GET http://localhost:4000/api/ticker/get-list-ticker/61a649095ffee10037731f1a
 
 ###
 GET http://localhost:4000/api/ticker/test/tk
@@ -978,3 +978,7 @@ Content-Type: application/json
     "fullName":"Lê Nguyễn Hùng Vỹ",
     "dateOfBirth":"11/26/2000"
 }
+
+
+#####
+GET http://localhost:4000/api/test/add-data

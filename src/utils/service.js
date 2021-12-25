@@ -962,7 +962,7 @@ const getListFoodBillDetail = async (fb, merge) => {
 
 const getTypeTicket = (type) => {
   if (type === 0) {
-    return "Vé trẻ em";
+    return "Vé thành viên";
   } else if (type == 1) {
     return "Vé người lớn";
   }

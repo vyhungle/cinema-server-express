@@ -380,6 +380,46 @@ export const getCinemaLocation = (cinemas) => {
   return locations;
 };
 
+const getAlphabetIndex = (key) => {
+  const alphabet = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+  return alphabet.findIndex((x) => x === key);
+};
+
+export const createSeatId = (key, stdId) => {
+  const alphabet = key.charAt(0);
+  const i = parseInt(key.substr(1)) + getAlphabetIndex(alphabet) * 10;
+  const idSeat = md5(i + alphabet + stdId);
+  console.log(new Date("12/24/2021").toISOString());
+  return idSeat;
+};
+
 export const renderObjTicket = (tickets, room, id) => {
   const res = [];
   const alphabet = [

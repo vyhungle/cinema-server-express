@@ -1,167 +1,113 @@
 import express from "express";
 const router = express.Router();
-import ShowTimeDetail from "../models/ShowTimeDetail.js";
-import haversine from "haversine";
-import axios from "axios";
-const jwt = require("jsonwebtoken");
-import { generateToken } from "../utils/helper";
-import request from "supertest";
-import { postAPI } from "../api/serverAPI.js";
+import Payment from "../models/Payment";
+import MovieBillDetail from "../models/MovieBillDetail";
+import FoodDetail from "../models/FoodDetail";
+import FoodBill from "../models/FoodBill";
+import MovieBill from "../models/MovieBill";
+import Coupon from "../models/Coupon";
+import Gift from "../models/Gift";
+import GiftDetail from "../models/GiftDetail";
+import User from "../models/User";
+import Cinema from "../models/Cinema";
+import Movie from "../models/Movie";
+import ShowTime from "../models/ShowTime";
+import ShowTimeDetail from "../models/ShowTimeDetail";
+import Ticker from "../models/Ticker";
+import Food from "../models/Food";
+import Room from "../models/Room";
+import TimeSlot from "../models/TimeSlot";
+import { createSeatId } from "../utils/helper";
+import { errorCatch } from "../utils/constaints";
+import { createBillTicket } from "../service/ticket";
 
 router.get("/test", async (req, res) => {
+  createSeatId("C1", "61a649095ffee10037731f1a");
+});
+
+router.get("/add-data", async (req, res) => {
   try {
-    const start = {
-      latitude: 12.721332807604266,
-      longitude: 108.23833814598193,
+    const data = {
+      // field tạo showtime
+      movieId: "616e7e62ecac510037c54960",
+      cinemaId: "614c03db576b5d00376801a6",
+
+      showTimes: [
+        {
+          // field tạo showtime detail [room showTime, timeSlot, date]
+          roomId: "6169a3a5038631344897c7b7",
+          time: "6154593a543dc74d680458ca",
+          date: "11/30/2021",
+          ticket: [
+            {
+              data: [
+                {
+                  seatName: "A1",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
+                {
+                  seatName: "A2",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
+              ],
+              combos: [],
+              gifts: [],
+              coupons: [],
+              payment: {
+                type: "0",
+              },
+              userId: "613e17d875cc9e00375d5ce5",
+            },
+          ],
+        },
+      ],
     };
 
-    // 12.721332807604266, 108.23833814598193
-    // 10.806698885168837, 106.62894702634684
-
-    const end = {
-      latitude: 10.823126287256677,
-      longitude: 106.6453205934414,
-    };
-    // 10.823126287256677, 106.6453205934414
-    // 10.768521579380778, 10.823126287256677
-    res.json({
-      km: haversine(start, end, { unit: "km" }),
-      meter: haversine(start, end, { unit: "meter" }),
+    const showTime = new ShowTime({
+      cinema: data.cinemaId,
+      movie: data.movieId,
     });
+
+    const movie = await Movie.findById(data.movieId);
+
+    data.showTimes.forEach(async (item) => {
+      const showTimeDetail = new ShowTimeDetail({
+        date: item.date,
+        room: item.roomId,
+        showTime: showTime._id,
+        timeSlot: item.time,
+      });
+
+      const room = await Room.findById(item.roomId).populate("screen");
+
+      item.ticket.forEach(async (ticket) => {
+        await createBillTicket(
+          ticket.data,
+          ticket.userId,
+          showTimeDetail._id,
+          data.cinemaId,
+          showTime._id,
+          movie?.name,
+          room?.name,
+          room?.screen?.name,
+          new Date(item.date).toISOString(),
+          ticket.payment.type
+        );
+      });
+
+      await showTimeDetail.save();
+    });
+
+    await showTime.save();
   } catch (error) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       message: errorCatch,
       errors: error.message,
-    });
-  }
-});
-
-router.post("/test-momo", async (req, res) => {
-  const data = req.body;
-  const tokenOrder = generateToken(data);
-
-  var partnerCode = "MOMOB8LF20211028";
-  var accessKey = "b8xE4uNzTm61kBbw";
-  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
-  var requestId = partnerCode + new Date().getTime();
-  var orderId = requestId;
-  var orderInfo = "kso shshs";
-  var redirectUrl = `http://localhost:4000/api/test/order-payment&token=${tokenOrder}`;
-  var ipnUrl = "https://callback.url/notify";
-  var amount = "50000";
-  var requestType = "captureWallet";
-  var extraData = ""; //pass empty value if your merchant does not have stores
-  var rawSignature =
-    "accessKey=" +
-    accessKey +
-    "&amount=" +
-    amount +
-    "&extraData=" +
-    extraData +
-    "&ipnUrl=" +
-    ipnUrl +
-    "&orderId=" +
-    orderId +
-    "&orderInfo=" +
-    orderInfo +
-    "&partnerCode=" +
-    partnerCode +
-    "&redirectUrl=" +
-    redirectUrl +
-    "&requestId=" +
-    requestId +
-    "&requestType=" +
-    requestType;
-  //puts raw signature
-  //signature
-  const crypto = require("crypto");
-  var signature = crypto
-    .createHmac("sha256", secretkey)
-    .update(rawSignature)
-    .digest("hex");
-
-
-  const requestBody = {
-    partnerCode: partnerCode,
-    accessKey: accessKey,
-    requestId: requestId,
-    amount: amount,
-    orderId: orderId,
-    orderInfo: orderInfo,
-    redirectUrl: redirectUrl,
-    ipnUrl: ipnUrl,
-    extraData: extraData,
-    requestType: requestType,
-    signature: signature,
-    lang: "vi",
-  };
-
-  const response = await axios.post(
-    "https://test-payment.momo.vn/v2/gateway/api/create",
-    requestBody
-  );
-  return res.json({
-    data: response.data,
-  });
-});
-
-router.post("/check-status", async (req, res) => {
-  const data = req.body;
-  const { orderId, requestId } = req.body;
-  const { resultCode } = req.query;
-
-  var partnerCode = "MOMOB8LF20211028";
-  var accessKey = "b8xE4uNzTm61kBbw";
-  var secretkey = "nR3w7l6cJIuUotsZVLxuwYFmIriG47Bk";
-  var rawSignature =
-    "accessKey=" +
-    accessKey +
-    "&orderId=" +
-    orderId +
-    "&partnerCode=" +
-    partnerCode +
-    "&requestId=" +
-    requestId;
-
-  //puts raw signature
-  //signature
-  const crypto = require("crypto");
-  var signature = crypto
-    .createHmac("sha256", secretkey)
-    .update(rawSignature)
-    .digest("hex");
-
-
-  const requestBody = {
-    partnerCode: partnerCode,
-    requestId: requestId,
-    orderId: orderId,
-    signature: signature,
-    lang: "vi",
-  };
-
-  const response = await axios.post(
-    "https://test-payment.momo.vn/v2/gateway/api/query",
-    requestBody
-  );
-  if (response.resultCode == 0) {
-  }
-  return res.json({
-    data: response.data,
-  });
-});
-
-router.get("/order-payment", async (req, res) => {
-  const { token } = req.query;
-  const client = request(req.app);
-  try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const isOrder = postAPI(client, "/api/ticker/add", decoded);
-    res.json(isOrder);
-  } catch (error) {
-    return res.json({
-      message: error.message,
     });
   }
 });
