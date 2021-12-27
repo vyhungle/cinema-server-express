@@ -19,7 +19,7 @@ import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
 import { createSeatId } from "../utils/helper";
 import { errorCatch } from "../utils/constaints";
-import { createBillTicket } from "../service/ticket";
+import { createBillTicket, createFoodBill } from "../service/ticket";
 
 router.get("/test", async (req, res) => {
   createSeatId("C1", "61a649095ffee10037731f1a");
@@ -29,15 +29,16 @@ router.get("/add-data", async (req, res) => {
   try {
     const data = {
       // field tạo showtime
-      movieId: "616e7e62ecac510037c54960",
-      cinemaId: "614c03db576b5d00376801a6",
+      movieId: "6169a42f038631344897c7c6",
+      cinemaId: "614c8a9e192439003768b5c1",
+      staffId: "61c9b0eff18ff040e88fb145",
 
       showTimes: [
         {
           // field tạo showtime detail [room showTime, timeSlot, date]
-          roomId: "6169a3a5038631344897c7b7",
+          roomId: "61a635c42e81e9003766942f",
           time: "6154593a543dc74d680458ca",
-          date: "11/30/2021",
+          date: "10/5/2021",
           ticket: [
             {
               data: [
@@ -53,9 +54,54 @@ router.get("/add-data", async (req, res) => {
                   status: 0,
                   type: 1,
                 },
+                {
+                  seatName: "A3",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
               ],
-              combos: [],
-              gifts: [],
+              combos: [{ _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }],
+              gifts: [
+                { _id: "61829527a96d972d441fb349", quantity: 1, coupon: false },
+                // { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
+                // { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: false },
+                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
+              ],
+              coupons: [],
+              payment: {
+                type: "0",
+              },
+              userId: "613e17d875cc9e00375d5ce5",
+            },
+            {
+              data: [
+                {
+                  seatName: "A4",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
+                {
+                  seatName: "A5",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
+                {
+                  seatName: "A6",
+                  price: 80000,
+                  status: 0,
+                  type: 1,
+                },
+              ],
+              combos: [{ _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }],
+              gifts: [
+                { _id: "61829527a96d972d441fb349", quantity: 1, coupon: false },
+                { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
+                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: false },
+                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
+              ],
               coupons: [],
               payment: {
                 type: "0",
@@ -95,7 +141,23 @@ router.get("/add-data", async (req, res) => {
           room?.name,
           room?.screen?.name,
           new Date(item.date).toISOString(),
-          ticket.payment.type
+          ticket.payment.type,
+          data.staffId,
+          ticket.gifts
+        );
+        await createFoodBill(
+          ticket.combos,
+          ticket.userId,
+          showTimeDetail._id,
+          data.cinemaId,
+          showTime._id,
+          movie?.name,
+          room?.name,
+          room?.screen?.name,
+          new Date(item.date).toISOString(),
+          ticket.payment.type,
+          data.staffId,
+          ticket.gifts
         );
       });
 
@@ -103,6 +165,10 @@ router.get("/add-data", async (req, res) => {
     });
 
     await showTime.save();
+
+    return res.json({
+      message: "Thêm thành công",
+    });
   } catch (error) {
     res.status(400).json({
       success: false,
