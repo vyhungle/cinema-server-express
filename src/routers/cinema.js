@@ -274,22 +274,31 @@ router.get("/get/thong-ke-all-rap-theo-quy", async (req, res) => {
   }
 });
 
-router.get("/get/thong-ke-doanh-thu-theo-ngay", async (req, res) => {
-  try {
-    const { cinemaId, date } = req.query;
-    return res.json({
-      success: true,
-      message: "Thống kê thành công",
-      values: await thongKeTheoNgay(cinemaId, date),
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: errorCatch,
-      errors: error.message,
-    });
+router.get(
+  "/get/thong-ke-doanh-thu-theo-ngay",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const { type, staffId, cinema } = req;
+      const { date } = req.query;
+      let staffIdFilter = undefined;
+      if (type == 2) {
+        staffIdFilter = staffId;
+      }
+      return res.json({
+        success: true,
+        message: "Thống kê thành công",
+        values: await thongKeTheoNgay(cinema, date, staffIdFilter),
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: errorCatch,
+        errors: error.message,
+      });
+    }
   }
-});
+);
 router.get(
   "/get/thong-ke-doanh-thu-theo-thang",
   verifyToken,

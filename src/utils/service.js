@@ -836,9 +836,9 @@ export const thongKeRapTheoQuy = async (year) => {
   return yearData;
 };
 
-export const thongKeTheoNgay = async (cinemaId, date) => {
-  let fb = await getFoodBill(cinemaId, date);
-  let mb = await getMovieBill(cinemaId, date);
+export const thongKeTheoNgay = async (cinemaId, date, staffId) => {
+  let fb = await getFoodBill(cinemaId, date, staffId);
+  let mb = await getMovieBill(cinemaId, date, staffId);
 
   const lstFood = await getListFoodBillDetail(fb);
   const lstTicket = await getListMovieBillDetail(mb);
@@ -880,8 +880,8 @@ const mergeTicketBill = (lstTicket) => {
   return res;
 };
 
-const getFoodBill = async (cinemaId, date) => {
-  const fb = await FoodBill.find({ cinema: cinemaId })
+const getFoodBill = async (cinemaId, date, staffId = undefined) => {
+  const fb = await FoodBill.find({ cinema: cinemaId, staff: staffId })
     .populate("user")
     .populate("staff");
   const tam = fb.filter(
@@ -903,8 +903,8 @@ const getFoodBill = async (cinemaId, date) => {
   return tam;
 };
 
-const getMovieBill = async (cinemaId, date) => {
-  const mb = await MovieBill.find({ cinema: cinemaId })
+const getMovieBill = async (cinemaId, date, staffId = undefined) => {
+  const mb = await MovieBill.find({ cinema: cinemaId, staff: staffId })
     .populate("user")
     .populate("staff");
   let tam = mb.filter((x) => moment(x.createdAt).format("MM/DD/YYYY") === date);

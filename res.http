@@ -355,15 +355,15 @@ DELETE http://localhost:4000/api/permission/delete/6149d4db9c68673610441a59
 ### Thêm nhân viên
 POST http://localhost:4000/api/staff/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJpYXQiOjE2Mzc5OTk0NjMsImV4cCI6MTYzOTIwOTA2M30.rK8jRBowlvPS22mHKZEY0IVD9nkIkPj5JUk5CE0KNoQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJjaW5lbWEiOiI2MTRjMDNkYjU3NmI1ZDAwMzc2ODAxYTYiLCJpYXQiOjE2NDA2MDc3NjksImV4cCI6MTY0MTgxNzM2OX0.bWouWDsi8ZwocHsXGQ4JJQB-gBtWWjteICVc32Yj_6Y
 
 {
-    "email":"manage@gmail.com",
-    "phoneNumber":"0983782200",
-    "fullName":"manage",
+    "email":"user1@gmail.com",
+    "phoneNumber":"0983782201",
+    "fullName":"Lê Văn An",
     "male":true,
     "dateOfBirth":"11/26/2000",
-    "permissionId":"6149d45f52d8c52050d24e45",
+    "permissionId":"6149d46c52d8c52050d24e47",
     "cinemaId":"614c8a9e192439003768b5c1"
 }
 
@@ -372,7 +372,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"manage@gmail.com",    
+    "username":"admin@gmail.com",    
     "password":"123456"
 }
 
@@ -906,6 +906,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/04/2021
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJjaW5lbWEiOiI2MTRjMDNkYjU3NmI1ZDAwMzc2ODAxYTYiLCJpYXQiOjE2NDA2MDc3NjksImV4cCI6MTY0MTgxNzM2OX0.bWouWDsi8ZwocHsXGQ4JJQB-gBtWWjteICVc32Yj_6Y
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
@@ -982,3 +983,10 @@ Content-Type: application/json
 
 #####
 GET http://localhost:4000/api/test/add-data
+
+
+
+
+###
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/26/2021
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWM5YjBlZmYxOGZmMDQwZTg4ZmIxNDUiLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjIwMSIsInR5cGUiOiIyIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjQwNjA3OTgzLCJleHAiOjE2NDE4MTc1ODN9.B2xj1U7c8d1hpA9R7katb80_OVGw_PNLPkss8OX5eeo
