@@ -123,7 +123,7 @@ const getPrice = (isGift, isCoupon, price) => {
   return price;
 };
 
-const getTypeKM = (isGift, isCoupon) => {
+export const getTypeKM = (isGift, isCoupon) => {
   if (isGift > 0) {
     return "Đổi điểm";
   } else if (isCoupon > 0) {

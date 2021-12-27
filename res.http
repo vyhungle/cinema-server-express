@@ -372,7 +372,7 @@ POST http://localhost:4000/api/staff/login
 Content-Type: application/json
 
 {
-    "username":"admin@gmail.com",    
+    "username":"long.long@gmail.com",    
     "password":"123456"
 }
 
@@ -651,38 +651,28 @@ Content-Type: application/json
 ####
 POST http://localhost:4000/api/ticker/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTYzODM2NDgzNywiZXhwIjoxNjM5NTc0NDM3fQ.zbjWBjeU7pGX7WUAr_raoEFUC36WddoCdOCRRd0udQE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MDYxNDA4MCwiZXhwIjoxNjQxODIzNjgwfQ.XC5iVPeDW42Izz0Ye9jB5IEj1mQBBInGfGz3SejMVi4
 
 
 {
-  "combos": [],
+  "combos": [
+        {"_id":"617cf540fb0f0b175c1d80c8","quantity":2},
+        {"_id":"617cf561fb0f0b175c1d80ca","quantity":1}
+    ],
   "data": [
-    {
-      "idSeat": "34f4856b847c6e7b630b01fd897e8a09",
-      "seatName": "C6",
-      "price": 80000,
-      "status": 0,
-      "type": 1,
-      "showTimesDetails": "61ac74b915d3500037d6ebea"
-    }
+        {"seatName":"E7", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1},
+        {"seatName":"E8", "price":95000, "idSeat":"800ca1beab17a89df15c98a86fb1fe15", "status":1}
   ],
   "payment": {
     "type": "0"
   },
-  "showTimeDetailId": "61ac74b915d3500037d6ebea",
-  "userId": "613e17d875cc9e00375d5ce5",
+  "showTimeDetailId": "61a65910b939bf0037f22c72",
+  "userId": "613da2d8736aa826841481b3",
   "gifts": [
-    {
-      "_id": "61829514a96d972d441fb345",
-      "name": "Vé xem phim 2D",
-      "image": "https://www.galaxycine.vn/media/2021/4/7/combo1_1617790472299.jpg",
-      "point": 350,
-      "type": 0,
-      "__v": 0,
-      "screenId": "61644b0edf1b9d2700e43b25",
-      "quantity": 1,
-      "coupon": false
-    }
+    {"_id":"6182951ca96d972d441fb347","quantity":1 , "coupon":false }, 
+    {"_id":"6182951ca96d972d441fb347","quantity":1 , "coupon":true },  
+
+    {"_id":"618293aab3b05642dc7bf89f","quantity":1, "coupon":false },
   ],
   "coupons": []
 }

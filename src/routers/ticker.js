@@ -40,6 +40,7 @@ import {
 import { mailOptionPayment, transporter } from "../config/nodeMailer";
 import moment from "moment";
 import { renderBillId } from "../utils/format";
+import { getTypeKM } from "../service/ticket";
 
 router.get("/test/tk", async (req, res) => {
   try {
@@ -89,6 +90,8 @@ router.post("/add", verifyToken, async (req, res) => {
     let idTicketBill = "";
     let idFoodBill = "";
     let numberTicket = 0;
+    let numberTicketGift = 0;
+    let numberTicketCoupon = 0;
     let giftPoint = 0;
     let giftList = [];
     let priceTicket = 0;
@@ -157,6 +160,11 @@ router.post("/add", verifyToken, async (req, res) => {
         // type = 0 loại vé
         if (gift.type === 0) {
           numberTicket += gifts[i].quantity;
+          if (gifts[i].coupon) {
+            numberTicketCoupon += gifts[i].quantity;
+          } else {
+            numberTicketGift += gifts[i].quantity;
+          }
           // nếu vé coupon
           if (gifts[i].coupon) {
             // tính tổng số lượng và tổng tiền vé coupon
@@ -298,8 +306,14 @@ router.post("/add", verifyToken, async (req, res) => {
           price: item.price,
           priceSell,
           promotion,
+          promotionType: getTypeKM(numberTicketGift, numberTicketCoupon),
         });
         await billDetail.save();
+        if (numberTicketGift > 0) {
+          numberTicketGift--;
+        } else if (numberTicketCoupon > 0) {
+          numberTicketCoupon--;
+        }
         // trừ vé free
       });
       // tính lại total bill
@@ -355,6 +369,9 @@ router.post("/add", verifyToken, async (req, res) => {
             price: foodGift.price,
             priceSell: 0,
             promotion: giftList[i].quantity * foodGift.price,
+            promotionType: giftList[i].coupon
+              ? "Dùng phiếm mua hàng"
+              : "Đổi điểm",
           });
           await foodDetailGift.save();
 
@@ -613,6 +630,8 @@ router.get("/success-payment", async (req, res) => {
       let idTicketBill = "";
       let idFoodBill = "";
       let numberTicket = 0;
+      let numberTicketGift = 0;
+      let numberTicketCoupon = 0;
       let giftPoint = 0;
       let giftList = [];
       let priceTicket = 0;
@@ -656,6 +675,11 @@ router.get("/success-payment", async (req, res) => {
           // type = 0 loại vé
           if (gift.type === 0) {
             numberTicket += gifts[i].quantity;
+            if (gifts[i].coupon) {
+              numberTicketCoupon += gifts[i].quantity;
+            } else {
+              numberTicketGift += gifts[i].quantity;
+            }
             // nếu vé coupon
             if (gifts[i].coupon) {
               // tính tổng số lượng và tổng tiền vé coupon
@@ -749,8 +773,14 @@ router.get("/success-payment", async (req, res) => {
             price: item.price,
             priceSell,
             promotion,
+            promotionType: getTypeKM(numberTicketGift, numberTicketCoupon),
           });
 
+          if (numberTicketGift > 0) {
+            numberTicketGift--;
+          } else if (numberTicketCoupon > 0) {
+            numberTicketCoupon--;
+          }
           await billDetail.save();
         });
         // tính lại total bill
@@ -805,6 +835,9 @@ router.get("/success-payment", async (req, res) => {
               price: foodGift.price,
               priceSell: 0,
               promotion: giftList[i].quantity * foodGift.price,
+              promotionType: giftList[i].coupon
+                ? "Dùng phiếm mua hàng"
+                : "Đổi điểm",
             });
             await foodDetailGift.save();
 
