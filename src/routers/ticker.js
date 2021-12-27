@@ -158,7 +158,7 @@ router.post("/add", verifyToken, async (req, res) => {
         if (gift.type === 0) {
           numberTicket += gifts[i].quantity;
           // nếu vé coupon
-          if (gift.coupon) {
+          if (gifts[i].coupon) {
             // tính tổng số lượng và tổng tiền vé coupon
             // countTicketCoupon += gifts[i].quantity;
             totalPriceTicketCoupon +=
@@ -657,7 +657,7 @@ router.get("/success-payment", async (req, res) => {
           if (gift.type === 0) {
             numberTicket += gifts[i].quantity;
             // nếu vé coupon
-            if (gift.coupon) {
+            if (gifts[i].coupon) {
               // tính tổng số lượng và tổng tiền vé coupon
               // countTicketCoupon += gifts[i].quantity;
               totalPriceTicketCoupon +=
