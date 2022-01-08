@@ -101,7 +101,7 @@ router.get("/get-gift", verifyToken, async (req, res) => {
         },
       });
     }
-    return res.success(400).json({
+    return res.status(400).json({
       success: couponRes.success,
       message: couponRes.success
         ? "Lấy coupon thành công"
