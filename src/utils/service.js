@@ -515,7 +515,7 @@ export const revenueYear = async (cinemaId, year) => {
     `1/1/${parseInt(year, 10) + 1}`,
     "MM-DD-YYYY"
   ).format();
-  console.log(dateStart,dateEnd)
+  console.log(dateStart, dateEnd);
   const dataFood = await FoodBill.find({
     createdAt: {
       $gte: dateStart,
@@ -881,9 +881,17 @@ const mergeTicketBill = (lstTicket) => {
 };
 
 const getFoodBill = async (cinemaId, date, staffId = undefined) => {
-  const fb = await FoodBill.find({ cinema: cinemaId, staff: staffId })
-    .populate("user")
-    .populate("staff");
+  let fb;
+  if (staffId) {
+    fb = await FoodBill.find({ cinema: cinemaId, staff: staffId })
+      .populate("user")
+      .populate("staff");
+  } else {
+    fb = await FoodBill.find({ cinema: cinemaId })
+      .populate("user")
+      .populate("staff");
+  }
+
   const tam = fb.filter(
     (x) => moment(x.createdAt).format("MM/DD/YYYY") === date
   );
@@ -904,9 +912,16 @@ const getFoodBill = async (cinemaId, date, staffId = undefined) => {
 };
 
 const getMovieBill = async (cinemaId, date, staffId = undefined) => {
-  const mb = await MovieBill.find({ cinema: cinemaId, staff: staffId })
-    .populate("user")
-    .populate("staff");
+  let mb;
+  if (staffId) {
+    mb = await MovieBill.find({ cinema: cinemaId, staff: staffId })
+      .populate("user")
+      .populate("staff");
+  } else {
+    mb = await MovieBill.find({ cinema: cinemaId })
+      .populate("user")
+      .populate("staff");
+  }
   let tam = mb.filter((x) => moment(x.createdAt).format("MM/DD/YYYY") === date);
   tam.forEach((item, index) => {
     tam[index] = {
@@ -1073,7 +1088,7 @@ const getMonthPlus = (value) => {
 };
 
 export const getDateEnd = (month, year) => {
-  return new Date(year, month , 0);
+  return new Date(year, month, 0);
 };
 
 export const getBillByMonth = async (month, year, cinema) => {
