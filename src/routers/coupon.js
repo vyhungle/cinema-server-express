@@ -101,15 +101,24 @@ router.get("/get-gift", verifyToken, async (req, res) => {
         },
       });
     }
-    return res.status(400).json({
-      success: couponRes.success,
-      message: couponRes.success
-        ? "Lấy coupon thành công"
-        : "Không tìm thấy mã coupon này.",
-      values: {
-        coupon: couponRes.coupon,
-      },
-    });
+
+    if (couponRes.success) {
+      return res.json({
+        success: couponRes.success,
+        message: "Lấy coupon thành công",
+        values: {
+          coupon: couponRes.coupon,
+        },
+      });
+    } else {
+      return res.status(400).json({
+        success: couponRes.success,
+        message: "Không tìm thấy mã coupon này.",
+        values: {
+          coupon: couponRes.coupon,
+        },
+      });
+    }
   } catch (error) {
     return res.json(
       responseModalError(false, errorCatch, { errors: error.message })
