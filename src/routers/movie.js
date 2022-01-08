@@ -116,7 +116,8 @@ router.put("/update/:id", async (req, res) => {
       cast,
       age,
       dateStart,
-      dateEnd
+      dateEnd,
+      true
     );
     if (valid) {
       movie.name = name;
@@ -207,6 +208,7 @@ const getMovie = async (movie) => {
   const categoryDetail = await CategoryDetail.find({
     movie: movie.id,
   }).populate("category");
+  console.log(categoryDetail);
   const screenDetail = await ScreenDetail.find({
     movie: movie.id,
   }).populate("screen");
