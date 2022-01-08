@@ -79,6 +79,7 @@ Content-Type: application/json
     "password":"6r8ytunq"
 }
 
+
 ### get my user
 GET http://localhost:4000/api/auth/me
 Content-Type: application/json
@@ -301,7 +302,7 @@ GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=6
 
 ####
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&year=2021
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZTM3NDVhNTE2NzM5OTg2MTJhMWIiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDk4Mzc4MjEwMCIsInR5cGUiOiIwIiwiY2luZW1hIjoiNjE0YzhhOWUxOTI0MzkwMDM3NjhiNWMxIiwiaWF0IjoxNjM4MjgxNzg5LCJleHAiOjE2Mzk0OTEzODl9.NSISvl6GjaqZXlRRMxLm8s8IBeqctrOVQ1XczdO6seI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MTYyODMzNSwiZXhwIjoxNjQyODM3OTM1fQ.v9reH7ia7Wb-KXk7eib9TO0p96mlsSM3gRtpUJlEmvk
 
 
 
@@ -902,7 +903,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwia
 GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-theo-quy?cinemaId=614c8a9e192439003768b5c1
+GET http://localhost:4000/api/cinema/get/thong-ke-theo-quy?cinemaId=614c03db576b5d00376801a6&year=2021
 
 
 ###

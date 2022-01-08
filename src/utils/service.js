@@ -515,6 +515,7 @@ export const revenueYear = async (cinemaId, year) => {
     `1/1/${parseInt(year, 10) + 1}`,
     "MM-DD-YYYY"
   ).format();
+  console.log(dateStart,dateEnd)
   const dataFood = await FoodBill.find({
     createdAt: {
       $gte: dateStart,
@@ -931,7 +932,6 @@ const getListFoodBillDetail = async (fb, merge) => {
   };
   for (let i = 0; i < fb.length; i++) {
     const fbd = await FoodDetail.find({ foodBill: fb[i]._id }).populate("food");
-    console.log(fbd)
     if (fbd) {
       const lstFood = [];
       fbd.forEach((item) => {
