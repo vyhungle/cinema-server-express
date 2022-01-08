@@ -416,7 +416,6 @@ export const createSeatId = (key, stdId) => {
   const alphabet = key.charAt(0);
   const i = parseInt(key.substr(1)) + getAlphabetIndex(alphabet) * 10;
   const idSeat = md5(i + alphabet + stdId);
-  console.log(new Date("12/24/2021").toISOString());
   return idSeat;
 };
 

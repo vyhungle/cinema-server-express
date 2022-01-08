@@ -20,6 +20,7 @@ import TimeSlot from "../models/TimeSlot";
 import { createSeatId } from "../utils/helper";
 import { errorCatch } from "../utils/constaints";
 import { createBillTicket, createFoodBill } from "../service/ticket";
+import { getDateEnd } from "../utils/service";
 
 router.get("/test", async (req, res) => {
   createSeatId("C1", "61a649095ffee10037731f1a");
@@ -28,17 +29,18 @@ router.get("/test", async (req, res) => {
 router.get("/add-data", async (req, res) => {
   try {
     const data = {
+      month: 11,
+      year: 2021,
       // field tạo showtime
-      movieId: "6169a42f038631344897c7c6",
-      cinemaId: "614c8a9e192439003768b5c1",
-      staffId: "61c9b0eff18ff040e88fb145",
+      movieId: "616e7e62ecac510037c54960",
+      cinemaId: "614c03db576b5d00376801a6",
+      staffId: "61d93b2b16fc3b1db89e178e",
 
       showTimes: [
         {
           // field tạo showtime detail [room showTime, timeSlot, date]
-          roomId: "61a635c42e81e9003766942f",
-          time: "6154593a543dc74d680458ca",
-          date: "10/5/2021",
+          roomId: "6169a3b2038631344897c7bc",
+          time: "61545946543dc74d680458cc",
           ticket: [
             {
               data: [
@@ -54,25 +56,27 @@ router.get("/add-data", async (req, res) => {
                   status: 0,
                   type: 1,
                 },
-                {
-                  seatName: "A3",
-                  price: 80000,
-                  status: 0,
-                  type: 1,
-                },
+                // {
+                //   seatName: "A3",
+                //   price: 80000,
+                //   status: 0,
+                //   type: 1,
+                // },
               ],
-              combos: [{ _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }],
+              combos: [
+                { _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }
+              ],
               gifts: [
                 { _id: "61829527a96d972d441fb349", quantity: 1, coupon: false },
-                // { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
-                // { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: false },
-                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
+                // // { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
+                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: false },
+                // { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
               ],
               coupons: [],
               payment: {
                 type: "0",
               },
-              userId: "613e17d875cc9e00375d5ce5",
+             userId:"618b427057aee3003765620d"
             },
             {
               data: [
@@ -82,89 +86,101 @@ router.get("/add-data", async (req, res) => {
                   status: 0,
                   type: 1,
                 },
-                {
-                  seatName: "A5",
-                  price: 80000,
-                  status: 0,
-                  type: 1,
-                },
-                {
-                  seatName: "A6",
-                  price: 80000,
-                  status: 0,
-                  type: 1,
-                },
+                // {
+                //   seatName: "A5",
+                //   price: 80000,
+                //   status: 0,
+                //   type: 1,
+                // },
+                // {
+                //   seatName: "A6",
+                //   price: 80000,
+                //   status: 0,
+                //   type: 1,
+                // },
               ],
-              combos: [{ _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }],
+              combos: [
+                { _id: "617cf540fb0f0b175c1d80c8", quantity: 1 }
+              ],
               gifts: [
-                { _id: "61829527a96d972d441fb349", quantity: 1, coupon: false },
-                { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
+                // { _id: "61829527a96d972d441fb349", quantity: 1, coupon: false },
+                // { _id: "61829527a96d972d441fb349", quantity: 1, coupon: true },
                 { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: false },
-                { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
+                // { _id: "618293aab3b05642dc7bf89f", quantity: 1, coupon: true },
               ],
               coupons: [],
               payment: {
                 type: "0",
               },
-              userId: "613e17d875cc9e00375d5ce5",
+             userId:"61c07789b801230037c0bb59"
             },
           ],
         },
       ],
     };
 
-    const showTime = new ShowTime({
-      cinema: data.cinemaId,
-      movie: data.movieId,
-    });
 
-    const movie = await Movie.findById(data.movieId);
+    const dateEnd = getDateEnd(data.month, data.year).getDate();
+    let date = 1;
+    while (dateEnd >= date) {
+      const createdAt = new Date(
+        `${data.month}/${date}/${data.year}`
+      ).toISOString();
 
-    data.showTimes.forEach(async (item) => {
-      const showTimeDetail = new ShowTimeDetail({
-        date: item.date,
-        room: item.roomId,
-        showTime: showTime._id,
-        timeSlot: item.time,
+      const showTime = new ShowTime({
+        cinema: data.cinemaId,
+        movie: data.movieId,
       });
 
-      const room = await Room.findById(item.roomId).populate("screen");
+      const movie = await Movie.findById(data.movieId);
 
-      item.ticket.forEach(async (ticket) => {
-        await createBillTicket(
-          ticket.data,
-          ticket.userId,
-          showTimeDetail._id,
-          data.cinemaId,
-          showTime._id,
-          movie?.name,
-          room?.name,
-          room?.screen?.name,
-          new Date(item.date).toISOString(),
-          ticket.payment.type,
-          data.staffId,
-          ticket.gifts
-        );
-        await createFoodBill(
-          ticket.combos,
-          ticket.userId,
-          showTimeDetail._id,
-          data.cinemaId,
-          showTime._id,
-          movie?.name,
-          room?.name,
-          room?.screen?.name,
-          new Date(item.date).toISOString(),
-          ticket.payment.type,
-          data.staffId,
-          ticket.gifts
-        );
+      data.showTimes.forEach(async (item) => {
+        const showTimeDetail = new ShowTimeDetail({
+          date: item.date,
+          room: item.roomId,
+          showTime: showTime._id,
+          timeSlot: item.time,
+        });
+
+        const room = await Room.findById(item.roomId).populate("screen");
+
+        item.ticket.forEach(async (ticket) => {
+          await createBillTicket(
+            ticket.data,
+            ticket.userId,
+            showTimeDetail._id,
+            data.cinemaId,
+            showTime._id,
+            movie?.name,
+            room?.name,
+            room?.screen?.name,
+            createdAt,
+            ticket.payment.type,
+            data.staffId,
+            ticket.gifts
+          );
+          await createFoodBill(
+            ticket.combos,
+            ticket.userId,
+            showTimeDetail._id,
+            data.cinemaId,
+            showTime._id,
+            movie?.name,
+            room?.name,
+            room?.screen?.name,
+            createdAt,
+            ticket.payment.type,
+            data.staffId,
+            ticket.gifts
+          );
+        });
+
+        await showTimeDetail.save();
       });
 
-      await showTimeDetail.save();
-    });
-
-    await showTime.save();
+      await showTime.save();
+      date++;
+    }
 
     return res.json({
       message: "Thêm thành công",

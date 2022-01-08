@@ -590,7 +590,6 @@ export const revenueYear = async (cinemaId, year) => {
 
 export const momoSend = async (data) => {
   const tokenOrder = generateToken(data);
-  console.log(tokenOrder);
   let info = "";
   data.data.forEach((item, index) => {
     if (data.data.length === 1) {
@@ -931,7 +930,8 @@ const getListFoodBillDetail = async (fb, merge) => {
     promotion: 0,
   };
   for (let i = 0; i < fb.length; i++) {
-    const fbd = await FoodDetail.find({ foodBill: fb[i]._id });
+    const fbd = await FoodDetail.find({ foodBill: fb[i]._id }).populate("food");
+    console.log(fbd)
     if (fbd) {
       const lstFood = [];
       fbd.forEach((item) => {
@@ -1070,6 +1070,10 @@ const getMonthPlus = (value) => {
     return 1;
   }
   return month + 1;
+};
+
+export const getDateEnd = (month, year) => {
+  return new Date(year, month , 0);
 };
 
 export const getBillByMonth = async (month, year, cinema) => {

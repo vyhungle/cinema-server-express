@@ -208,7 +208,6 @@ const getMovie = async (movie) => {
   const categoryDetail = await CategoryDetail.find({
     movie: movie.id,
   }).populate("category");
-  console.log(categoryDetail);
   const screenDetail = await ScreenDetail.find({
     movie: movie.id,
   }).populate("screen");

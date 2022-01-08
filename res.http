@@ -358,13 +358,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJjaW5lbWEiOiI2MTRjMDNkYjU3NmI1ZDAwMzc2ODAxYTYiLCJpYXQiOjE2NDA2MDc3NjksImV4cCI6MTY0MTgxNzM2OX0.bWouWDsi8ZwocHsXGQ4JJQB-gBtWWjteICVc32Yj_6Y
 
 {
-    "email":"user1@gmail.com",
-    "phoneNumber":"0983782201",
+    "email":"staff2@gmail.com",
+    "phoneNumber":"0983782203",
     "fullName":"Lê Văn An",
     "male":true,
     "dateOfBirth":"11/26/2000",
     "permissionId":"6149d46c52d8c52050d24e47",
-    "cinemaId":"614c8a9e192439003768b5c1"
+    "cinemaId":"614c03db576b5d00376801a6"
 }
 
 #### Đăng nhập
@@ -895,8 +895,8 @@ GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzODM2NjM2NSwiZXhwIjoxNjM5NTc1OTY1fQ.iE_QWWW2-MhbthRn87zlB9bCMrqIBghbiZEo_NQkTWw
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=12/04/2021
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJjaW5lbWEiOiI2MTRjMDNkYjU3NmI1ZDAwMzc2ODAxYTYiLCJpYXQiOjE2NDA2MDc3NjksImV4cCI6MTY0MTgxNzM2OX0.bWouWDsi8ZwocHsXGQ4JJQB-gBtWWjteICVc32Yj_6Y
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c03db576b5d00376801a6&date=12/04/2021
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWQ5M2IxYzE2ZmMzYjFkYjg5ZTE3ODUiLCJlbWFpbCI6InN0YWZmMUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDIiLCJ0eXBlIjoiMiIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MTYyNzU4NiwiZXhwIjoxNjQyODM3MTg2fQ.2jhiTHiEss0jT7xO2RY5W4xsHaoY7LUT3ppP4HbnDqw
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
