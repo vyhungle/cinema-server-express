@@ -83,7 +83,7 @@ router.get("/get-gift", verifyToken, async (req, res) => {
     const couponRes = await getCoupon(_id, code);
 
     if (couponRes.coupon?.status === 1) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Mã coupon đã được sử dụng, vui lòng nhập mã khác.",
         // trả về coupon theo yêu cần của Long.
@@ -92,7 +92,7 @@ router.get("/get-gift", verifyToken, async (req, res) => {
         },
       });
     } else if (couponRes.coupon?.dateExpiry < Date.now()) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Mã coupon đã hết hạng sử dụng, vui lòng nhập mã khác.",
         // trả về coupon theo yêu cần của Long.
@@ -101,7 +101,7 @@ router.get("/get-gift", verifyToken, async (req, res) => {
         },
       });
     }
-    return res.json({
+    return res.success(400).json({
       success: couponRes.success,
       message: couponRes.success
         ? "Lấy coupon thành công"
