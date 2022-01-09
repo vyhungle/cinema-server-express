@@ -13,7 +13,7 @@ export const test = {
     child: {
       name: "Vé trẻ em",
       count: 1,
-      price: 60000,
+      price: 45000,
     },
     student: {
       name: "Vé sinh viên",
