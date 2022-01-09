@@ -152,7 +152,7 @@ export const cinemaData = [
       "61c193b028062300372e40ec",
       "61d950999a33960037b034f4",
     ],
-    staff: ["61d93b1c16fc3b1db89e1785", "61d93b2b16fc3b1db89e178e"],
+    staff: ["61daac32b047eb44f017bd8a", "61daac4fb047eb44f017bd91"],
   },
 ];
 

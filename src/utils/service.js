@@ -515,7 +515,6 @@ export const revenueYear = async (cinemaId, year) => {
     `1/1/${parseInt(year, 10) + 1}`,
     "MM-DD-YYYY"
   ).format();
-  console.log(dateStart, dateEnd);
   const dataFood = await FoodBill.find({
     createdAt: {
       $gte: dateStart,

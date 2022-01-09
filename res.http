@@ -359,13 +359,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MTRjN2NkNzlmZmExNDJjOGMzYmU1OWYiLCJlbWFpbCI6ImxuaHYuMjYxMTIwMDBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIwOTgzNzgyOTQxIiwidHlwZSI6IjAiLCJjaW5lbWEiOiI2MTRjMDNkYjU3NmI1ZDAwMzc2ODAxYTYiLCJpYXQiOjE2NDA2MDc3NjksImV4cCI6MTY0MTgxNzM2OX0.bWouWDsi8ZwocHsXGQ4JJQB-gBtWWjteICVc32Yj_6Y
 
 {
-    "email":"staff2@gmail.com",
-    "phoneNumber":"0983782203",
-    "fullName":"Lê Văn An",
+    "email":"staff4@gmail.com",
+    "phoneNumber":"0983782205",
+    "fullName":"Lê Thái Hiền",
     "male":true,
     "dateOfBirth":"11/26/2000",
     "permissionId":"6149d46c52d8c52050d24e47",
-    "cinemaId":"614c03db576b5d00376801a6"
+    "cinemaId":"614c8a9e192439003768b5c1"
 }
 
 #### Đăng nhập

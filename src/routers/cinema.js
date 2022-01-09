@@ -280,7 +280,6 @@ router.get(
   async (req, res) => {
     try {
       const { type, staffId, cinema } = req;
-      console.log(type)
       const { date } = req.query;
       let staffIdFilter = undefined;
       if (type == 2) {

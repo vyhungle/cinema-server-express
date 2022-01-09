@@ -17,7 +17,7 @@ import Food from "../models/Food";
 import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
 import { createSeatId } from "../utils/helper";
-import { renderBillId } from "../utils/format";
+import { renderBillId, renderBillNumberId } from "../utils/format";
 
 export const createBillTicket = async (
   data,
@@ -34,11 +34,12 @@ export const createBillTicket = async (
   gifts
 ) => {
   //#region  Tạo hóa đơn vé và vé
+  const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
+  const oldId = lastBill[0]?.billId || `HDT_00000`;
+  let numberLast = parseInt(oldId.split("_")[1], 10) + 1;
   if (data && data.length > 0) {
-    const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
-    const oldId = lastBill[0]?.billId || `HDT_00000`;
     const bill = new MovieBill({
-      billId: renderBillId(oldId),
+      billId: renderBillNumberId("HDT", numberLast),
       user: userId,
       showTime: showTimeId,
       showTimeDetail: showTimeDetailId,
@@ -51,6 +52,7 @@ export const createBillTicket = async (
       paymentType: paymentType,
       staff: staffId,
     });
+    numberLast++;
 
     // sort lại vé
     data = data.sort((a, b) => {
@@ -146,11 +148,12 @@ export const createFoodBill = async (
   staffId,
   gifts
 ) => {
+  const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
+  const oldId = lastBill[0]?.billId || `HDF_00000`;
+  let numberLast = parseInt(oldId.split("_")[1], 10) + 1;
   if ((combos && combos.length > 0) || (gifts && gifts.length > 0)) {
-    const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
-    const oldId = lastBill[0]?.billId || `HDF_00000`;
     const foodBill = new FoodBill({
-      billId: renderBillId(oldId),
+      billId: renderBillNumberId("HTF", numberLast),
       user: userId,
       showTime: showTimeId,
       showTimeDetail: showTimeDetailId,

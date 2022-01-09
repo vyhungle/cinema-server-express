@@ -38,62 +38,42 @@ router.get("/test", async (req, res) => {
 router.get("/add-data", async (req, res) => {
   try {
     const data = {
-      month: 4,
-      year: 2022,
+      month: 12,
+      year: 2021,
       // field tạo showtime
-      movieId: movieData[getRandomInt(5)],
       cinemaId: 0,
-
-      showTimes: [
-        {
-          // field tạo showtime detail [room showTime, timeSlot, date]
-
-          ticket: [
-            {
-              payment: {
-                type: "0",
-              },
-            },
-            {
-              payment: {
-                type: "0",
-              },
-            },
-          ],
-        },
-      ],
+      numberShowTime: 2,
+      numberBill: 1,
     };
 
     const cinema = cinemaData[data.cinemaId];
 
     const dateEnd = getDateEnd(data.month, data.year).getDate();
     let date = 1;
-    const movieId = movieData[getRandomInt(5)];
 
     while (dateEnd >= date) {
       const createdAt = new Date(
         `${data.month}/${date}/${data.year}`
       ).toISOString();
 
-      const showTime = new ShowTime({
-        cinema: cinema.cinema.id,
-        movie: movieId,
-      });
-
-      const movie = await Movie.findById(movieId);
-
-      data.showTimes.forEach(async (item) => {
-        const tickerRandom = tickerData[getRandomInt(4)];
-        const showTimeDetail = new ShowTimeDetail({
-          date: `${data.month}/${date}/${data.year}`,
-          room: cinema.room[getRandomInt(3)],
-          showTime: showTime._id,
-          timeSlot: timeData[getRandomInt(4)],
+      for (let i = 0; i < data.numberShowTime; i++) {
+        const movieId = movieData[getRandomInt(3)];
+        const showTime = new ShowTime({
+          cinema: cinema.cinema.id,
+          movie: movieId,
         });
+        const movie = await Movie.findById(movieId);
 
-        const room = await Room.findById(item.roomId).populate("screen");
-
-        item.ticket.forEach(async (ticket) => {
+        for (let j = 0; j < data.numberBill; j++) {
+          const tickerRandom = tickerData[getRandomInt(4)];
+          const roomId = cinema.room[getRandomInt(3)];
+          const room = await Room.findById(roomId).populate("screen");
+          const showTimeDetail = new ShowTimeDetail({
+            date: `${data.month}/${date}/${data.year}`,
+            room: roomId,
+            showTime: showTime._id,
+            timeSlot: timeData[getRandomInt(4)],
+          });
           await createBillTicket(
             tickerRandom.data,
             userData[getRandomInt(6)],
@@ -106,10 +86,10 @@ router.get("/add-data", async (req, res) => {
             createdAt,
             0,
             cinema.staff[getRandomInt(2)],
-            giftData[getRandomInt(4)]
+            giftData[getRandomInt(4)].data
           );
           await createFoodBill(
-            comboData[getRandomInt(4)],
+            comboData[getRandomInt(4)].data,
             userData[getRandomInt(6)],
             showTimeDetail._id,
             cinema.cinema.id,
@@ -120,14 +100,12 @@ router.get("/add-data", async (req, res) => {
             createdAt,
             0,
             cinema.staff[getRandomInt(2)],
-            giftData[getRandomInt(4)]
+            giftData[getRandomInt(4)].data
           );
-        });
-
-        await showTimeDetail.save();
-      });
-
-      await showTime.save();
+          await showTimeDetail.save();
+        }
+        await showTime.save();
+      }
       date++;
     }
 

@@ -10,8 +10,13 @@ const formatCode = (code) => {
   } else return "" + code.toString();
 };
 
-export const renderBillId = (oldId) => {
+export const renderBillId = (oldId, number) => {
   const arr = oldId.split("_");
   const nextId = `${arr[0]}_${formatCode(parseInt(arr[1], 10) + 1)}`;
+  return nextId;
+};
+
+export const renderBillNumberId = (key, number) => {
+  const nextId = `${key}_${formatCode(number)}`;
   return nextId;
 };
