@@ -24,7 +24,7 @@ function generateToken(staff) {
       email: staff.email,
       phoneNumber: staff.phoneNumber,
       type: staff.permission.type,
-      cinema:staff.cinema._id
+      cinema: staff.cinema._id,
     },
     process.env.SECRET_KEY,
     { expiresIn: "14d" }
@@ -281,7 +281,7 @@ router.post("/login", async (req, res) => {
       if (username !== "") {
         errors.username = "Thông tin tài khoản không tồn tại";
       }
-      res.json({
+      res.status(400).json({
         success: false,
         message: "Đăng nhập",
         errors: errors,
@@ -294,7 +294,7 @@ router.post("/login", async (req, res) => {
         if (password !== "") {
           errors.password = "Thông tin mật khẩu chưa chính xác";
         }
-        res.json({
+        res.status(400).json({
           success: false,
           message: "Đăng nhập",
           errors: errors,

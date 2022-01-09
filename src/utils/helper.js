@@ -659,3 +659,7 @@ export const filterTimeSTD = (std, dateStart, dateEnd) => {
 
   return Object.values(res);
 };
+
+export const getRandomInt = (max) => {
+  return Math.floor(Math.random() * max);
+};

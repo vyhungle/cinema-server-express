@@ -301,7 +301,7 @@ Content-Type: application/json
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=11/30/2021
 
 ####
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&year=2021
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=2&year=2022
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MTYyODMzNSwiZXhwIjoxNjQyODM3OTM1fQ.v9reH7ia7Wb-KXk7eib9TO0p96mlsSM3gRtpUJlEmvk
 
 
@@ -892,7 +892,7 @@ GET http://localhost:4000/api/quick/get-show-time-detail-by-cinema-movie-date?mo
 
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&year=2021
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=3&year=2022
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWExZWVkZGM0OTA3YzI2MDQxZDM0Y2QiLCJlbWFpbCI6Im1hbmFnZUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDAiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGM4YTllMTkyNDM5MDAzNzY4YjVjMSIsImlhdCI6MTYzODM2NjM2NSwiZXhwIjoxNjM5NTc1OTY1fQ.iE_QWWW2-MhbthRn87zlB9bCMrqIBghbiZEo_NQkTWw
 
 ###
@@ -900,7 +900,7 @@ GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MWQ5M2IxYzE2ZmMzYjFkYjg5ZTE3ODUiLCJlbWFpbCI6InN0YWZmMUBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA5ODM3ODIyMDIiLCJ0eXBlIjoiMiIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MTYyNzU4NiwiZXhwIjoxNjQyODM3MTg2fQ.2jhiTHiEss0jT7xO2RY5W4xsHaoY7LUT3ppP4HbnDqw
 
 ###
-GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy
+GET http://localhost:4000/api/cinema/get/thong-ke-all-rap-theo-quy?year=2021
 
 ###
 GET http://localhost:4000/api/cinema/get/thong-ke-theo-quy?cinemaId=614c03db576b5d00376801a6&year=2021
