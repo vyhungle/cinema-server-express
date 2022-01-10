@@ -301,7 +301,7 @@ Content-Type: application/json
 GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-ngay?cinemaId=614c8a9e192439003768b5c1&date=11/30/2021
 
 ####
-GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=2&year=2022
+GET http://localhost:4000/api/cinema/get/thong-ke-doanh-thu-theo-thang?month=12&year=2021
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlVXNlciI6MSwiaWQiOiI2MThhMWUyNzFmMWQ0NTRmYmE3N2RjZDciLCJlbWFpbCI6ImxvbmcubG9uZ0BnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IjA3Nzg4ODg5OTkiLCJ0eXBlIjoiMSIsImNpbmVtYSI6IjYxNGMwM2RiNTc2YjVkMDAzNzY4MDFhNiIsImlhdCI6MTY0MTYyODMzNSwiZXhwIjoxNjQyODM3OTM1fQ.v9reH7ia7Wb-KXk7eib9TO0p96mlsSM3gRtpUJlEmvk
 
 

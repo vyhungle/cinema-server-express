@@ -1113,8 +1113,8 @@ export const getBillByMonth = async (month, year, cinema) => {
     cinema,
   });
 
-  const lstFood = await getListFoodBillDetail(lstFoodBill, true);
-  const lstTicket = await getListMovieBillDetail(lstTicketBill, true);
+  const lstFood = await getListFoodBillDetail(lstFoodBill, false);
+  const lstTicket = await getListMovieBillDetail(lstTicketBill, false);
 
   return {
     data: [
