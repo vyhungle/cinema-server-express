@@ -964,7 +964,10 @@ const getListFoodBillDetail = async (fb, merge) => {
           user: fb[i].user,
           staff: fb[i].staff,
           promotionType: item.promotionType,
-          // point: fb[i].user
+          point:
+            fb[i].user._id !== USER_DEFAULT
+              ? Math.ceil(total / POINT_BONUS)
+              : 0,
         });
         res.total += item.priceSell * item.quantity;
         res.promotion += item.promotion;
@@ -1018,6 +1021,10 @@ const getListMovieBillDetail = async (mb, merge) => {
             user: mb[i].user,
             staff: mb[i].staff,
             promotionType: item.promotionType,
+            point:
+              mb[i].user._id !== USER_DEFAULT
+                ? Math.ceil(total / POINT_BONUS)
+                : 0,
           });
         } else {
           const index = lstTicket.findIndex(
