@@ -18,6 +18,7 @@ import Room from "../models/Room";
 import TimeSlot from "../models/TimeSlot";
 import { createSeatId } from "../utils/helper";
 import { renderBillId, renderBillNumberId } from "../utils/format";
+import { POINT_BONUS } from "../utils/constaints";
 
 export const createBillTicket = async (
   data,
@@ -113,6 +114,7 @@ export const createBillTicket = async (
     // tính lại total bill
     bill.total = totalPrice;
     bill.promotion = totalPromotion;
+    await plusPoints(userId, Math.floor(bill.total / POINT_BONUS));
     await bill.save();
   }
   //#endregion
@@ -206,6 +208,13 @@ export const createFoodBill = async (
     }
     foodBill.total = total;
     foodBill.promotion = totalPromotion;
+    await plusPoints(userId, Math.floor(foodBill.total / POINT_BONUS));
     await foodBill.save();
   }
+};
+
+const plusPoints = async (userId, point) => {
+  const user = await User.findById(userId);
+  user.point += point;
+  await user.save();
 };

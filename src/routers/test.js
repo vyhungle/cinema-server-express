@@ -38,7 +38,7 @@ router.get("/test", async (req, res) => {
 router.get("/add-data", async (req, res) => {
   try {
     const data = {
-      month: 12,
+      month: 11,
       year: 2021,
       // field tạo showtime
       cinemaId: 0,

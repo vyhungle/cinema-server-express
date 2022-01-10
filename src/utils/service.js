@@ -969,7 +969,7 @@ const getListFoodBillDetail = async (fb, merge) => {
             fb[i].user._id !== USER_DEFAULT &&
             item.promotionType !== "Đổi điểm" &&
             item.promotionType !== "Dùng phiếm mua hàng"
-              ? Math.ceil((item.price * item.quantity) / POINT_BONUS)
+              ? Math.floor((item.price * item.quantity) / POINT_BONUS)
               : 0,
         });
         res.total += item.priceSell * item.quantity;
@@ -1028,7 +1028,7 @@ const getListMovieBillDetail = async (mb, merge) => {
               mb[i].user._id !== USER_DEFAULT &&
               item.promotionType !== "Đổi điểm" &&
               item.promotionType !== "Dùng phiếm mua hàng"
-                ? Math.ceil(item.priceSell / POINT_BONUS)
+                ? Math.floor(item.priceSell / POINT_BONUS)
                 : 0,
           });
         } else {
