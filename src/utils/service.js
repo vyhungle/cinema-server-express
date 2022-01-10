@@ -964,6 +964,7 @@ const getListFoodBillDetail = async (fb, merge) => {
           user: fb[i].user,
           staff: fb[i].staff,
           promotionType: item.promotionType,
+          // point: fb[i].user
         });
         res.total += item.priceSell * item.quantity;
         res.promotion += item.promotion;
@@ -1103,7 +1104,9 @@ export const getBillByMonth = async (month, year, cinema) => {
       $lte: dateEnd,
     },
     cinema,
-  });
+  })
+    .populate("user")
+    .populate("staff");
 
   const lstTicketBill = await MovieBill.find({
     createdAt: {
@@ -1111,7 +1114,9 @@ export const getBillByMonth = async (month, year, cinema) => {
       $lte: dateEnd,
     },
     cinema,
-  });
+  })
+    .populate("user")
+    .populate("staff");
 
   const lstFood = await getListFoodBillDetail(lstFoodBill, false);
   const lstTicket = await getListMovieBillDetail(lstTicketBill, false);
