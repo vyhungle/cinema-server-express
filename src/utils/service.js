@@ -25,6 +25,7 @@ import moment from "moment";
 import {
   objStaffDefault,
   objUserDefault,
+  POINT_BONUS,
   STAFF_DEFAULT,
   USER_DEFAULT,
 } from "./constaints";
@@ -965,8 +966,10 @@ const getListFoodBillDetail = async (fb, merge) => {
           staff: fb[i].staff,
           promotionType: item.promotionType,
           point:
-            fb[i].user._id !== USER_DEFAULT
-              ? Math.ceil(total / POINT_BONUS)
+            fb[i].user._id !== USER_DEFAULT &&
+            item.promotionType !== "Đổi điểm" &&
+            item.promotionType !== "Dùng phiếm mua hàng"
+              ? Math.ceil((item.price * item.quantity) / POINT_BONUS)
               : 0,
         });
         res.total += item.priceSell * item.quantity;
@@ -1022,8 +1025,10 @@ const getListMovieBillDetail = async (mb, merge) => {
             staff: mb[i].staff,
             promotionType: item.promotionType,
             point:
-              mb[i].user._id !== USER_DEFAULT
-                ? Math.ceil(total / POINT_BONUS)
+              mb[i].user._id !== USER_DEFAULT &&
+              item.promotionType !== "Đổi điểm" &&
+              item.promotionType !== "Dùng phiếm mua hàng"
+                ? Math.ceil(item.priceSell / POINT_BONUS)
                 : 0,
           });
         } else {
