@@ -29,6 +29,7 @@ import {
   STAFF_DEFAULT,
   USER_DEFAULT,
 } from "./constaints";
+import { formatDate } from "./format";
 
 export const getMoviePlay = async () => {
   const res = {
@@ -1233,5 +1234,92 @@ export const formatObjST = (lst) => {
     });
   });
 
+  return res;
+};
+
+export const thongKeRapTheoNgay = async (date) => {
+  const dateTam = new Date(date);
+
+  const dateStart = `${dateTam.getFullYear()}-${formatDate(
+    dateTam.getMonth() + 1
+  )}-${formatDate(dateTam.getDate())}T00:00:00.000Z`;
+
+  const dateEnd = `${dateTam.getFullYear()}-${formatDate(
+    dateTam.getMonth() + 1
+  )}-${formatDate(dateTam.getDate())}T23:59:59.000Z`;
+
+  const lstFoodBill = await FoodBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+  }).populate("cinema");
+
+  const lstTicketBill = await MovieBill.find({
+    createdAt: {
+      $gte: dateStart,
+      $lte: dateEnd,
+    },
+  }).populate("cinema");
+
+  const ticketData = [];
+
+  lstTicketBill.forEach((item) => {
+    const check = ticketData.some((x) => x.cinemaId === item.cinema._id);
+    if (check) {
+      const index = ticketData.findIndex((x) => x.cinemaId === item.cinema._id);
+      ticketData[index].total += item.total;
+    } else {
+      ticketData.push({
+        date: date,
+        cinemaId: item.cinema._id,
+        cinemaName: item.cinema.name,
+        total: item.total,
+      });
+    }
+  });
+
+  const foodData = [];
+  lstFoodBill.forEach((item) => {
+    const check = foodData.some((x) => x.cinemaId === item.cinema._id);
+    if (check) {
+      const index = foodData.findIndex((x) => x.cinemaId === item.cinema._id);
+      foodData[index].total += item.total;
+    } else {
+      foodData.push({
+        date: date,
+        cinemaId: item.cinema._id,
+        cinemaName: item.cinema.name,
+        total: item.total,
+      });
+    }
+  });
+
+  ticketData.forEach((item) => {
+    if (foodData.some((x) => x.id === item._id)) {
+      const index = foodData.findIndex((x) => x.id === item.id);
+      foodData[index].total += item.total;
+    } else {
+      foodData.push(item);
+    }
+  });
+
+  return foodData;
+};
+
+export const thongkeAllRapTheoThang = async (month, year) => {
+  let res = [];
+
+  const dateEnd = getDateEnd(month, year).getDate();
+  let date = 1;
+
+  while (dateEnd >= date) {
+    res = res.concat(
+      await thongKeRapTheoNgay(
+        `${formatDate(month)}/${formatDate(date)}/${year}`
+      )
+    );
+    date++;
+  }
   return res;
 };

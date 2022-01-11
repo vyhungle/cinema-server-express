@@ -10,6 +10,12 @@ const formatCode = (code) => {
   } else return "" + code.toString();
 };
 
+export const formatDate = (code) => {
+  if (code.toString().length === 1) {
+    return "0" + code.toString();
+  } else return code.toString();
+};
+
 export const renderBillId = (oldId, number) => {
   const arr = oldId.split("_");
   const nextId = `${arr[0]}_${formatCode(parseInt(arr[1], 10) + 1)}`;

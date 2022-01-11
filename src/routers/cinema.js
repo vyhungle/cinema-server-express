@@ -9,6 +9,8 @@ import {
   getBillByMonth,
   revenueStatisticsMovie,
   revenueYear,
+  thongkeAllRapTheoThang,
+  thongKeRapTheoNgay,
   thongKeRapTheoQuy,
   thongKeTheoNgay,
 } from "../utils/service";
@@ -320,5 +322,27 @@ router.get(
     }
   }
 );
+
+router.get("/get/thong-ke-all-rap-theo-thang", async (req, res) => {
+  try {
+    const {
+      month = new Date().getMonth() + 1,
+      year = new Date().getFullYear(),
+    } = req.query;
+
+    const data = await await thongkeAllRapTheoThang(month, year);
+    return res.json({
+      success: true,
+      message: "thống kê tạp thành công",
+      data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: errorCatch,
+      errors: error.message,
+    });
+  }
+});
 
 module.exports = router;
