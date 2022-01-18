@@ -49,8 +49,8 @@ export const responseModalError = (status, message, error) => {
 };
 
 /** */
-export const paymentFailLink = "http://localhost:3000";
-export const paymentSuccessLink = "http://localhost:3000";
+export const paymentFailLink = "http://localhost:3001";
+export const paymentSuccessLink = "http://localhost:3001";
 
 export const objStaffDefault = {
   _id: { $oid: "61a1e3745a51673998612a1b" },
