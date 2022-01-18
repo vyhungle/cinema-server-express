@@ -607,8 +607,8 @@ POST http://localhost:4000/api/showTime/add
 Content-Type: application/json
 
 {
-    "dateStart":"",
-    "dateEnd":"",
+    "dateStart":"01/18/2022",
+    "dateEnd":"01/19/2022",
     "movieId":"6169a42f038631344897c7c6", 
     "cinemaId":"614c03db576b5d00376801a6", 
     "showTimes":[

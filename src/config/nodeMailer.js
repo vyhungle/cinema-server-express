@@ -33,7 +33,16 @@ export const mailOption = (email, link) => {
   };
 };
 
-export const mailOptionPayment = (email, payment, name, user, date, price) => {
+export const mailOptionPayment = (
+  email,
+  payment,
+  name,
+  user,
+  date,
+  price,
+  idFood,
+  idTicket
+) => {
   return {
     form: process.env.EMAIL_USER,
     to: email,
@@ -45,6 +54,8 @@ export const mailOptionPayment = (email, payment, name, user, date, price) => {
       user,
       date,
       price,
+      idFood,
+      idTicket,
     },
   };
 };

@@ -38,11 +38,11 @@ router.get("/test", async (req, res) => {
 router.get("/add-data", async (req, res) => {
   try {
     const data = {
-      month: 11,
-      year: 2021,
+      month: 1,
+      year: 2022,
       // field tạo showtime
-      cinemaId: 0,
-      numberShowTime: 2,
+      cinemaId: 1,
+      numberShowTime: 1,
       numberBill: 1,
     };
 
@@ -51,7 +51,7 @@ router.get("/add-data", async (req, res) => {
     const dateEnd = getDateEnd(data.month, data.year).getDate();
     let date = 1;
 
-    while (dateEnd >= date) {
+    while (dateEnd >= 17) {
       const createdAt = new Date(
         `${data.month}/${date}/${data.year}`
       ).toISOString();

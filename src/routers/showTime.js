@@ -39,6 +39,7 @@ router.post("/add", validateToken, async (req, res) => {
       });
       await newShowTime.save();
 
+      
       // add show time detail
 
       showTimes.map((item) => {

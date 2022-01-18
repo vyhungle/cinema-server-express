@@ -734,6 +734,7 @@ router.get("/success-payment", async (req, res) => {
       }
       //#endregion
 
+      let idTicker = "";
       //#region  Tạo hóa đơn vé và vé
       if (data && data.length > 0) {
         const lastBill = await MovieBill.find().sort({ _id: -1 }).limit(1);
@@ -751,6 +752,7 @@ router.get("/success-payment", async (req, res) => {
           createdAt: new Date().toISOString(),
           paymentType: payment.type,
         });
+        idTicker = bill._id;
 
         // tạo vé
         data.forEach(async (item) => {
@@ -791,6 +793,7 @@ router.get("/success-payment", async (req, res) => {
       }
       //#endregion
 
+      let idFood = "";
       //#region  Tạo hóa đơn combo và combo detail
       if ((combos && combos.length > 0) || (gifts && giftList.length > 0)) {
         const lastBill = await FoodBill.find().sort({ _id: -1 }).limit(1);
@@ -808,6 +811,7 @@ router.get("/success-payment", async (req, res) => {
           createdAt: new Date().toISOString(),
           paymentType: payment.type,
         });
+        idFood = foodBill._id;
 
         // tạo combo detail
         if (combos && combos.length > 0) {
@@ -894,7 +898,16 @@ router.get("/success-payment", async (req, res) => {
       const price =
         totalTicket - totalTicket * discount + totalFood - totalFood * discount;
       transporter.sendMail(
-        mailOptionPayment(email, paymentName, name, tk, date, price),
+        mailOptionPayment(
+          email,
+          paymentName,
+          name,
+          tk,
+          date,
+          price,
+          idFood,
+          idTicker
+        ),
         function (error, info) {}
       );
       //#endregion
