@@ -1,4 +1,4 @@
-# Api Ciname
+# Api Cenima
 
 Api server https://server-api-cinema.herokuapp.com/ \
 Api geolocation https://opencagedata.com/api \
